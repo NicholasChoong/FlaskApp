@@ -1,5 +1,5 @@
 # CITS3403_WebDev
-A full stack web developing porject for newbies
+A full stack web developing project for newbies
 Made by Nicholas & Nicholas
 Project Description
 

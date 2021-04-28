@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>New Project</h2>
+
+<div class="container">
+  <h4>{{student.prefered_name}}</h4> 
+  
+  <form name='registerProject' action='' method='post' novalidate>
+    <div class='form-group'>
+      {{form.hidden_tag()}}
+      <p>
+      {{ form.partner1_number.label }}<br>
+      {{ form.partner1_number(size=8) }}
+      Enter first partner's student number
+      {% for error in form.partner1_number.errors %}
+      <span style="color:red;">[{{ error}}]</span>
+      {% endfor %}
+      </p>
+      <p>
+      {{ form.partner2_number.label }}<br>
+      {{ form.partner2_number(size=8) }}
+      Enter second partner's student number or 00000000, if only two in the group 
+      {% for error in form.partner2_number.errors %}
+      <span style="color:red;">[{{ error}}]</span>
+      {% endfor %}
+      </p>
+      <p>
+      {{ form.partner3_number.label }}<br>
+      {{ form.partner3_number(size=8) }}
+      Enter third partner's student number or 00000000, if only three in the group 
+      {% for error in form.partner3_number.errors %}
+      <span style="color:red;">[{{ error}}]</span>
+      {% endfor %}
+      </p>
+      <p>
+      {{ form.project_description.label }}<br>
+      {{ form.project_description(size=20) }}
+      {% for error in form.project_description.errors %}
+      <span style="color:red;">[{{ error}}]</span>
+      {% endfor %}
+      </p>
+      <p>
+      {{ form.lab.label }}<br>
+      {{ form.lab }}
+      </p>
+      <p> {{ form.submit() }}</p>
+    </div>
+  </form>
+
+  {% endblock %}

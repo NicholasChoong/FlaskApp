@@ -6,13 +6,10 @@ Tables:
         Username
         Hashed password
         isAdmin
-
     Assesment Info
         
-
     Assesment Results
         Assessment_id primary key
-
     Site Data
         User_id foreign key
         Login_key primary key

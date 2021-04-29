@@ -1,83 +1,115 @@
-# Pair Up!
+# PC wiki
 
-A simple flask app for allocating student pairs in the [CITS3403 project](http://teaching.csse.uwa.edu.au/units/CITS3403/index.php?fname=projects&project=yes).
+## Planned contents
 
-## Getting Started
+CPU
 
-Activate the python virtual environment:
-`$source virtual-environment/bin/activate`
+    Connected though main socket
 
-To run the app:
-`$flask run`
+    Depends on manufacturer and model
 
-To stop the app:
-`$^C`
+GPU
 
-To exit the environment:
-`$deactivate`
+    Connects through a PCI-E connection
 
-### Prerequisites
+    Commonly uses PCI-E 3.0 but modern cards are now supporting 4.0
 
-Requires python3, flask, venv, and sqlite
+RAM
 
-```
-Give examples
-```
+    Operates in DDR (Double Data Rate)
 
-### Installing
+    To use this mode installed in pairs
 
-Install python3, sqlite3
+    Speed and max size are determined by the CPU and motherboard
 
-1. Set up a virtual environment:
- - use pip or another package manager to install virtualenv package `pip install virtualenv`
- - start the provided virtual environment
-   `source virtual-environment/bin/activate`
- - This should include flask and all the required packages
-2. Install sqlite
- - [Windows instructions](http://www.sqlitetutorial.net/download-install-sqlite/)
- - In \*nix, `sudo apt-get install sqlite`
-3. Build the database: `flask db init`
-4. `flask run`
+Storage Drive
 
-This should start the app running on localhost at port 5000, i.e. [http://localhost:5000/index](http://localhost:5000/index)
+    Connected through SATA, or M.2
 
-## Running the tests
+    Can be SSD or HDD.
 
-A few tests now:
+Fan/Liquid Cooling
 
-To run unit tests
-`python -m tests.unittest`
+    Necessary for ensuring a computer continued operation
 
-To run selenium tests, make sure that you have the 
-appropriate web driver installed. In this case it should be geckodriver for Firefox, 
-and it assumes that it is installed in the test directory.
-Then start the webserver in TestingConfig, and run
-`python -m tests.systemtest`
+PSU
 
-## Deployment
+    Bringer of power to the system
 
-via localhost
+    Power Efficiency
 
-## Built With
+Case
 
-vim and git
+    I/O
 
-## Contributing
+    USB
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+    Ethernet
 
-## Versioning
+    Power/ Reset buttons
 
-## Authors
+    Audio jacks
 
-* **Tim French** - *Initial work* - [drtnf](https://github.com/drtnf)
+Peripherals
 
+    Keyboard
 
-## License
+    Switches
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+    Mouse
 
-## Acknowledgments
+    DPI
 
-* Built following the [Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) by **Miguel Grinberg**.
+    Monitor
 
+    Resolution
+
+    Contrast Ratio
+
+    Refresh rate
+
+    Response time
+
+    Webcam
+
+    Megapixels
+
+    Speakers/Headset/Earphone
+
+    Speaker range
+
+    Mic
+
+Global
+
+Navigation bar
+
+    Home
+
+    Lessons
+
+    Assessments
+
+Login info
+
+Dark Mode
+
+Home Page
+
+Lessons Page
+
+Assessments Page
+
+    HTML Form
+
+    Marking done on server-side
+
+Login page
+
+Login and signup
+
+Administrative page
+
+    Administrative information (not visible to non admin users)
+
+    Secure access

@@ -1,4 +1,6 @@
-.styled-table, dl, .container  {
+.styled-table,
+dl,
+.container {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -11,11 +13,13 @@
     color: #ffffff;
     text-align: left;
 }
-.styled-table th, dt,
+.styled-table th,
+dt,
 .styled-table td {
     padding: 12px 15px;
 }
-.styled-table tbody tr, dd {
+.styled-table tbody tr,
+dd {
     border-bottom: 1px solid #dddddd;
 }
 
@@ -41,12 +45,11 @@ dd {
 }
 ul {
     list-style: none;
-    
-  }
-  li {
+}
+li {
     margin: 0.2rem;
-  }
-  li::before {
+}
+li::before {
     content: "";
     background: #009879;
     width: 0.9rem;
@@ -58,13 +61,13 @@ ul {
     text-align: center;
     margin-right: 0.5rem;
     margin-bottom: -0.1rem; /* badness */
-  }
-  ol ol li::before {
+}
+ol ol li::before {
     background: #06d6ad;
-  }
-  ol ol ol li::before {
+}
+ol ol ol li::before {
     background: #06d6ad;
-  }
+}
 body {
     font-family: sans-serif;
 }
@@ -73,9 +76,9 @@ body {
     /* border-radius: 5px; */
     padding: 10px;
 }
-h1, h2  {
+h1,
+h2 {
     padding-left: 10px;
-
 }
 .center {
     display: flex;
@@ -91,7 +94,7 @@ h1, h2  {
     padding-left: 25%;
     padding-top: 1%;
     padding-bottom: 1%;
-    border: solid  #009879 1px;
+    border: solid #009879 1px;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }

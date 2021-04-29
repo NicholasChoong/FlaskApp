@@ -113,3 +113,5 @@ Administrative page
     Administrative information (not visible to non admin users)
 
     Secure access
+
+Review page

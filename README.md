@@ -94,24 +94,24 @@ Login info
 
 Dark Mode
 
-Home Page
+1. Home Page
 
-Lessons Page
+2. Lessons Page
 
-Assessments Page
+3. Assessments Page
 
     HTML Form
 
     Marking done on server-side
 
-Login page
+4. Login page
 
-Login and signup
+    Login and signup
 
-Administrative page
+5. Administrative page
 
     Administrative information (not visible to non admin users)
 
     Secure access
 
-Review page
+6. Review page

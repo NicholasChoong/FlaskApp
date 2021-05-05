@@ -52,20 +52,6 @@ class User(UserMixin, db.Model):
             return None
         return user
 
-    def is_committed(self):
-        return self.project_id is not None
-
-    def get_project(self):
-        return Project.query.get(self.project_id)
-
-    def get_partners(self):
-        project = self.get_project()
-        if not project:
-            return None
-        team = project.get_team()
-        team.remove(self)
-        return team
-
     """Adding in dictionary methods to convert to JSON
      Format
      {
@@ -97,8 +83,8 @@ class User(UserMixin, db.Model):
             self.set_password(data["pin"])
 
     def __repr__(self):
-        return "[Number:{}, Name:{}, CITS3403:{}, assign_me:{}]".format(
-            self.id, self.__str__(), self.cits3403, self.assign_me
+        return (
+            f"[User ID:{self.user_id}, Name:{self.__str__()}, is Admin:{self.isAdmin}]"
         )
 
     def __str__(self):
@@ -108,32 +94,26 @@ class User(UserMixin, db.Model):
 class Assessment(db.Model):
     __tablename__ = "assessments"
     assessment_id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(64))
+    question = db.Column(db.String(256))
 
-    """returns a list of students involved in the project"""
+    """returns a list of questions"""
 
     def to_dict(self):
         data = {
-            "id": self.project_id,
-            "description": self.description,
-            "lab_id": self.lab_id,
-            "lab_name": str(Lab.query.get(self.lab_id)),
+            "assessment_id": self.assessment_id,
+            "question": self.question,
         }
         return data
 
     def from_dict(self, data):
-        if "description" in data:
-            self.description = data["description"]
-        if "lab_id" in data and Lab.query.get(data["lab_id"]).is_available():
-            self.lab_id = data["lab_id"]
+        if "question" in data:
+            self.question = data["question"]
 
     def __repr__(self):
-        return "[PID:{}, Desc:{},LabId:{}]".format(
-            self.project_id, self.description, self.lab_id
-        )
+        return f"[Assessment ID:{self.assessment_id}, Question:{self.question}]"
 
     def __str__(self):
-        return "Project {}: {}".format(self.project_id, self.description)
+        return f"Assessment {self.assessment_id}: {self.question}"
 
 
 class Log(db.Model):
@@ -142,23 +122,5 @@ class Log(db.Model):
     user_id = db.Column(db.String(8), db.ForeignKey("users.user_id"))
     time = db.Column(db.String(64))  # date and time
 
-    def get_project(self):
-        return Project.query.filter_by(lab_id=self.lab_id).first()
-
-    def is_available(self):
-        return self.get_project() is None
-
-    def get_available_labs():
-        labs = (
-            Lab.query.outerjoin(Project, Lab.lab_id == Project.lab_id)
-            .add_columns(Project.project_id, Lab.lab_id, Lab.lab, Lab.time)
-            .filter(Project.project_id == None)
-            .all()
-        )
-        return labs
-
     def __repr__(self):
-        return "[LID:{}, Lab:{}, time:{}]".format(self.lab_id, self.lab, self.time)
-
-    def __str__(self):
-        return "Lab {}: {}".format(self.lab, self.time)
+        return f"[Login Key:{self.login_key}, User ID:{self.user_id}, time:{self.time}]"

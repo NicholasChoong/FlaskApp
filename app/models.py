@@ -9,25 +9,17 @@ import os
 # allows login to get student from database, given id
 # will be stored as current_user?
 @login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
+def load_user(id):
+    return User.query.get(int(id))
 
 
-# student database will be prepopulated with
-# student numbers, firstname, surname, CITS3403 boolean
-# students can add/edit pin and project id
-class Student(UserMixin, db.Model):
-    __tablename__ = "students"
-    id = db.Column(db.String(8), primary_key=True)  # prepopulate
-    first_name = db.Column(db.String(64))  # prepopulate
-    surname = db.Column(db.String(64))  # prepopulate
-    prefered_name = db.Column(db.String(64))  # defaults to first_name if empty
-    cits3403 = db.Column(db.Boolean)  # prepopulate
-    assign_me = db.Column(db.Boolean)  # prepopulate
-    password_hash = db.Column(db.String(128))  # overkill to hash a four digit pin....
-    project_id = db.Column(
-        db.Integer, db.ForeignKey("projects.project_id"), nullable=True
-    )
+class User(UserMixin, db.Model):
+    __tablename__ = "users"
+    user_id = db.Column(db.String(8), primary_key=True)
+    first_name = db.Column(db.String(64))
+    surname = db.Column(db.String(64))
+    password_hash = db.Column(db.String(128))
+    isAdmin = db.Column(db.Boolean, default=False)
     # token authetication for api
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
@@ -54,10 +46,10 @@ class Student(UserMixin, db.Model):
 
     @staticmethod
     def check_token(token):
-        student = Student.query.filter_by(token=token).first()
-        if student is None or student.token_expiration < datetime.utcnow():
+        user = User.query.filter_by(token=token).first()
+        if user is None or user.token_expiration < datetime.utcnow():
             return None
-        return student
+        return user
 
     def is_committed(self):
         return self.project_id is not None
@@ -89,12 +81,10 @@ class Student(UserMixin, db.Model):
 
     def to_dict(self):
         data = {
-            "id": self.id,
+            "user_id": self.user_id,
             "first_name": self.first_name,
             "surname": self.surname,
-            "prefered_name": self.prefered_name,
-            "cits3403": self.cits3403,
-            "assign_me": self.assign_me,
+            "isAdmin": self.isAdmin,
             "_links": {"project": url_for("get_student_project", id=self.id)},
         }
         return data

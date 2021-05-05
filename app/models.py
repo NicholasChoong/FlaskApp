@@ -6,8 +6,7 @@ from flask import url_for
 from datetime import datetime, timedelta
 import os
 
-# allows login to get student from database, given id
-# will be stored as current_user?
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
@@ -23,6 +22,8 @@ class User(UserMixin, db.Model):
     # token authetication for api
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
+
+    result = db.relationship("Assessment", backref="user", lazy="dynamic")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -104,25 +105,12 @@ class User(UserMixin, db.Model):
         return self.first_name + " " + self.surname
 
 
-# Projects are created editted by students
-class Project(db.Model):
-    __tablename__ = "projects"
-    project_id = db.Column(db.Integer, primary_key=True)
+class Assessment(db.Model):
+    __tablename__ = "assessments"
+    assessment_id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(64))
-    lab_id = db.Column(db.Integer, db.ForeignKey("labs.lab_id"), nullable=True)
 
     """returns a list of students involved in the project"""
-
-    def get_team(self):
-        return Student.query.filter_by(project_id=self.project_id).all()
-
-    def get_lab(self):
-        lab = (
-            Lab.query.filter_by(project_id=self.project_id)
-            .add_columns(Lab.lab, Lab.time)
-            .first()
-        )
-        return lab
 
     def to_dict(self):
         data = {
@@ -148,11 +136,10 @@ class Project(db.Model):
         return "Project {}: {}".format(self.project_id, self.description)
 
 
-# demonstration lab times are prepopulated and intended to be immutable
-class Lab(db.Model):
-    __tablename__ = "labs"
-    lab_id = db.Column(db.Integer, primary_key=True)
-    lab = db.Column(db.String(64))  # zoom url
+class Log(db.Model):
+    __tablename__ = "logs"
+    login_key = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(8), db.ForeignKey("users.user_id"))
     time = db.Column(db.String(64))  # date and time
 
     def get_project(self):

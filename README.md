@@ -123,3 +123,7 @@ Planned Pages
     ```
 
 6. Review page
+
+# Table Models
+
+![Entity Relationship Diagrams](./ERD.png)

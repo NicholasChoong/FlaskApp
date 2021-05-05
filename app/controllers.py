@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm, RegistrationForm, ProjectForm
-from app.models import Student, Project, Lab
+from app.models import User, Assessment, Log
 from flask import request
 from werkzeug.urls import url_parse
 from datetime import datetime

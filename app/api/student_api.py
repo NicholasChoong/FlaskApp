@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Student, Project, Lab
+from app.models import User, Assessment, Log
 from app.api.errors import bad_request, error_response
 from flask import jsonify, url_for, request, g, abort
 from app.api.auth import token_auth

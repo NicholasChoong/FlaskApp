@@ -67,18 +67,25 @@ class User(UserMixin, db.Model):
     def to_dict(self):
         data = {
             "user_id": self.user_id,
+            "password_hash": self.password_hash,
             "first_name": self.first_name,
             "surname": self.surname,
             "isAdmin": self.isAdmin,
-            "_links": {"project": url_for("get_student_project", id=self.id)},
+            "_links": {"Reslts": url_for("get_user_results", id=self.user_id)},
         }
         return data
 
     def from_dict(self, data):
-        if "prefered_name" in data:
-            self.prefered_name = data["prefered_name"]
-        if "password" in data:
-            self.set_password(data["password"])
+        if "user_id" in data:
+            self.user_name = data["user_id"]
+        if "first_name" in data:
+            self.user_name = data["first_name"]
+        if "surname" in data:
+            self.user_name = data["surname"]
+        if "isAdmin" in data:
+            self.user_name = data["isAdmin"]
+        if "password_hash" in data:
+            self.set_password(data["password_hash"])
 
     def __repr__(self):
         return (
@@ -93,36 +100,44 @@ class Result(db.Model):
     __tablename__ = "results"
     result_id = db.Column(db.Integer, primary_key=True)
     marks = db.Column(db.Intger)
-    correct_question = db.Column(db.String(256))  # A string of booleans
-    time = db.Column(db.String(64))  # date and time
+    correct_questions = db.Column(db.String(256))  # A string of booleans
+    date = db.Column(db.DateTime)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
 
-    """returns a list of questions"""
-
     def to_dict(self):
-        data = {
-            "result_id": self.assessment_id,
-            "question": self.question,
-        }
+        data = {"result_id": self.result_id, "marks": self.marks, "date": self.date}
         return data
 
     def from_dict(self, data):
-        if "question" in data:
-            self.question = data["question"]
+        if "result_id" in data:
+            self.question = data["result_id"]
+        if "marks" in data:
+            self.question = data["marks"]
+        if "correct_questions" in data:
+            self.question = data["correct_questions"]
+        if "date" in data:
+            self.question = data["date"]
+        if "user_id" in data:
+            self.question = data["user_id"]
 
     def __repr__(self):
-        return f"[Assessment ID:{self.assessment_id}, Question:{self.question}]"
+        return f"[Result ID:{self.result_id}, Marks:{self.marks}, Date:{self.date}]"
 
     def __str__(self):
-        return f"Assessment {self.assessment_id}: {self.question}"
+        return f"Result {self.result_id}: {self.marks}"
 
 
 class Log(db.Model):
     __tablename__ = "logs"
     login_key = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime)  # date and time
+
     user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
-    time = db.Column(db.String(64))  # date and time
+
+    def to_dict(self):
+        data = {"login_key": self.login_key, "date": self.date, "user_id": self.user_id}
+        return data
 
     def __repr__(self):
-        return f"[Login Key:{self.login_key}, User ID:{self.user_id}, time:{self.time}]"
+        return f"[Login Key:{self.login_key}, User ID:{self.user_id}, Date:{self.date}]"

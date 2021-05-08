@@ -109,7 +109,7 @@ class Result(db.Model):
             "marks": self.marks,
             "date": self.date,
             "user_id": self.user_id,
-            "user_name": str(User.query.get(self.lab_id)),
+            "user_name": User.query.get(self.user_id).__str__(),
         }
         return data
 
@@ -126,7 +126,7 @@ class Result(db.Model):
             self.question = data["user_id"]
 
     def __repr__(self):
-        return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}]"
+        return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}, Name: {User.query.get(self.user_id).__str__()}]"
 
     def __str__(self):
         return f"Result {self.result_id}: {self.marks}"
@@ -134,16 +134,22 @@ class Result(db.Model):
 
 class Log(db.Model):
     __tablename__ = "logs"
-    login_key = db.Column(db.Integer, primary_key=True)
+    log_id = db.Column(db.Integer, primary_key=True)
+    login_key = db.Column(db.Integer, unique=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
 
     def to_dict(self):
-        data = {"login_key": self.login_key, "date": self.date, "user_id": self.user_id}
+        data = {
+            "log_id": self.log_id,
+            "login_key": self.login_key,
+            "date": self.date,
+            "user_id": self.user_id,
+        }
         return data
 
     def __repr__(self):
         return (
-            f"[Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
+            f"[Log ID: {self.log_id}, Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
         )

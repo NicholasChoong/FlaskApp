@@ -14,7 +14,7 @@ def load_user(id):
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
-    user_id = db.Column(db.String(8), primary_key=True)
+    user_id = db.Column(db.String(128), primary_key=True)
     first_name = db.Column(db.String(64))
     surname = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
@@ -79,8 +79,8 @@ class User(UserMixin, db.Model):
     def from_dict(self, data):
         if "prefered_name" in data:
             self.prefered_name = data["prefered_name"]
-        if "pin" in data:
-            self.set_password(data["pin"])
+        if "password" in data:
+            self.set_password(data["password"])
 
     def __repr__(self):
         return (
@@ -91,10 +91,11 @@ class User(UserMixin, db.Model):
         return self.first_name + " " + self.surname
 
 
-class Assessment(db.Model):
-    __tablename__ = "assessments"
-    assessment_id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(256))
+class Result(db.Model):
+    __tablename__ = "results"
+    result_id = db.Column(db.Integer, primary_key=True)
+    marks = db.Column(db.Intger)
+    correct_question = db.Column(db.String(256))
 
     """returns a list of questions"""
 

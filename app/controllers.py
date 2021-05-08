@@ -2,21 +2,21 @@ from flask import render_template, flash, redirect, url_for
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm, RegistrationForm, ProjectForm
-from app.models import User, Assessment, Log
+from app.models import User, Result, Log
 from flask import request
 from werkzeug.urls import url_parse
 from datetime import datetime
 
 
-class StudentController:
+class UserController:
     def login():
         form = LoginForm()
         if form.validate_on_submit():  # will return false for a get request
-            student = Student.query.filter_by(id=form.student_number.data).first()
-            if student is None or not student.check_password(form.pin.data):
-                flash("invalid username or data")
+            user = User.query.filter_by(id=form.username.data).first()
+            if user is None or not user.check_password(form.password.data):
+                flash("invalid username or password")
                 return redirect(url_for("login"))
-            login_user(student, remember=form.remember_me.data)
+            login_user(user, remember=form.remember_me.data)
             next_page = request.args.get("next")
             if not next_page or url_parse(next_page).netloc != "":
                 next_page = "index"
@@ -30,30 +30,28 @@ class StudentController:
     def register():
         form = RegistrationForm()  # ??include current user data by default
         if form.validate_on_submit():  # will return false for a GET request
-            student = Student.query.filter_by(id=form.student_number.data).first()
-            if student is None:
-                flash("Unrecognized student number")
+            user = User.query.filter_by(id=form.username.data).first()
+            if user is None:
+                flash("Username is unknown")
                 return redirect(url_for("index"))
             if current_user.is_authenticated:
-                if not student.check_password(form.pin.data):
-                    flash("Incorrect pin")
+                if not user.check_password(form.password.data):
+                    flash("Incorrect password")
                     return redirect(url_for("index"))
-            elif student.password_hash is not None:
-                flash("Student already registered. Login to edit details")
+            elif user.password_hash is not None:
+                flash("User registered")
                 return redirect(url_for("index"))
-            student.set_password(form.new_pin.data)
-            student.prefered_name = form.prefered_name.data
-            student.assign_me = form.assign_me.data
+            user.set_password(form.new_password.data)
             db.session.commit()
-            login_user(student, remember=False)
+            login_user(user, remember=False)
             return redirect(url_for("index"))
         return render_template("register.html", title="Register", form=form)
 
 
-class ProjectController:
-    def project_list():
-        projects = ProjectController.get_all_projects()
-        return render_template("index.html", projects=projects)
+class ResultController:
+    def project_list(self):
+        results = ResultController.get_all_results()
+        return render_template("index.html", results=results)
 
     def new_project():
         if not current_user.project_id == None:
@@ -161,10 +159,10 @@ class ProjectController:
 
     """returns list of registered projects as a list of dictionaries, with elements "project", "team" and "lab". Used by index to display project list."""
 
-    def get_all_projects():
-        project_list = Project.query.all()
-        projects = []
-        for p in project_list:
+    def get_all_results():
+        result_list = Result.query.all()
+        results = []
+        for result in result_list:
             team_str = ProjectController.get_team_string(p.get_team())
             l = Lab.query.filter_by(lab_id=p.lab_id).first()
             dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
@@ -196,3 +194,8 @@ class ProjectController:
             dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
             choices.append((str(l.lab_id), dt.strftime("%A %d %b, %H:%M")))
         return choices
+
+
+class LogController:
+    def get_all_logs():
+        pass

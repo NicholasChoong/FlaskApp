@@ -1,10 +1,24 @@
+from flask import Flask
+
+# from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_login import LoginManager
 import base64
-from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from flask import url_for
 from datetime import datetime, timedelta
 import os
+from flask import url_for
+
+app = Flask(__name__)
+# app.config.from_object(Config)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.db")
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+login = LoginManager(app)
+login.login_view = "login"
 
 
 @login.user_loader
@@ -147,3 +161,24 @@ class Log(db.Model):
         return (
             f"[Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
         )
+
+
+admin = User(
+    user_id="admin",
+    first_name="Jojn",
+    surname="jej",
+    password_hash="awad",
+    isAdmin=True,
+    token="awd",
+)
+
+res = Result( marks=8, correct_questions="1111001111", user_id="admin")
+
+lg = Log( user_id="admin")
+
+
+db.create_all()
+db.session.add(admin)
+db.session.add(res)
+db.session.add(lg)
+db.session.commit()

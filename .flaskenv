@@ -1,1 +1,1 @@
-FLASK_APP=pair-up.py
+FLASK_APP=test/app.py

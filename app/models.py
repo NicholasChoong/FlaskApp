@@ -88,7 +88,7 @@ class User(UserMixin, db.Model):
             self.set_password(data["password_hash"])
 
     def __repr__(self):
-        return f"[User ID: {self.user_id}, Name: {self.__str__()}, is Admin: {self.isAdmin}]"
+        return f"[User ID: {self.user_id}, Name: {self.__str__()}, Admin: {self.isAdmin}]"
 
     def __str__(self):
         return self.first_name + " " + self.surname

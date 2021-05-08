@@ -102,7 +102,9 @@ class User(UserMixin, db.Model):
             self.set_password(data["password_hash"])
 
     def __repr__(self):
-        return f"[User ID: {self.user_id}, Name: {self.__str__()}, is Admin: {self.isAdmin}]"
+        return (
+            f"[User ID: {self.user_id}, Name: {self.__str__()}, Admin: {self.isAdmin}]"
+        )
 
     def __str__(self):
         return self.first_name + " " + self.surname
@@ -123,7 +125,7 @@ class Result(db.Model):
             "marks": self.marks,
             "date": self.date,
             "user_id": self.user_id,
-            "user_name": str(User.query.get(self.lab_id)),
+            "user_name": str(User.query.get(self.user_id).__str__()),
         }
         return data
 
@@ -140,7 +142,7 @@ class Result(db.Model):
             self.question = data["user_id"]
 
     def __repr__(self):
-        return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}]"
+        return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}, Name: {str(User.query.get(self.user_id).__str__())}]"
 
     def __str__(self):
         return f"Result {self.result_id}: {self.marks}"
@@ -148,19 +150,23 @@ class Result(db.Model):
 
 class Log(db.Model):
     __tablename__ = "logs"
-    login_key = db.Column(db.Integer, primary_key=True)
+    log_id = db.Column(db.Integer, primary_key=True)
+    login_key = db.Column(db.Integer, unique=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
 
     def to_dict(self):
-        data = {"login_key": self.login_key, "date": self.date, "user_id": self.user_id}
+        data = {
+            "log_id": self.log_id,
+            "login_key": self.login_key,
+            "date": self.date,
+            "user_id": self.user_id,
+        }
         return data
 
     def __repr__(self):
-        return (
-            f"[Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
-        )
+        return f"[Log ID: {self.log_id}, Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
 
 
 admin = User(
@@ -172,10 +178,9 @@ admin = User(
     token="awd",
 )
 
-res = Result( marks=8, correct_questions="1111001111", user_id="admin")
+res = Result(marks=8, correct_questions="1111001111", user_id="admin")
 
-lg = Log( user_id="admin")
-
+lg = Log(login_key="12313", user_id="admin")
 
 db.create_all()
 db.session.add(admin)

@@ -5,14 +5,28 @@ from app.models import User, Assessment, Log
 
 """class to hold elements and validators for login form"""
 
+MSG = "must be between 8-16 characters and no special characters"
+
 
 class LoginForm(FlaskForm):
-    student_number = StringField(
-        "Student Number",
-        validators=[DataRequired(), regexp("^\d{8}$", message="must by 8 digits")],
+    username = StringField(
+        "Username",
+        validators=[
+            DataRequired(),
+            regexp(
+                "^\w{8,16}$",
+                message=MSG,
+            ),
+        ],
     )
-    pin = PasswordField(
-        "Pin Code", validators=[regexp("^\d{4}$", message="must be 4 digits")]
+    password = PasswordField(
+        "Password",
+        validators=[
+            regexp(
+                "^\w{8-16}$",
+                message=MSG,
+            )
+        ],
     )
     remember_me = BooleanField("Remember Me")
     submit = SubmitField("Sign In")
@@ -22,45 +36,20 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    student_number = StringField(
-        "Student Number",
-        validators=[DataRequired(), regexp("^\d{8}$", message="must be 8 digits")],
+    username = StringField(
+        "Username",
+        validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)],
     )
-    prefered_name = StringField("Prefered Name", validators=[])
-    assign_me = BooleanField("Assign me to a group, please.", validators=[])
-    pin = PasswordField(
-        "Current Pin",
-        validators=[regexp("^\d{4}$", message="must be four digits")],
+    password = PasswordField(
+        "Current Password",
+        validators=[regexp("^\w{8,16}$", message=MSG)],
         default="0000",
     )
-    new_pin = PasswordField(
-        "New Pin", validators=[regexp("^\d{4}$", message="must be four digits")]
+    new_password = PasswordField(
+        "New Password", validators=[regexp("^\w{8,16}$", message=MSG)]
     )
-    new_pin2 = PasswordField("Confirm Pin", validators=[EqualTo("new_pin")])
+    repeat_new_password = PasswordField(
+        "Confirm Password",
+        validators=[EqualTo("new_password", message="Passwords must match")],
+    )
     submit = SubmitField("Sign up")
-
-
-"""Class to hold form elements for project registration and editting"""
-
-
-class ProjectForm(FlaskForm):
-    partner1_number = StringField(
-        "Partner 1 Student Number",
-        validators=[DataRequired(), regexp("^\d{8}$")],
-        default="00000000",
-    )
-    partner2_number = StringField(
-        "Partner 2 Student Number",
-        validators=[DataRequired(), regexp("^\d{8}$")],
-        default="00000000",
-    )
-    partner3_number = StringField(
-        "Partner 3 Student Number",
-        validators=[DataRequired(), regexp("^\d{8}$")],
-        default="00000000",
-    )
-    project_description = StringField(
-        "Project Description", validators=[DataRequired()]
-    )
-    lab = SelectField("Demonstration Laboratory", choices=[])
-    submit = SubmitField("Register project")

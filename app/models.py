@@ -23,8 +23,6 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
-    result = db.relationship("Assessment", backref="user", lazy="dynamic")
-
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -101,7 +99,7 @@ class Result(db.Model):
 
     def to_dict(self):
         data = {
-            "assessment_id": self.assessment_id,
+            "result_id": self.assessment_id,
             "question": self.question,
         }
         return data

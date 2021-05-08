@@ -93,7 +93,10 @@ class Result(db.Model):
     __tablename__ = "results"
     result_id = db.Column(db.Integer, primary_key=True)
     marks = db.Column(db.Intger)
-    correct_question = db.Column(db.String(256))
+    correct_question = db.Column(db.String(256))  # A string of booleans
+    time = db.Column(db.String(64))  # date and time
+
+    user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
 
     """returns a list of questions"""
 
@@ -118,7 +121,7 @@ class Result(db.Model):
 class Log(db.Model):
     __tablename__ = "logs"
     login_key = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(8), db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
     time = db.Column(db.String(64))  # date and time
 
     def __repr__(self):

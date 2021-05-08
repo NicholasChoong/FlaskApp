@@ -5,57 +5,57 @@ from flask import jsonify, url_for, request, g, abort
 from app.api.auth import token_auth
 
 
-@app.route("/api/students/<id>", methods=["GET"])
+@app.route("/api/users/<user_id>", methods=["GET"])
 @token_auth.login_required
-def get_student(id):
+def get_user(id):
     print(g.current_user)
     if g.current_user.id != id:
         abort(403)
-    return jsonify(Student.query.get_or_404(id).to_dict())
+    return jsonify(User.query.get_or_404(id).to_dict())
 
 
-@app.route("/api/students", methods=["POST"])
-def register_student():
+@app.route("/api/users", methods=["POST"])
+def register_user():
     data = request.get_json() or {}
-    if "id" not in data or "pin" not in data:
-        return bad_request("Must include student number and pin")
-    student = Student.query.get(data["id"])
-    if student is None:
-        return bad_request("Unknown student")
-    if student.password_hash is not None:
-        return bad_request("Student already registered")
-    student.from_dict(data)
+    if "user_id" not in data or "password_hash" not in data:
+        return bad_request("Must include username and password")
+    user = User.query.get(data["id"])
+    if user is None:
+        return bad_request("Unknown user")
+    if user.password_hash is not None:
+        return bad_request("User already registered")
+    user.from_dict(data)
     db.session.commit()
     response = jsonify(user.to_dict())
     response.status_code = 201  # creating a new resource should chare the location....
-    response.headers["Location"] = url_for("get_student", id=student.id)
+    response.headers["Location"] = url_for("get_user", id=user.user_id)
     return response
 
 
-@app.route("/api/students/<id>", methods=["PUT"])
+@app.route("/api/users/<user_id>", methods=["PUT"])
 @token_auth.login_required
-def update_student(id):
+def update_user(id):
     if g.current_user.id != id:
         abort(403)
     data = request.get_json() or {}
-    student = Student.query.get(id)
-    if student is None:
-        return bad_request("Unknown student")
-    if student.password_hash is None:
-        return bad_request("Student not registered")
-    student.from_dict(data)
+    user = User.query.get(id)
+    if user is None:
+        return bad_request("Unknown user")
+    if user.password_hash is None:
+        return bad_request("User not registered")
+    user.from_dict(data)
     db.session.commit()
-    return jsonify(student.to_dict())
+    return jsonify(user.to_dict())
 
 
-@app.route("/api/students/<id>/project", methods=["GET"])
+@app.route("/api/users/<user_id>/results", methods=["GET"])
 @token_auth.login_required
-def get_student_project(id):
+def get_user_results(id):
     if g.current_user.id != id:
         abort(403)
-    student = Student.query.get(id)
-    if student is None:
-        return error_response(404, "Student not found.")
+    user = User.query.get(id)
+    if user is None:
+        return error_response(404, "User not found.")
     if student.project_id is None:
         return error_response(404, "Student has no project")
     project = Project.query.get(student.project_id)

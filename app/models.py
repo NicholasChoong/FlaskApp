@@ -88,7 +88,7 @@ class User(UserMixin, db.Model):
             self.set_password(data["password_hash"])
 
     def __repr__(self):
-        return f"[User ID: {self.user_id}, Name: {self.__str__()}, Admin: {self.isAdmin}]"
+        return f"[user_id: {self.user_id}, name: {self.__str__()}, isAdmin: {self.isAdmin}]"
 
     def __str__(self):
         return self.first_name + " " + self.surname
@@ -115,21 +115,21 @@ class Result(db.Model):
 
     def from_dict(self, data):
         if "result_id" in data:
-            self.question = data["result_id"]
+            self.result_id = data["result_id"]
         if "marks" in data:
-            self.question = data["marks"]
+            self.marks = data["marks"]
         if "correct_questions" in data:
-            self.question = data["correct_questions"]
+            self.correct_questions = data["correct_questions"]
         if "date" in data:
-            self.question = data["date"]
+            self.date = data["date"]
         if "user_id" in data:
-            self.question = data["user_id"]
+            self.user_id = data["user_id"]
 
     def __repr__(self):
-        return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}, Name: {User.query.get(self.user_id).__str__()}]"
+        return f"[result_id: {self.result_id}, marks: {self.marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
 
     def __str__(self):
-        return f"Result {self.result_id}: {self.marks}"
+        return f"result {self.result_id}: {self.marks}"
 
 
 class Log(db.Model):
@@ -150,6 +150,4 @@ class Log(db.Model):
         return data
 
     def __repr__(self):
-        return (
-            f"[Log ID: {self.log_id}, Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
-        )
+        return f"[log_id: {self.log_id}, login_key: {self.login_key}, user_id: {self.user_id}, date: {self.date}]"

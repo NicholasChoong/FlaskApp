@@ -1,25 +1,24 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{ title }}</title>
-        <!-- Latest compiled and minified Bootstrap CSS -->
-        <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-        />
         <!-- jQuery library -->
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"
         ></script>
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <!--link rel="stylesheet" media="screen" href="static/bootstrap.min.css">
-      <link rel="stylesheet" href="static/bootstrap-theme.min.css">
-      <script src="static/bootstrap.min.js"></script-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="./css/main.css" />
+        <script defer src="./js/main.js"></script>
+        <style></style>
     </head>
-
     <body>
         <div class="container">
             <div class="col-sm-4">
@@ -31,21 +30,12 @@
                 <a href='{{ url_for("login") }}'>Login</a><br />
                 <a href='{{ url_for("register") }}'>Register</a>
             </div>
-            {% else %} {% if current_user.project_id == None %}
-            <div class="col-sm-4 text-center">
-                <a href='{{ url_for("new_project") }}'>Enter Project details</a>
-            </div>
-            {% else %}
-            <div class="col-sm-4 text-center">
-                <a href='{{ url_for("edit_project") }}'>Edit Project details</a>
-            </div>
-            {% endif %}
             <div class="col-sm-4 text-right">
                 <a href='{{ url_for("register") }}'
-                    >Update {{ current_user.prefered_name }}</a
+                    >Update {{ current_user.surname }}</a
                 ><br />
                 <a href='{{ url_for("logout") }}'
-                    >Logout {{ current_user.prefered_name }}</a
+                    >Logout {{ current_user.surname }}</a
                 >
             </div>
             {%endif %}
@@ -59,39 +49,7 @@
         </ul>
         {% endif %} {% endwith %}
         <div class="container">
-            <h1>
-                Group Up!
-                <h1>
-                    <h3>
-                        CITS3403 group allocation tool, and flask sample
-                        project.
-                    </h3>
-
-                    {% block content%} {% endblock %}
-                    <!-- </div> -->
-                    <!-- Footer -->
-                    <footer class="page-footer font-small blue pt-4">
-                        <!-- Copyright -->
-                        <div class="footer-copyright text-center py-3">
-                            Written by Tim, 2019, for
-                            <a
-                                href="http://teaching.csse.uwa.edu.au/units/CITS3403/index.php?fname=projects&project=yes"
-                            >
-                                CITS3403 Agile Web Development Project</a
-                            >
-                            Source available on
-                            <a href="https://github.com/drtnf/cits3403-pair-up"
-                                >github</a
-                            >.
-                        </div>
-                        <!-- Copyright -->
-                    </footer>
-                    <!-- Footer -->
-
-                    <!-- </body> -->
-                    <!-- </html> -->
-                </h1>
-            </h1>
+            <h1>PC Wiki</h1>
         </div>
     </body>
 </html>

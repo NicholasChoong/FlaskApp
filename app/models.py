@@ -77,13 +77,13 @@ class User(UserMixin, db.Model):
 
     def from_dict(self, data):
         if "user_id" in data:
-            self.user_name = data["user_id"]
+            self.user_id = data["user_id"]
         if "first_name" in data:
-            self.user_name = data["first_name"]
+            self.first_name = data["first_name"]
         if "surname" in data:
-            self.user_name = data["surname"]
+            self.surname = data["surname"]
         if "isAdmin" in data:
-            self.user_name = data["isAdmin"]
+            self.isAdmin = data["isAdmin"]
         if "password_hash" in data:
             self.set_password(data["password_hash"])
 

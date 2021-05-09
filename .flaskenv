@@ -1,1 +1,1 @@
-FLASK_APP=test/app.py
+FLASK_APP=pc_wiki.py

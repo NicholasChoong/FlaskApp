@@ -131,15 +131,15 @@ class Result(db.Model):
 
     def from_dict(self, data):
         if "result_id" in data:
-            self.question = data["result_id"]
+            self.result_id = data["result_id"]
         if "marks" in data:
-            self.question = data["marks"]
+            self.marks = data["marks"]
         if "correct_questions" in data:
-            self.question = data["correct_questions"]
+            self.correct_questions = data["correct_questions"]
         if "date" in data:
-            self.question = data["date"]
+            self.date = data["date"]
         if "user_id" in data:
-            self.question = data["user_id"]
+            self.user_id = data["user_id"]
 
     def __repr__(self):
         return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}, Name: {str(User.query.get(self.user_id).__str__())}]"
@@ -185,5 +185,6 @@ lg = Log(login_key="12313", user_id="admin")
 db.create_all()
 db.session.add(admin)
 db.session.add(res)
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
 db.session.add(lg)
 db.session.commit()

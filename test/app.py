@@ -186,5 +186,20 @@ db.create_all()
 db.session.add(admin)
 db.session.add(res)
 db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
 db.session.add(lg)
 db.session.commit()
+
+
+from app import *
+
+User.query.all()
+Result.query.all()
+Result.query.filter_by(user_id=id)
+Result.query.filter_by(user_id="admin").all()
+Result.query.filter_by(user_id="admin").all()[-1]
+Result.query.filter_by(user_id="admin")[-1]
+Log.query.all()

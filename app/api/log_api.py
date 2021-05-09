@@ -1,11 +1,13 @@
 from app import app, db
 from app.models import User, Result, Log
 from app.api.errors import bad_request, error_response
-from flask import jsonify, url_for, request
+from flask import jsonify, url_for, request, redirect
 
 
 @app.route("/api/logs/", methods=["GET"])
-def list_logs():
+def list_logs(id):
+    if not User.query.get(id).isAdmin:
+        return redirect(url_for("index"))
     print("getting logs")
     logList = Log.query.all()
     logs = []

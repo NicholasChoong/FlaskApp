@@ -54,113 +54,77 @@ def get_user_results(id):
     if g.current_user.id != id:
         abort(403)
     user = User.query.get(id)
+    results = Result.query.filter_by(user_id=id)
     if user is None:
         return error_response(404, "User not found.")
-    if student.project_id is None:
-        return error_response(404, "Student has no project")
-    project = Project.query.get(student.project_id)
-    t = project.get_team()
-    if len(t) == 2:
-        team = t[0].prefered_name + " & " + t[1].prefered_name
-    else:
-        team = t[0].prefered_name
-    data = project.to_dict()
-    data["team"] = team
+    if results is None:
+        return error_response(404, "User has not done any assessments.")
+    # User.query.filter_by(user_id=log.user_id).first()
+    data = {}
+    for result in results:
+        result_dict = result.to_dict()
+        result_dict["user_name"] = User.query.get(result.user_id).__str__()
+        data[f"{result.result_id}"] = result_dict
     return jsonify(data)
 
 
-@app.route("/api/students/<id>/project", methods=["POST"])
+number_of_questions = 10
+
+
+@app.route("/api/users/<user_id>/results", methods=["POST"])
 @token_auth.login_required
-def new_student_project(id):
+def new_result(id):
     if g.current_user.id != id:
         abort(403)
     data = request.get_json() or {}
-    if "description" not in data or "lab_id" not in data:
-        return bad_request("Must include description and lab_id")
-    student = Student.query.get(id)
-    if student is None:
-        return bad_request("Unknown student, or wrong id")
-    if student.project_id is not None:
-        return bad_request("Student already committed")
-    partner = None
-    if "partner" in data:
-        partner = Student.query.get(data["partner"])
-        if partner is None:
-            return bad_request("Unknown partner")
-        if partner.project_id is not None:
-            return bad_request("Partner already committed")
-    if partner is None and student.cits3403:
-        return bad_request("CITS3403 students require a partner")
-    lab = Lab.query.get(data["lab_id"])
-    if lab is None or not lab.is_available():
-        return bad_request("Lab not available")
-    # all good, create project
-    project = Project()
-    project.description = description
-    project.lab_id = lab.lab_id
-    db.session.add(project)
+    if "marks" not in data or "result_id" not in data:
+        return bad_request("Must include marks and result_id")
+    user = User.query.get(id)
+    if user is None:
+        return bad_request("Unknown user, or wrong id")
+    result = Result()
+    result.marks = -1
+    result.correct_questions = "0" * number_of_questions
+    db.session.add(result)
     db.session.flush()  # generates pk for new project
-    student.project_id = project.project_id
-    if partner is not None:
-        partner.project_id = project.project_id
     db.session.commit()
-    response = jsonify(project.to_dict())
+    response = jsonify(result.to_dict())
     response.status_code = 201  # creating a new resource should chare the location....
-    response.headers["Location"] = url_for("new_student_project", id=student.id)
+    response.headers["Location"] = url_for("new_user_results", id=user.id)
     return response
 
 
-@app.route("/api/students/<id>/project", methods=["PUT"])
+@app.route("/api/users/<user_id>/results", methods=["PUT"])
 @token_auth.login_required
-def update_student_project(id):
+def update_user_result(id):
     if g.current_user.id != id:
         abort(403)
     print(request.data)
     data = request.get_json() or {}
     print(data)
-    if "description" not in data or "lab_id" not in data:
-        return bad_request("Must include description and lab_id")
-    student = Student.query.get(id)
-    if student is None:
-        return bad_request("Unknown student")
-    if student.project_id is None:
-        return bad_request("Student has no project")
-    project = Project.query.get(student.project_id)
-    team = project.get_team()
-    if not team[0].id == g.current_user.id:
-        partner = team[0]
-    elif len(team) > 1:
-        partner = team[1]
-    else:
-        partner = None
-    lab = Lab.query.get(data["lab_id"])
-    if lab is None or (not lab.is_available() and lab.lab_id != project.lab_id):
-        return bad_request("Lab not available")
-    # all good, create project
-    project.description = data["description"]
-    project.lab_id = lab.lab_id
-    student.project_id = project.project_id
-    if partner is not None:
-        partner.project_id = project.project_id
+    if "marks" not in data or "result_id" not in data:
+        return bad_request("Must include marks and result_id")
+    user = User.query.get(id)
+    if user is None:
+        return bad_request("Unknown user, or wrong id")
+    result = Result.query.filter_by(user_id=id)[-1]
+    result.marks = data["marks"]
+    result.correct_questions = data["correct_questions"]
     db.session.commit()
-    return jsonify(project.to_dict())
+    return jsonify(result.to_dict())
 
 
-@app.route("/api/students/<id>/project", methods=["DELETE"])
+@app.route("/api/users/<user_id>/results", methods=["DELETE"])
 @token_auth.login_required
-def delete_student_project(id):
+def delete_user_results(id):
     if g.current_user.id != id:
         abort(403)
-    student = Student.query.get(id)
-    if student is None:
-        return bad_request("Unknown student, or wrong number")
-    if student.project_id is None:
-        return bad_request("Student does not have a project")
-    project = Project.query.get(student.project_id)
-    if project is None:
-        return bad_request("Project not found")
-    for s in project.get_team():
-        s.project_id = None
-    db.session.delete(project)
+    user = User.query.get(id)
+    if user is None:
+        return bad_request("Unknown user, or wrong id")
+    result = Result.query.filter_by(user_id=id)
+    if result is None:
+        return bad_request("Result not found")
+    db.session.delete(result)
     db.session.commit()
-    return jsonify(project.to_dict())
+    return jsonify(result.to_dict())

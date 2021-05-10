@@ -12,7 +12,7 @@ class UserController:
     def login():
         form = LoginForm()
         if form.validate_on_submit():  # will return false for a get request
-            user = User.query.filter_by(id=form.username.data).first()
+            user = User.query.get(form.username.data)
             if user is None or not user.check_password(form.password.data):
                 flash("invalid username or password")
                 return redirect(url_for("login"))
@@ -30,7 +30,7 @@ class UserController:
     def register():
         form = RegistrationForm()  # ??include current user data by default
         if form.validate_on_submit():  # will return false for a GET request
-            user = User.query.filter_by(id=form.username.data).first()
+            user = User.query.get(form.username.data)
             if user is None:
                 flash("Username is unknown")
                 return redirect(url_for("index"))

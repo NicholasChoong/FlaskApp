@@ -42,6 +42,8 @@ class UserController:
                 flash("User registered")
                 return redirect(url_for("index"))
             user.set_password(form.new_password.data)
+            user.first_name = form.first_name.data
+            user.surname = form.surname.data
             db.session.commit()
             login_user(user, remember=False)
             return redirect(url_for("index"))

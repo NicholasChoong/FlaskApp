@@ -40,10 +40,10 @@ class RegistrationForm(FlaskForm):
         "Username",
         validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)],
     )
+    first_name = StringField("First name", validators=[])
+    surname = StringField("Surname", validators=[])
     password = PasswordField(
-        "Current Password",
-        validators=[regexp("^\w{8,16}$", message=MSG)],
-        default="0000",
+        "Current Password", validators=[regexp("^\w{8,16}$", message=MSG)]
     )
     new_password = PasswordField(
         "New Password", validators=[regexp("^\w{8,16}$", message=MSG)]

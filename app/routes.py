@@ -14,9 +14,9 @@ def favicon():
 @app.route("/")
 @app.route("/index")
 def index():
-    if not current_user.is_authenticated:
-        return render_template("index.html", projects=[])
-    return ProjectController.project_list()
+    # if not current_user.is_authenticated:
+    #     return render_template("index.html", projects=[])
+    return render_template("index.html", title="PC Wiki")
 
 
 @app.route("/login", methods=["GET", "POST"])

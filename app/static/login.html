@@ -57,7 +57,7 @@
       </nav>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade active show" id="nav-signin" role="tabpanel" aria-labelledby="nav-signin-tab">
-          <form>
+          <form id="signin-form">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
         
             <div class="form-floating">
@@ -75,12 +75,12 @@
               </label>
             </div>
             <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+          </form>
         </div>
         <div class="tab-pane fade" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
-          <form class="was-validated">
-            <div class="invalid-feedback">Ensure passwords match</div>
+          <form id="signup-form" class="needs-validation">
             <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
-        
+            
             <div class="form-floating">
               <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
               <label for="floatingInput">Email address</label>
@@ -96,6 +96,7 @@
             <div class="form-floating">
               <input type="password" class="form-control" placeholder="Password" id="signupPass2">
               <label for="floatingPassword">Password Confirm</label>
+              <div class="invalid-feedback">Ensure passwords match</div>
             </div>
             
         
@@ -105,6 +106,7 @@
               </label>
             </div>
             <button class="btn btn-lg btn-primary" type="submit" id="signUpButton">Sign Up</button>
+          </form>
         </div>
       </div>
       </div>

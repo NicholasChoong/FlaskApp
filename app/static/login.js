@@ -1,4 +1,4 @@
-document.getElementById('signupPass2').addEventListener('change', (event) => {
+document.getElementById('signupPass2').addEventListener('input', (event) => {
     const passw = document.getElementById('signupPass1').value;
     if(passw != event.target.value){
       event.target.classList.add('is-invalid');

@@ -7,11 +7,11 @@ from app.api.auth import token_auth
 
 @app.route("/api/users/<user_id>", methods=["GET"])
 @token_auth.login_required
-def get_user(id):
+def get_user(user_id):
     print(g.current_user)
-    if g.current_user.id != id:
+    if g.current_user.id != user_id:
         abort(403)
-    return jsonify(User.query.get_or_404(id).to_dict())
+    return jsonify(User.query.get_or_404(user_id).to_dict())
 
 
 @app.route("/api/users", methods=["POST"])
@@ -19,7 +19,7 @@ def register_user():
     data = request.get_json() or {}
     if "user_id" not in data or "password_hash" not in data:
         return bad_request("Must include username and password")
-    user = User.query.get(data["id"])
+    user = User.query.get(data["user_id"])
     if user is None:
         return bad_request("Unknown user")
     if user.password_hash is not None:
@@ -34,11 +34,11 @@ def register_user():
 
 @app.route("/api/users/<user_id>", methods=["PUT"])
 @token_auth.login_required
-def update_user(id):
-    if g.current_user.id != id:
+def update_user(user_id):
+    if g.current_user.id != user_id:
         abort(403)
     data = request.get_json() or {}
-    user = User.query.get(id)
+    user = User.query.get(user_id)
     if user is None:
         return bad_request("Unknown user")
     if user.password_hash is None:
@@ -50,11 +50,11 @@ def update_user(id):
 
 @app.route("/api/users/<user_id>/results", methods=["GET"])
 @token_auth.login_required
-def get_user_results(id):
-    if g.current_user.id != id:
+def get_user_results(user_id):
+    if g.current_user.id != user_id:
         abort(403)
-    user = User.query.get(id)
-    results = Result.query.filter_by(user_id=id)
+    user = User.query.get(user_id)
+    results = Result.query.filter_by(user_id=user_id)
     if user is None:
         return error_response(404, "User not found.")
     if results is None:
@@ -73,13 +73,13 @@ number_of_questions = 10
 
 @app.route("/api/users/<user_id>/results", methods=["POST"])
 @token_auth.login_required
-def new_result(id):
-    if g.current_user.id != id:
+def new_result(user_id):
+    if g.current_user.id != user_id:
         abort(403)
     data = request.get_json() or {}
     if "marks" not in data or "result_id" not in data:
         return bad_request("Must include marks and result_id")
-    user = User.query.get(id)
+    user = User.query.get(user_id)
     if user is None:
         return bad_request("Unknown user, or wrong id")
     result = Result()
@@ -96,18 +96,18 @@ def new_result(id):
 
 @app.route("/api/users/<user_id>/results", methods=["PUT"])
 @token_auth.login_required
-def update_user_result(id):
-    if g.current_user.id != id:
+def update_user_result(user_id):
+    if g.current_user.id != user_id:
         abort(403)
     print(request.data)
     data = request.get_json() or {}
     print(data)
     if "marks" not in data or "result_id" not in data:
         return bad_request("Must include marks and result_id")
-    user = User.query.get(id)
+    user = User.query.get(user_id)
     if user is None:
         return bad_request("Unknown user, or wrong id")
-    result = Result.query.filter_by(user_id=id)[-1]
+    result = Result.query.filter_by(user_id=user_id)[-1]
     result.marks = data["marks"]
     result.correct_questions = data["correct_questions"]
     db.session.commit()
@@ -116,13 +116,13 @@ def update_user_result(id):
 
 @app.route("/api/users/<user_id>/results", methods=["DELETE"])
 @token_auth.login_required
-def delete_user_results(id):
-    if g.current_user.id != id:
+def delete_user_results(user_id):
+    if g.current_user.id != user_id:
         abort(403)
-    user = User.query.get(id)
+    user = User.query.get(user_id)
     if user is None:
         return bad_request("Unknown user, or wrong id")
-    result = Result.query.filter_by(user_id=id)
+    result = Result.query.filter_by(user_id=user_id)
     if result is None:
         return bad_request("Result not found")
     db.session.delete(result)

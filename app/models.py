@@ -71,7 +71,6 @@ class User(UserMixin, db.Model):
             "first_name": self.first_name,
             "surname": self.surname,
             "isAdmin": self.isAdmin,
-            "_links": {"Reslts": url_for("get_user_results", id=self.user_id)},
         }
         return data
 

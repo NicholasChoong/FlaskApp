@@ -170,12 +170,12 @@ class Log(db.Model):
 
 
 admin = User(
-    user_id="admin",
+    user_id="admin1234",
     first_name="Jojn",
     surname="jej",
-    password_hash="awad",
+    password_hash="admin1234",
     isAdmin=True,
-    token="awd",
+    token="awdwds",
 )
 
 res = Result(marks=8, correct_questions="1111001111", user_id="admin")
@@ -190,6 +190,16 @@ db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
 db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
 db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
 db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
+db.session.add(
+    User(
+        user_id="guest1234",
+        first_name="John",
+        surname="Doe",
+        password_hash="guest1234",
+        isAdmin=False,
+        token="trthre",
+    )
+)
 db.session.add(lg)
 db.session.commit()
 

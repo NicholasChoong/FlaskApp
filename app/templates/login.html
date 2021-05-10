@@ -5,15 +5,14 @@
     <div class="form-group">
         {{form.hidden_tag()}}
         <p>
-            {{ form.student_number.label }}<br />
-            {{ form.student_number(size=8) }} {% for error in
-            form.student_number.errors %}
+            {{ form.username.label }}<br />
+            {{ form.username(size=16) }} {% for error in form.username.errors %}
             <span style="color: red">[{{ error}}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.pin.label }}<br />
-            {{ form.pin(size=4) }} {% for error in form.pin.errors %}
+            {{ form.password.label }}<br />
+            {{ form.password(size=16) }} {% for error in form.password.errors %}
             <span style="color: red">[{{ error}}]</span>
             {% endfor %}
         </p>
@@ -21,5 +20,5 @@
         <p>{{ form.submit() }}</p>
     </div>
 </form>
-<p>To register <a href="{{" url_for('register') }}>click here</a></p>
+<p>To register <a href="{{ url_for('register') }}">click here</a></p>
 {% endblock %}

@@ -15,8 +15,8 @@
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
         />
-        <link rel="stylesheet" href="./css/main.css" />
-        <script defer src="./js/main.js"></script>
+        <!-- <link rel="stylesheet" href="./css/main.css" />
+        <script defer src="./js/main.js"></script> -->
         <style></style>
     </head>
     <body>
@@ -31,9 +31,6 @@
                 <a href='{{ url_for("register") }}'>Register</a>
             </div>
             <div class="col-sm-4 text-right">
-                <a href='{{ url_for("register") }}'
-                    >Update {{ current_user.surname }}</a
-                ><br />
                 <a href='{{ url_for("logout") }}'
                     >Logout {{ current_user.surname }}</a
                 >
@@ -51,5 +48,6 @@
         <div class="container">
             <h1>PC Wiki</h1>
         </div>
+        <div>{% block content%} {% endblock %}</div>
     </body>
 </html>

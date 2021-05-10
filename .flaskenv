@@ -1,1 +1,2 @@
 FLASK_APP=pc_wiki.py
+FLASK_ENV=development

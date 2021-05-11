@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
     username = StringField(
         "Username",
         validators=[
-            DataRequired(),
+            DataRequired(), 
             regexp(
                 "^\w{8,16}$",
                 message=MSG,

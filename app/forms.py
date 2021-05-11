@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
         validators=[
             DataRequired(),
             regexp(
-                "^\w{8-16}$",
+                "^\w{8,16}$",
                 message=MSG,
             ),
         ],

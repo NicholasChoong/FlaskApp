@@ -14,7 +14,7 @@ def load_user(id):
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
-    user_id = db.Column(db.String(128), primary_key=True)
+    id = db.Column(db.String(128), primary_key=True)
     first_name = db.Column(db.String(64))
     surname = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
@@ -66,7 +66,7 @@ class User(UserMixin, db.Model):
 
     def to_dict(self):
         data = {
-            "user_id": self.user_id,
+            "id": self.id,
             "password_hash": self.password_hash,
             "first_name": self.first_name,
             "surname": self.surname,
@@ -75,8 +75,8 @@ class User(UserMixin, db.Model):
         return data
 
     def from_dict(self, data):
-        if "user_id" in data:
-            self.user_id = data["user_id"]
+        if "id" in data:
+            self.user_id = data["id"]
         if "first_name" in data:
             self.first_name = data["first_name"]
         if "surname" in data:
@@ -87,7 +87,7 @@ class User(UserMixin, db.Model):
             self.set_password(data["password_hash"])
 
     def __repr__(self):
-        return f"[user_id: {self.user_id}, name: {self.__str__()}, isAdmin: {self.isAdmin}]"
+        return f"[id: {self.id}, name: {self.__str__()}, isAdmin: {self.isAdmin}]"
 
     def __str__(self):
         return self.first_name + " " + self.surname

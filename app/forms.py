@@ -10,22 +10,16 @@ MSG = "must be between 8-16 characters and no special characters"
 
 class LoginForm(FlaskForm):
     username = StringField(
-        "Username",
-        validators=[
-            DataRequired(), 
-            regexp(
-                "^\w{8,16}$",
-                message=MSG,
-            ),
-        ],
+        "Username", validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)]
     )
     password = PasswordField(
         "Password",
         validators=[
+            DataRequired(),
             regexp(
                 "^\w{8-16}$",
                 message=MSG,
-            )
+            ),
         ],
     )
     remember_me = BooleanField("Remember Me")
@@ -37,19 +31,23 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField(
-        "Username",
-        validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)],
+        "Username", validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)]
     )
     first_name = StringField("First name", validators=[])
     surname = StringField("Surname", validators=[])
     password = PasswordField(
-        "Current Password", validators=[regexp("^\w{8,16}$", message=MSG)]
+        "Current Password",
+        validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)],
+        default="password",
     )
     new_password = PasswordField(
-        "New Password", validators=[regexp("^\w{8,16}$", message=MSG)]
+        "New Password", validators=[DataRequired(), regexp("^\w{8,16}$", message=MSG)]
     )
     repeat_new_password = PasswordField(
         "Confirm Password",
-        validators=[EqualTo("new_password", message="Passwords must match")],
+        validators=[
+            DataRequired(),
+            EqualTo("new_password", message="Passwords must match"),
+        ],
     )
     submit = SubmitField("Sign up")

@@ -1,9 +1,8 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm, RegistrationForm
 from app.models import User, Result, Log
-from flask import request
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -31,6 +30,7 @@ class UserController:
         form = RegistrationForm()  # ??include current user data by default
         if form.validate_on_submit():  # will return false for a GET request
             user = User()
+            user.id = form.username.data
             user.set_password(form.new_password.data)
             user.first_name = form.first_name.data
             user.surname = form.surname.data
@@ -41,23 +41,16 @@ class UserController:
                 if not user.check_password(form.password.data):
                     flash("Incorrect password")
                     return redirect(url_for("index"))
-            elif user.password_hash is not None:
-                flash("User registered")
-                return redirect(url_for("index"))
+            # elif user.password_hash is not None:
+            #     flash("User registered")
+            #     return redirect(url_for("index"))
+
             db.session.add(user)
             db.session.flush()
             db.session.commit()
             login_user(user, remember=False)
             return redirect(url_for("index"))
         return render_template("register.html", title="Register", form=form)
-    #     project = Project()
-    #     project.description = description
-    #     project.lab_id = lab.lab_id
-    #     db.session.add(project)
-    #     db.session.flush()  # generates pk for new project
-    #     for student in team:
-    #         student.project_id = project.project_id
-    #     db.session.commit()
 
 
 class ResultController:

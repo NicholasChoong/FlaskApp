@@ -44,7 +44,9 @@ class UserController:
             # elif user.password_hash is not None:
             #     flash("User registered")
             #     return redirect(url_for("index"))
-
+            if User.query.get(form.username.data) is not None:
+                flash("Username is already taken")
+                return render_template("register.html", title="Register", form=form)
             db.session.add(user)
             db.session.flush()
             db.session.commit()

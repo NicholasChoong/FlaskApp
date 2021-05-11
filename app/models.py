@@ -9,7 +9,7 @@ import os
 
 @login.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return User.query.get(id)
 
 
 class User(UserMixin, db.Model):
@@ -100,14 +100,14 @@ class Result(db.Model):
     correct_questions = db.Column(db.String(256))  # A string of booleans
     date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
 
-    user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
 
     def to_dict(self):
         data = {
             "result_id": self.result_id,
             "marks": self.marks,
             "date": self.date,
-            "user_id": self.user_id,
+            "user_id": self.id,
             "user_name": User.query.get(self.user_id).__str__(),
         }
         return data
@@ -137,7 +137,7 @@ class Log(db.Model):
     login_key = db.Column(db.Integer, unique=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
 
-    user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
 
     def to_dict(self):
         data = {

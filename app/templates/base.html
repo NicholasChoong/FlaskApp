@@ -30,6 +30,7 @@
                 <a href='{{ url_for("login") }}'>Login</a><br />
                 <a href='{{ url_for("register") }}'>Register</a>
             </div>
+            {% else %}
             <div class="col-sm-4 text-right">
                 <a href='{{ url_for("logout") }}'
                     >Logout {{ current_user.surname }}</a

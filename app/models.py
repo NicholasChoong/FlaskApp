@@ -23,6 +23,9 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
+    results = db.relationship("Result", backref="user", lazy="dynamic")
+    logs = db.relationship("Log", backref="user", lazy="dynamic")
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -98,9 +101,11 @@ class Result(db.Model):
     result_id = db.Column(db.Integer, primary_key=True)
     marks = db.Column(db.Integer)
     correct_questions = db.Column(db.String(256))  # A string of booleans
-    date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
+
+    answers = db.relationship("Answer", backref="result", lazy="dynamic")
 
     def to_dict(self):
         data = {
@@ -131,11 +136,18 @@ class Result(db.Model):
         return f"result {self.result_id}: {self.marks}"
 
 
+class Answer(db.Model):
+    __tablename__ = "answers"
+    answer_id = db.Column(db.Integer, primary_key=True)
+
+    result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
+
+
 class Log(db.Model):
     __tablename__ = "logs"
     log_id = db.Column(db.Integer, primary_key=True)
     login_key = db.Column(db.Integer, unique=True)
-    date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
 

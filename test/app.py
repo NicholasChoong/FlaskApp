@@ -37,6 +37,9 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
+    results = db.relationship("Result", backref="user", lazy="dynamic")
+    logs = db.relationship("Log", backref="user", lazy="dynamic")
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -119,6 +122,8 @@ class Result(db.Model):
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
 
+    answers = db.relationship("Answer", backref="result", lazy="dynamic")
+
     def to_dict(self):
         data = {
             "result_id": self.result_id,
@@ -146,6 +151,13 @@ class Result(db.Model):
 
     def __str__(self):
         return f"Result {self.result_id}: {self.marks}"
+
+
+class Answer(db.Model):
+    __tablename__ = "answers"
+    answer_id = db.Column(db.Integer, primary_key=True)
+
+    result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
 
 
 class Log(db.Model):
@@ -185,11 +197,20 @@ lg = Log(login_key="12313", user_id="admin")
 db.create_all()
 db.session.add(admin)
 db.session.add(res)
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin"))
+db.session.add(
+    User(
+        user_id="Guest12345",
+        first_name="Jojn",
+        surname="jej",
+        password_hash="admin12345",
+        isAdmin=False,
+    )
+)
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
+db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
 db.session.add(
     User(
         user_id="guest1234",
@@ -213,3 +234,9 @@ Result.query.filter_by(user_id="admin").all()
 Result.query.filter_by(user_id="admin").all()[-1]
 Result.query.filter_by(user_id="admin")[-1]
 Log.query.all()
+
+admin = User.query.get("admin1234")
+# Get results from user id
+admin.results.first()
+admin.results.all()
+admin.results.filter_by(result_id=6).all()

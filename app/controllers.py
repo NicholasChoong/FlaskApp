@@ -9,18 +9,21 @@ from datetime import datetime
 
 class UserController:
     def login():
-        form = LoginForm()
-        if form.validate_on_submit():  # will return false for a get request
-            user = User.query.get(form.username.data)
-            if user is None or not user.check_password(form.password.data):
+        lform = LoginForm()
+        rform = RegistrationForm()  # ??include current user data by default
+
+        if lform.validate_on_submit():  # will return false for a get request
+            user = User.query.get(lform.username.data)
+            if user is None or not user.check_password(lform.password.data):
                 flash("invalid username or password")
-                return redirect(url_for("login"))
-            login_user(user, remember=form.remember_me.data)
+                return render_template("login.html", title="Login", signinform=lform, signupform=rform)
+            login_user(user, remember=lform.remember_me.data)
             # next_page = request.args.get("next")
             # if not next_page or url_parse(next_page).netloc != "":
             #     next_page = "index"
             return redirect(url_for("index"))
-        return render_template("login.html", title="Sign in", form=form)
+        return render_template("login.html", title="Login", signinform=lform, signupform=rform)
+        # return redirect(url_for('static', filename='login.html'))
 
     def logout():
         logout_user()
@@ -28,6 +31,7 @@ class UserController:
 
     def register():
         form = RegistrationForm()  # ??include current user data by default
+        lform = LoginForm()
         if form.validate_on_submit():  # will return false for a GET request
             user = User()
             user.id = form.username.data
@@ -46,13 +50,13 @@ class UserController:
             #     return redirect(url_for("index"))
             if User.query.get(form.username.data) is not None:
                 flash("Username is already taken")
-                return render_template("register.html", title="Register", form=form)
+                return render_template("login.html", title="Register", signupform=form, signinform=lform)
             db.session.add(user)
             db.session.flush()
             db.session.commit()
             login_user(user, remember=False)
             return redirect(url_for("index"))
-        return render_template("register.html", title="Register", form=form)
+        return render_template("login.html", title="Register", signupform=form, signinform=lform)
 
 
 class ResultController:

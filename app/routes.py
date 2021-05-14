@@ -40,4 +40,6 @@ def register():
 def learn():
     return render_template("content.html", title="Learning")
 
-
+@app.route("/Review")
+def review():
+    return render_template("review.html", title="Review")

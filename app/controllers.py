@@ -16,13 +16,17 @@ class UserController:
             user = User.query.get(lform.username.data)
             if user is None or not user.check_password(lform.password.data):
                 flash("invalid username or password")
-                return render_template("login.html", title="Login", signinform=lform, signupform=rform)
+                return render_template(
+                    "login.html", title="Login", signinform=lform, signupform=rform
+                )
             login_user(user, remember=lform.remember_me.data)
             # next_page = request.args.get("next")
             # if not next_page or url_parse(next_page).netloc != "":
             #     next_page = "index"
             return redirect(url_for("index"))
-        return render_template("login.html", title="Login", signinform=lform, signupform=rform)
+        return render_template(
+            "login.html", title="Login", signinform=lform, signupform=rform
+        )
         # return redirect(url_for('static', filename='login.html'))
 
     def logout():
@@ -50,13 +54,17 @@ class UserController:
             #     return redirect(url_for("index"))
             if User.query.get(form.username.data) is not None:
                 flash("Username is already taken")
-                return render_template("login.html", title="Register", signupform=form, signinform=lform)
+                return render_template(
+                    "login.html", title="Register", signupform=form, signinform=lform
+                )
             db.session.add(user)
             db.session.flush()
             db.session.commit()
             login_user(user, remember=False)
             return redirect(url_for("index"))
-        return render_template("login.html", title="Register", signupform=form, signinform=lform)
+        return render_template(
+            "login.html", title="Register", signupform=form, signinform=lform
+        )
 
 
 class ResultController:
@@ -206,6 +214,14 @@ class ResultController:
     #         dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
     #         choices.append((str(l.lab_id), dt.strftime("%A %d %b, %H:%M")))
     #     return choices
+
+
+class AttemptController:
+    pass
+
+
+class QuestionController:
+    pass
 
 
 class LogController:

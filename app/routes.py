@@ -1,7 +1,13 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
-from app.controllers import UserController, ResultController, LogController
+from app.controllers import (
+    UserController,
+    ResultController,
+    LogController,
+    AttemptController,
+    QuestionController,
+)
 from flask import request
 from werkzeug.urls import url_parse
 
@@ -40,6 +46,13 @@ def register():
 def learn():
     return render_template("content.html", title="Learning")
 
-@app.route("/Review")
+
+@app.route("/review")
 def review():
     return render_template("review.html", title="Review")
+
+
+@app.route("/quiz", methods=["GET", "POST"])
+def quiz():
+    return render_template("quiz.html", title="quiz")  ##### placeholder
+    # return AttemptController.quiz()

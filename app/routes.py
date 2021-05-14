@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
-from app.controllers import UserController, ResultController, LogController
+from app.controllers import UserController, ResultController, LogController, ReviewController
 from flask import request
 from werkzeug.urls import url_parse
 
@@ -42,4 +42,4 @@ def learn():
 
 @app.route("/Review")
 def review():
-    return render_template("review.html", title="Review")
+    return ReviewController.get_User_Results()

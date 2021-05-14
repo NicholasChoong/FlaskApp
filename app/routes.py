@@ -7,7 +7,9 @@ from app.controllers import (
     LogController,
     AttemptController,
     QuestionController,
+    ReviewController,
 )
+
 from flask import request
 from werkzeug.urls import url_parse
 
@@ -49,7 +51,7 @@ def learn():
 
 @app.route("/review")
 def review():
-    return render_template("review.html", title="Review")
+    return ReviewController.get_User_Results()
 
 
 @app.route("/quiz", methods=["GET", "POST"])

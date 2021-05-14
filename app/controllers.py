@@ -214,6 +214,12 @@ class ResultController:
     #         dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
     #         choices.append((str(l.lab_id), dt.strftime("%A %d %b, %H:%M")))
     #     return choices
+class ReviewController:
+    def get_User_Results():
+        Rev = Result.query.filter_by(user_id = current_user.id).all()
+        return render_template("review.html", title="Review", Res = Rev)
+
+
 
 
 class AttemptController:

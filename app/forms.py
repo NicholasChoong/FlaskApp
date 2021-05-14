@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, regexp, EqualTo
-from app.models import User, Result, Log
+from app.models import User, Result, Log, Result, Question, Attempt
 
 """class to hold elements and validators for login form"""
 
@@ -51,3 +51,7 @@ class RegistrationForm(FlaskForm):
         ],
     )
     submit = SubmitField("Sign up")
+
+
+class QuizForm(FlaskForm):
+    pass

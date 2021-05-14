@@ -18,8 +18,8 @@
               <div class="d-flex flex-wrap align-items-center justify-content-left justify-content-lg-start">
         
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                  <li><a href='{{ url_for("index") }}' class="nav-link px-2 {% if title == 'PC Wiki'%} link-secondary {% else %} link-dark {%endif%}">Home</a></li>
-                  <li><a href="#" class="nav-link px-2 link-dark">not yet</a></li>
+                  <li><a href="{{ url_for('index') }}" class="nav-link px-2 {% if title == 'PC Wiki'%} link-secondary {% else %} link-dark {%endif%}">Home</a></li>
+                  <li><a href="{{ url_for('learn')}}" class="nav-link px-2 {% if title == 'Learning'%} link-secondary {% else %} link-dark {%endif%}">Learn</a></li>
                   <li><a href="#" class="nav-link px-2 link-dark">not yet</a></li>
                   <li><a href="#" class="nav-link px-2 link-dark">not yet</a></li>
                 </ul>

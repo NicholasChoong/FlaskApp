@@ -217,7 +217,8 @@ class ResultController:
 
 
 class AttemptController:
-    pass
+    def quiz():
+        pass
 
 
 class QuestionController:

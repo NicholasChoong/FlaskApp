@@ -139,8 +139,43 @@ class Result(db.Model):
 class Answer(db.Model):
     __tablename__ = "answers"
     answer_id = db.Column(db.Integer, primary_key=True)
+    question_1 = db.Column(db.String(256))
+    question_2 = db.Column(db.String(256))
+    question_3 = db.Column(db.String(256))
+    question_4 = db.Column(db.String(256))
+    question_5 = db.Column(db.String(256))
+    question_6 = db.Column(db.String(256))
+    question_7 = db.Column(db.String(256))
 
     result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
+
+    def to_dict(self):
+        data = {
+            "result_id": self.result_id,
+            "marks": self.marks,
+            "date": self.date,
+            "user_id": self.id,
+            "user_name": User.query.get(self.user_id).__str__(),
+        }
+        return data
+
+    def from_dict(self, data):
+        if "result_id" in data:
+            self.result_id = data["result_id"]
+        if "marks" in data:
+            self.marks = data["marks"]
+        if "correct_questions" in data:
+            self.correct_questions = data["correct_questions"]
+        if "date" in data:
+            self.date = data["date"]
+        if "user_id" in data:
+            self.user_id = data["user_id"]
+
+    def __repr__(self):
+        return f"[result_id: {self.result_id}, marks: {self.marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
+
+    def __str__(self):
+        return f"result {self.result_id}: {self.marks}"
 
 
 class Log(db.Model):

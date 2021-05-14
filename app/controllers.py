@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
-from app.forms import LoginForm, RegistrationForm
-from app.models import User, Result, Log
+from app.forms import LoginForm, RegistrationForm, QuizForm
+from app.models import User, Result, Log, Result, Question, Attempt
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -20,9 +20,9 @@ class UserController:
                     "login.html", title="Login", signinform=lform, signupform=rform
                 )
             login_user(user, remember=lform.remember_me.data)
-            # next_page = request.args.get("next")
-            # if not next_page or url_parse(next_page).netloc != "":
-            #     next_page = "index"
+            next_page = request.args.get("next")
+            if not next_page or url_parse(next_page).netloc != "":
+                next_page = "index"
             return redirect(url_for("index"))
         return render_template(
             "login.html", title="Login", signinform=lform, signupform=rform
@@ -214,16 +214,20 @@ class ResultController:
     #         dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
     #         choices.append((str(l.lab_id), dt.strftime("%A %d %b, %H:%M")))
     #     return choices
+
+
 class ReviewController:
     def get_User_Results():
-        Rev = Result.query.filter_by(user_id = current_user.id).all()
-        return render_template("review.html", title="Review", Res = Rev)
-
-
+        Rev = Result.query.filter_by(user_id=current_user.id).all()
+        return render_template("review.html", title="Review", Res=Rev)
 
 
 class AttemptController:
     def quiz():
+        form = QuizForm()
+        if form.validate_on_submit():
+            attempt = Attempt()
+            if 
         pass
 
 

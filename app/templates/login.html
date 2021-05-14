@@ -1,24 +1,78 @@
 {% extends "base.html" %} {% block content %}
-<h2>Login</h2>
 
-<form name="login" action="" method="post">
-    <div class="form-group">
-        {{form.hidden_tag()}}
-        <p>
-            {{ form.username.label }}<br />
-            {{ form.username(size=16) }} {% for error in form.username.errors %}
-            <span style="color: red">[{{ error}}]</span>
+
+
+<div class="container" style="height: 500px;">
+    <nav>
+      <div class="nav nav-tabs mb-2" id="nav-tab" role="tablist">
+        <button class="nav-link {% if title == 'Login'%} active {% endif %}" id="nav-signin-tab" data-bs-toggle="tab" data-bs-target="#nav-signin" type="button" role="tab" aria-controls="nav-signin" aria-selected="true">Sign In</button>
+        <button class="nav-link {% if title == 'Register'%} active {% endif %}" id="nav-signup-tab" data-bs-toggle="tab" data-bs-target="#nav-signup" type="button" role="tab" aria-controls="nav-signup" aria-selected="false">Sign Up</button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade {% if title == 'Login'%} active show {% endif %}" id="nav-signin" role="tabpanel" aria-labelledby="nav-signin-tab">
+        <form id="signin-form" action="/login" name="login" method="POST">
+        {{signinform.hidden_tag()}}
+          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      
+          <div class="form-floating">
+            <input name="username" type="text" class="form-control {% if signinform.username.errors %}is-invalid {% endif %}" id="floatingInput" required>
+            <label for="floatingInput">{{ signinform.username.label }}</label>
+            {% for error in signinform.username.errors %}
+            <div class="invalid-feedback">{{ error}}</div>
             {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br />
-            {{ form.password(size=16) }} {% for error in form.password.errors %}
-            <span style="color: red">[{{ error}}]</span>
+          </div>
+          <div class="form-floating">
+            <input name="password" type="password" class="form-control" id="floatingPassword">
+            <label for="floatingPassword">{{ signinform.password.label }}</label>
+          </div>
+      
+          <div class="checkbox mb-3">
+            <label>
+              <input name="Remember Me" type="checkbox" value="remember-me">{{signinform.remember_me.label}}
+            </label>
+          </div>
+          <button name="Sign In" class="btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+      </div>
+
+      <div class="tab-pane fade {% if title == 'Register'%} active show {% endif %}" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
+        <form id="signup-form" action="/register" class="needs-validation" method="POST">
+            {{ signupform.hidden_tag() }}
+            <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+
+          <div class="form-floating">
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Username">
+            <label for="floatingInput">{{ signupform.username.label }}</label>
+            {% for error in signupform.username.errors %}
+            <div class="invalid-feedback">{{ error}}</div>
+            {% endfor %}  
+          </div>
+          <div class="form-floating">
+            <input name="new_password" type="password" class="form-control" placeholder="Password" id="signupPass1">
+            <label for="floatingInput">Password</label>
+            {% for error in signupform.new_password.errors %}
+            <div class="invalid-feedback">{{ error}}</div>
             {% endfor %}
-        </p>
-        <p>{{form.remember_me() }} {{form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+          </div>
+          <div class="form-floating">
+            <input name="repeat_new_password" type="password" class="form-control" placeholder="Password" id="signupPass2">
+            <label for="floatingPassword">Password Confirm</label>
+            <div class="invalid-feedback">Ensure passwords match</div>
+            {% for error in signupform.repeat_new_password.errors %}
+            <div class="invalid-feedback">{{ error}}</div>
+            {% endfor %}
+          </div>
+          
+      
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="btn btn-lg btn-primary" type="submit" id="signUpButton">Sign Up</button>
+        </form>
+      </div>
     </div>
-</form>
-<p>To register <a href="{{ url_for('register') }}">click here</a></p>
+    </div>
 {% endblock %}

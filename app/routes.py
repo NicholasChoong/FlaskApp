@@ -36,25 +36,10 @@ def register():
     return UserController.register()
 
 
-# @app.route("/new_project", methods=["GET", "POST"])
-# @login_required
-# def new_project():
-#     if not current_user.is_authenticated:
-#         return redirect(url_for("login"))
-#     return ProjectController.new_project()
+@app.route("/learn")
+def learn():
+    return render_template("content.html", title="Learning")
 
-
-# @app.route("/edit_project", methods=["GET", "POST"])
-# @login_required
-# def edit_project():
-#     if not current_user.is_authenticated:
-#         return redirect(url_for("login"))
-#     return ProjectController.edit_project()
-
-
-# @app.route("/delete_project", methods=["GET"])
-# @login_required
-# def delete_project():
-#     if not current_user.is_authenticated:
-#         return redirect(url_for("login"))
-#     return ProjectController.delete_project()
+@app.route("/Review")
+def review():
+    return render_template("review.html", title="Review")

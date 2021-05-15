@@ -77,7 +77,8 @@ class AttemptController:
     def quiz():
         form = QuizForm()
         if form.validate_on_submit():
-            attempt = Attempt(user_id=current_user.id)
+            attempt = Attempt()
+            attempt.user_id = current_user.id
             attempt.answer_1 = form.question_1.data.lower()
             attempt.answer_2 = form.question_2.data.lower()
             attempt.answer_3 = form.question_3.data.lower()
@@ -92,7 +93,7 @@ class AttemptController:
             db.session.flush()
             db.session.commit()
             AttemptController.mark(attempt.attempt_id)
-            return render_template("review.html", title="Review")
+            return ReviewController.get_User_Results()
         return render_template("quiz.html", title="Quiz", form=form)
 
     def mark(attempt_id):

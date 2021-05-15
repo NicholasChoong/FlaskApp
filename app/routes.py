@@ -3,10 +3,8 @@ from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from app.controllers import (
     UserController,
-    ResultController,
     LogController,
     AttemptController,
-    QuestionController,
     ReviewController,
 )
 

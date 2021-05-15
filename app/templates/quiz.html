@@ -1,52 +1,69 @@
 {% extends "base.html" %} {% block content %}
-<h1>Quiz</h1>
+<h1 class="title" id="quiz-title">Quiz</h1>
 <form action="" method="POST">
     {{ form.hidden_tag() }}
     <div class="quiz">
         <p id="question_1">
+            <strong>Question 1.</strong>
+            <br />
             {{form.question_1.label}}
             <br />
             {{form.question_1}}
         </p>
 
         <p id="question_2">
+            <strong>Question 2.</strong>
+            <br />
             {{form.question_2.label}}
             <br />
             {{form.question_2}}
         </p>
 
         <p id="question_3">
+            <strong>Question 3.</strong>
+            <br />
             {{form.question_3.label}}
             <br />
             {{form.question_3}}
         </p>
 
         <p id="question_4">
+            <strong>Question 4.</strong>
+            <br />
             {{form.question_4.label}}
             <br />
             {{form.question_4}}
         </p>
 
         <p id="question_5">
+            <strong>Question 5.</strong>
+            <br />
             {{form.question_5.label}}
             <br />
             {{form.question_5}}
         </p>
 
         <p id="question_6">
-            {{form.question_5.label}}
+            <strong>Question 6.</strong>
             <br />
-            {{form.question_5}}
+            {{form.question_6.label}}
+            <br />
+            {{form.question_6}}
         </p>
 
         <p id="question_7">
-            {{form.question_5.label}}
+            <strong>Question 7.</strong>
             <br />
-            {{form.question_5}}
+            {{form.question_7.label}}
+            <br />
+            {{form.question_7}}
         </p>
     </div>
-    <button class="btn btn-lg btn-primary" type="submit" id="quiz-submission">
+    <!-- <button class="btn btn-lg btn-primary" type="submit" id="quiz-submission">
         Submit
-    </button>
+    </button> -->
+    <p class="btn btn-lg btn-primary" id="quiz-submission">
+        {{ form.submit() }}
+    </p>
 </form>
 {% endblock %}

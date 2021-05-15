@@ -196,11 +196,9 @@ class QuizForm(FlaskForm):
                 answer="7",
             ),
         ]
-    # raise Exception
-
     if questions[0].answer_type == "MCQ":
         question_1 = RadioField(
-            str(questions[0].question).encode("ascii", "ignore"),
+            str(questions[0].question),
             choices=[
                 ("1", f"{questions[0].answer_choice_1}"),
                 ("2", f"{questions[0].answer_choice_2}"),
@@ -216,7 +214,7 @@ class QuizForm(FlaskForm):
 
     if questions[1].answer_type == "MCQ":
         question_2 = RadioField(
-            str(questions[1].question).encode("ascii", "ignore"),
+            str(questions[1].question),
             choices=[
                 ("1", f"{questions[1].answer_choice_1}"),
                 ("2", f"{questions[1].answer_choice_2}"),
@@ -232,7 +230,7 @@ class QuizForm(FlaskForm):
 
     if questions[2].answer_type == "MCQ":
         question_3 = RadioField(
-            str(questions[2].question).encode("ascii", "ignore"),
+            str(questions[2].question),
             choices=[
                 ("1", f"{questions[2].answer_choice_1}"),
                 ("2", f"{questions[2].answer_choice_2}"),
@@ -248,7 +246,7 @@ class QuizForm(FlaskForm):
 
     if questions[3].answer_type == "MCQ":
         question_4 = RadioField(
-            str(questions[3].question).encode("ascii", "ignore"),
+            str(questions[3].question),
             choices=[
                 ("1", f"{questions[3].answer_choice_1}"),
                 ("2", f"{questions[3].answer_choice_2}"),
@@ -264,7 +262,7 @@ class QuizForm(FlaskForm):
 
     if questions[4].answer_type == "MCQ":
         question_5 = RadioField(
-            str(questions[4].question).encode("ascii", "ignore"),
+            str(questions[4].question),
             choices=[
                 ("1", f"{questions[4].answer_choice_1}"),
                 ("2", f"{questions[4].answer_choice_2}"),
@@ -280,7 +278,7 @@ class QuizForm(FlaskForm):
 
     if questions[5].answer_type == "MCQ":
         question_6 = RadioField(
-            str(questions[5].question).encode("ascii", "ignore"),
+            str(questions[5].question),
             choices=[
                 ("1", f"{questions[5].answer_choice_1}"),
                 ("2", f"{questions[5].answer_choice_2}"),
@@ -296,7 +294,7 @@ class QuizForm(FlaskForm):
 
     if questions[6].answer_type == "MCQ":
         question_7 = RadioField(
-            str(questions[6].question).encode("ascii", "ignore"),
+            str(questions[6].question),
             choices=[
                 ("1", f"{questions[6].answer_choice_1}"),
                 ("2", f"{questions[6].answer_choice_2}"),
@@ -309,6 +307,7 @@ class QuizForm(FlaskForm):
             questions[6].question,
             validators=[regexp(f"^\w{{{len(questions[6].answer)}}}$")],
         )
+    submit = SubmitField("Submit Answers")
     # Experimental
     # Dynamic design
     # questions_dict = {}
@@ -322,5 +321,3 @@ class QuizForm(FlaskForm):
     #             ("4", f"{question.answer_choice_4}"),
     #         ],
     #     )
-
-    submit = SubmitField("Submit Answers")

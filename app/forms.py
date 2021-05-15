@@ -10,6 +10,7 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, regexp, EqualTo
 from app.models import User, Log, Question, Attempt
+from sqlalchemy.exc import OperationalError
 
 """class to hold elements and validators for login form"""
 
@@ -62,7 +63,141 @@ class RegistrationForm(FlaskForm):
 
 
 class QuizForm(FlaskForm):
-    questions = Question.query.all()
+    questions = [
+        Question(
+            question="Pick 1",
+            answer_type="MCQ",
+            answer_choice_1="1",
+            answer_choice_2="2",
+            answer_choice_3="3",
+            answer_choice_4="4",
+            answer="1",
+        ),
+        Question(
+            question="Pick 2",
+            answer_type="MCQ",
+            answer_choice_1="1",
+            answer_choice_2="2",
+            answer_choice_3="3",
+            answer_choice_4="4",
+            answer="2",
+        ),
+        Question(
+            question="Pick 3",
+            answer_type="MCQ",
+            answer_choice_1="1",
+            answer_choice_2="2",
+            answer_choice_3="3",
+            answer_choice_4="4",
+            answer="3",
+        ),
+        Question(
+            question="Pick 4",
+            answer_type="MCQ",
+            answer_choice_1="1",
+            answer_choice_2="2",
+            answer_choice_3="3",
+            answer_choice_4="4",
+            answer="4",
+        ),
+        Question(
+            question="Pick 5",
+            answer_type="MCQ",
+            answer_choice_1="5",
+            answer_choice_2="6",
+            answer_choice_3="7",
+            answer_choice_4="8",
+            answer="5",
+        ),
+        Question(
+            question="Pick 6",
+            answer_type="MCQ",
+            answer_choice_1="5",
+            answer_choice_2="6",
+            answer_choice_3="7",
+            answer_choice_4="8",
+            answer="6",
+        ),
+        Question(
+            question="Pick 7",
+            answer_type="MCQ",
+            answer_choice_1="5",
+            answer_choice_2="6",
+            answer_choice_3="7",
+            answer_choice_4="8",
+            answer="7",
+        ),
+    ]
+    try:
+        questions = Question.query.all()
+    except OperationalError as e:
+        questions = [
+            Question(
+                question="Pick 1",
+                answer_type="MCQ",
+                answer_choice_1="1",
+                answer_choice_2="2",
+                answer_choice_3="3",
+                answer_choice_4="4",
+                answer="1",
+            ),
+            Question(
+                question="Pick 2",
+                answer_type="MCQ",
+                answer_choice_1="1",
+                answer_choice_2="2",
+                answer_choice_3="3",
+                answer_choice_4="4",
+                answer="2",
+            ),
+            Question(
+                question="Pick 3",
+                answer_type="MCQ",
+                answer_choice_1="1",
+                answer_choice_2="2",
+                answer_choice_3="3",
+                answer_choice_4="4",
+                answer="3",
+            ),
+            Question(
+                question="Pick 4",
+                answer_type="MCQ",
+                answer_choice_1="1",
+                answer_choice_2="2",
+                answer_choice_3="3",
+                answer_choice_4="4",
+                answer="4",
+            ),
+            Question(
+                question="Pick 5",
+                answer_type="MCQ",
+                answer_choice_1="5",
+                answer_choice_2="6",
+                answer_choice_3="7",
+                answer_choice_4="8",
+                answer="5",
+            ),
+            Question(
+                question="Pick 6",
+                answer_type="MCQ",
+                answer_choice_1="5",
+                answer_choice_2="6",
+                answer_choice_3="7",
+                answer_choice_4="8",
+                answer="6",
+            ),
+            Question(
+                question="Pick 7",
+                answer_type="MCQ",
+                answer_choice_1="5",
+                answer_choice_2="6",
+                answer_choice_3="7",
+                answer_choice_4="8",
+                answer="7",
+            ),
+        ]
+    # raise Exception
+
     if questions[0].answer_type == "MCQ":
         question_1 = RadioField(
             str(questions[0].question).encode("ascii", "ignore"),
@@ -188,4 +323,4 @@ class QuizForm(FlaskForm):
     #         ],
     #     )
 
-    submit = SubmitField("Submit Answers")
+    # submit = SubmitField("Submit Answers")

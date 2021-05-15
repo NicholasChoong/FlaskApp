@@ -69,7 +69,7 @@ class UserController:
 
 class ReviewController:
     def get_User_Results():
-        Rev = Result.query.filter_by(user_id=current_user.id).all()
+        Rev = Attempt.query.filter_by(user_id=current_user.id).all()
         return render_template("review.html", title="Review", Res=Rev)
 
 

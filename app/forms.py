@@ -6,9 +6,10 @@ from wtforms import (
     SubmitField,
     SelectField,
     RadioField,
+    TextField,
 )
 from wtforms.validators import DataRequired, regexp, EqualTo
-from app.models import User, Result, Log, Question, Attempt
+from app.models import User, Log, Question, Attempt
 
 """class to hold elements and validators for login form"""
 
@@ -62,15 +63,19 @@ class RegistrationForm(FlaskForm):
 
 class QuizForm(FlaskForm):
     questions = Question.query.all()
-    question_1 = RadioField(
-        str(questions[0].question).encode("ascii", "ignore"),
-        choices=[
-            ("1", f"{questions[0].answer_choice_1}"),
-            ("2", f"{questions[0].answer_choice_2}"),
-            ("3", f"{questions[0].answer_choice_3}"),
-            ("4", f"{questions[0].answer_choice_4}"),
-        ],
-    )
+    if questions[0].answer_type == "MCQ":
+        question_1 = RadioField(
+            str(questions[0].question).encode("ascii", "ignore"),
+            choices=[
+                ("1", f"{questions[0].answer_choice_1}"),
+                ("2", f"{questions[0].answer_choice_2}"),
+                ("3", f"{questions[0].answer_choice_3}"),
+                ("4", f"{questions[0].answer_choice_4}"),
+            ],
+        )
+    elif questions[0].answer_type == "SAQ":
+        question_1 = TextField(questions[0].question, validators=)
+
     question_2 = RadioField(
         str(questions[1].question).encode("ascii", "ignore"),
         choices=[
@@ -89,18 +94,54 @@ class QuizForm(FlaskForm):
             ("4", f"{questions[2].answer_choice_4}"),
         ],
     )
+    question_4 = RadioField(
+        str(questions[2].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[3].answer_choice_1}"),
+            ("2", f"{questions[3].answer_choice_2}"),
+            ("3", f"{questions[3].answer_choice_3}"),
+            ("4", f"{questions[3].answer_choice_4}"),
+        ],
+    )
+    question_5 = RadioField(
+        str(questions[2].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[4].answer_choice_1}"),
+            ("2", f"{questions[4].answer_choice_2}"),
+            ("3", f"{questions[4].answer_choice_3}"),
+            ("4", f"{questions[4].answer_choice_4}"),
+        ],
+    )
+    question_6 = RadioField(
+        str(questions[2].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[5].answer_choice_1}"),
+            ("2", f"{questions[5].answer_choice_2}"),
+            ("3", f"{questions[5].answer_choice_3}"),
+            ("4", f"{questions[5].answer_choice_4}"),
+        ],
+    )
+    question_7 = RadioField(
+        str(questions[2].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[6].answer_choice_1}"),
+            ("2", f"{questions[6].answer_choice_2}"),
+            ("3", f"{questions[6].answer_choice_3}"),
+            ("4", f"{questions[6].answer_choice_4}"),
+        ],
+    )
     # Experimental
     # Dynamic design
-    questions_dict = {}
-    for i, question in enumerate(questions):
-        questions_dict[f"question_{i+1}"] = RadioField(
-            str(question.question).encode("ascii", "ignore"),
-            choices=[
-                ("1", f"{question.answer_choice_1}"),
-                ("2", f"{question.answer_choice_2}"),
-                ("3", f"{question.answer_choice_3}"),
-                ("4", f"{question.answer_choice_4}"),
-            ],
-        )
+    # questions_dict = {}
+    # for i, question in enumerate(questions):
+    #     questions_dict[f"question_{i+1}"] = RadioField(
+    #         str(question.question).encode("ascii", "ignore"),
+    #         choices=[
+    #             ("1", f"{question.answer_choice_1}"),
+    #             ("2", f"{question.answer_choice_2}"),
+    #             ("3", f"{question.answer_choice_3}"),
+    #             ("4", f"{question.answer_choice_4}"),
+    #         ],
+    #     )
 
     submit = SubmitField("Submit Answers")

@@ -412,9 +412,9 @@ db.session.add(
 db.session.commit()
 
 
-from app import *
+# from app import *
 
-User.query.all()
-Log.query.all()
+# User.query.all()
+# Log.query.all()
 
-admin = User.query.get("admin1234")
+# admin = User.query.get("admin1234")

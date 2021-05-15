@@ -56,4 +56,6 @@ def review():
 
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
+    if current_user.is_anonymous:
+        return render_template("quiz.html", title="Quiz")
     return AttemptController.quiz()

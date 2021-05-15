@@ -54,5 +54,4 @@ def review():
 
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
-    return render_template("quiz.html", title="quiz")  ##### placeholder
-    # return AttemptController.quiz()
+    return AttemptController.quiz()

@@ -9,7 +9,7 @@
                     {{Rev.date}}
                     </button>
                 </h2>
-            <div id="collapseOne{{Rev.attempt_id}}" class="accordion-collapse collapse" aria-labelledby="heading{{Rev.attempt_id}}" data-bs-parent="#testAccordion">
+            <div id="collapseOne{{Rev.attempt_id}}" class="accordion-collapse collapse show" aria-labelledby="heading{{Rev.attempt_id}}" data-bs-parent="#testAccordion">
                 <div class="accordion-body">
                     <ul class="list-group">
                         <li class="list-group-item {% if Rev.correct_1 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q1 {% if Rev.correct_1 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_1}}</span> {% endif %}</li>

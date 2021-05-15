@@ -24,9 +24,8 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
-    results = db.relationship("Result", backref="user", lazy="dynamic")
-    logs = db.relationship("Log", backref="user", lazy="dynamic")
     attempts = db.relationship("Attempt", backref="user", lazy="dynamic")
+    logs = db.relationship("Log", backref="user", lazy="dynamic")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -101,47 +100,6 @@ class User(UserMixin, db.Model):
         return self.first_name + " " + self.surname
 
 
-class Result(db.Model):
-    __tablename__ = "results"
-    result_id = db.Column(db.Integer, primary_key=True)
-    marks = db.Column(db.Integer, default=0)
-    correct_questions = db.Column(db.String(256))  # A string of booleans
-    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
-
-    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
-    attempt = db.relationship(
-        "Attempt", backref="result", uselist=False
-    )  ## one-to-one relation
-
-    def to_dict(self):
-        data = {
-            "result_id": self.result_id,
-            "marks": self.marks,
-            "date": self.date,
-            "user_id": self.id,
-            "user_name": User.query.get(self.user_id).__str__(),
-        }
-        return data
-
-    def from_dict(self, data):
-        if "result_id" in data:
-            self.result_id = data["result_id"]
-        if "marks" in data:
-            self.marks = data["marks"]
-        if "correct_questions" in data:
-            self.correct_questions = data["correct_questions"]
-        if "date" in data:
-            self.date = data["date"]
-        if "user_id" in data:
-            self.user_id = data["user_id"]
-
-    def __repr__(self):
-        return f"[result_id: {self.result_id}, marks: {self.marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
-
-    def __str__(self):
-        return f"result {self.result_id}: {self.marks}"
-
-
 class Attempt(db.Model):
     __tablename__ = "attempts"
     attempt_id = db.Column(db.Integer, primary_key=True)
@@ -160,8 +118,6 @@ class Attempt(db.Model):
     correct_6 = db.Column(db.Boolean, default=False)
     correct_7 = db.Column(db.Boolean, default=False)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
-
-    result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
     user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
 
     def to_dict(self):
@@ -182,7 +138,6 @@ class Attempt(db.Model):
             "correct_6": self.correct_6,
             "correct_7": self.correct_7,
             "date": self.date,
-            "result_id": self.result_id,
             "user_id": self.user_id,
         }
         return data
@@ -220,13 +175,11 @@ class Attempt(db.Model):
             self.correct_7 = data["correct_7"]
         if "date" in data:
             self.date = data["date"]
-        if "result_id" in data:
-            self.result_id = data["result_id"]
         if "user_id" in data:
             self.user_id = data["user_id"]
 
     def __repr__(self):
-        return f"[attempt_id: {self.attempt_id}, marks: {Result.query.get(self.result_id).marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
+        return f"[attempt_id: {self.attempt_id}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
 
 
 class Question(db.Model):

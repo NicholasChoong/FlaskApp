@@ -107,7 +107,7 @@ class QuizForm(FlaskForm):
             answer_choice_2="6",
             answer_choice_3="7",
             answer_choice_4="8",
-            answer="5",
+            answer="1",
         ),
         Question(
             question="Pick 6",
@@ -116,7 +116,7 @@ class QuizForm(FlaskForm):
             answer_choice_2="6",
             answer_choice_3="7",
             answer_choice_4="8",
-            answer="6",
+            answer="2",
         ),
         Question(
             question="Pick 7",
@@ -125,7 +125,7 @@ class QuizForm(FlaskForm):
             answer_choice_2="6",
             answer_choice_3="7",
             answer_choice_4="8",
-            answer="7",
+            answer="3",
         ),
     ]
     try:

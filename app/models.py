@@ -104,12 +104,14 @@ class User(UserMixin, db.Model):
 class Result(db.Model):
     __tablename__ = "results"
     result_id = db.Column(db.Integer, primary_key=True)
-    marks = db.Column(db.Integer)
+    marks = db.Column(db.Integer, default=0)
     correct_questions = db.Column(db.String(256))  # A string of booleans
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
-    attempts = db.relationship("Attempt", backref="result", lazy="dynamic")
+    attempt = db.relationship(
+        "Attempt", backref="result", uselist=False
+    )  ## one-to-one relation
 
     def to_dict(self):
         data = {
@@ -143,13 +145,13 @@ class Result(db.Model):
 class Attempt(db.Model):
     __tablename__ = "attempts"
     attempt_id = db.Column(db.Integer, primary_key=True)
-    answer_1 = db.Column(db.String(256))
-    answer_2 = db.Column(db.String(256))
-    answer_3 = db.Column(db.String(256))
-    answer_4 = db.Column(db.String(256))
-    answer_5 = db.Column(db.String(256))
-    answer_6 = db.Column(db.String(256))
-    answer_7 = db.Column(db.String(256))
+    answer_1 = db.Column(db.String(256), nullable=True)
+    answer_2 = db.Column(db.String(256), nullable=True)
+    answer_3 = db.Column(db.String(256), nullable=True)
+    answer_4 = db.Column(db.String(256), nullable=True)
+    answer_5 = db.Column(db.String(256), nullable=True)
+    answer_6 = db.Column(db.String(256), nullable=True)
+    answer_7 = db.Column(db.String(256), nullable=True)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
@@ -173,7 +175,7 @@ class Attempt(db.Model):
 
     def from_dict(self, data):
         if "attempt_id" in data:
-            self.answer_id = data["attempt_id"]
+            self.attempt_id = data["attempt_id"]
         if "answer_1" in data:
             self.answer_1 = data["answer_1"]
         if "answer_2" in data:
@@ -196,10 +198,42 @@ class Attempt(db.Model):
             self.user_id = data["user_id"]
 
     def __repr__(self):
-        return f"[attempt_id: {self.attempt_id}, marks: {Result.query.get(self.result_id).mark}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
+        return f"[attempt_id: {self.attempt_id}, marks: {Result.query.get(self.result_id).marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
 
 
-class Question(db.model):
+class Answer(db.Model):
+    """User Answers"""
+
+    __tablename__ = "answers"
+    answer_id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(256), nullable=True)
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
+    question_id = db.Column(db.String(128), db.ForeignKey("questions.question_id"))
+
+    def to_dict(self):
+        data = {
+            "answer_id": self.answer_id,
+            "answer": self.answer,
+            "date": self.date,
+            "question_id": self.question_id,
+        }
+        return data
+
+    def from_dict(self, data):
+        if "answer_id" in data:
+            self.answer_id = data["answer_id"]
+        if "answer" in data:
+            self.answer = data["answer"]
+        if "date" in data:
+            self.date = data["date"]
+        if "question_id" in data:
+            self.question_id = data["question_id"]
+
+    def __repr__(self):
+        return f"[question_id: {self.question_id}, question: {self.question}, answer: {self.answer}, date: {self.date}]"
+
+
+class Question(db.Model):
     __tablename__ = "questions"
     question_id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(256))
@@ -210,6 +244,8 @@ class Question(db.model):
     answer_choice_4 = db.Column(db.String(256), nullable=True)
     answer = db.Column(db.String(256))
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
+
+    attempted_answers = db.relationship("Answer", backref="questions", lazy="dynamic")
 
     def to_dict(self):
         data = {

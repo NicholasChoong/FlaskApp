@@ -1,5 +1,16 @@
 # PC wiki
 
+## Setup
+
+flask db init
+flask db migrate
+flask db upgrade
+
+## Testing
+
+python test.py
+flask shell
+
 ## Planned contents
 
 CPU

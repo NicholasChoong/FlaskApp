@@ -11,10 +11,24 @@ from datetime import datetime, timedelta
 import os
 from flask import url_for
 
+
+from flask_wtf import FlaskForm
+from wtforms import (
+    StringField,
+    PasswordField,
+    BooleanField,
+    SubmitField,
+    SelectField,
+    RadioField,
+)
+from wtforms.validators import DataRequired, regexp, EqualTo
+
+
 app = Flask(__name__)
 # app.config.from_object(Config)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.db")
+app.config["SECRET_KEY"] = "sshh!"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
@@ -38,9 +52,8 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
-    results = db.relationship("Result", backref="user", lazy="dynamic")
-    logs = db.relationship("Log", backref="user", lazy="dynamic")
     attempts = db.relationship("Attempt", backref="user", lazy="dynamic")
+    logs = db.relationship("Log", backref="user", lazy="dynamic")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -115,60 +128,24 @@ class User(UserMixin, db.Model):
         return self.first_name + " " + self.surname
 
 
-class Result(db.Model):
-    __tablename__ = "results"
-    result_id = db.Column(db.Integer, primary_key=True)
-    marks = db.Column(db.Integer, default=0)
-    correct_questions = db.Column(db.String(256))  # A string of booleans
-    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
-
-    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
-    attempt = db.relationship(
-        "Attempt", backref="result", uselist=False
-    )  ## one-to-one relation
-
-    def to_dict(self):
-        data = {
-            "result_id": self.result_id,
-            "marks": self.marks,
-            "date": self.date,
-            "user_id": self.id,
-            "user_name": User.query.get(self.user_id).__str__(),
-        }
-        return data
-
-    def from_dict(self, data):
-        if "result_id" in data:
-            self.result_id = data["result_id"]
-        if "marks" in data:
-            self.marks = data["marks"]
-        if "correct_questions" in data:
-            self.correct_questions = data["correct_questions"]
-        if "date" in data:
-            self.date = data["date"]
-        if "user_id" in data:
-            self.user_id = data["user_id"]
-
-    def __repr__(self):
-        return f"[result_id: {self.result_id}, marks: {self.marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
-
-    def __str__(self):
-        return f"result {self.result_id}: {self.marks}"
-
-
 class Attempt(db.Model):
     __tablename__ = "attempts"
     attempt_id = db.Column(db.Integer, primary_key=True)
-    answer_1 = db.Column(db.String(256))
-    answer_2 = db.Column(db.String(256))
-    answer_3 = db.Column(db.String(256))
-    answer_4 = db.Column(db.String(256))
-    answer_5 = db.Column(db.String(256))
-    answer_6 = db.Column(db.String(256))
-    answer_7 = db.Column(db.String(256))
+    answer_1 = db.Column(db.String(256), nullable=True)
+    answer_2 = db.Column(db.String(256), nullable=True)
+    answer_3 = db.Column(db.String(256), nullable=True)
+    answer_4 = db.Column(db.String(256), nullable=True)
+    answer_5 = db.Column(db.String(256), nullable=True)
+    answer_6 = db.Column(db.String(256), nullable=True)
+    answer_7 = db.Column(db.String(256), nullable=True)
+    correct_1 = db.Column(db.Boolean, default=False)
+    correct_2 = db.Column(db.Boolean, default=False)
+    correct_3 = db.Column(db.Boolean, default=False)
+    correct_4 = db.Column(db.Boolean, default=False)
+    correct_5 = db.Column(db.Boolean, default=False)
+    correct_6 = db.Column(db.Boolean, default=False)
+    correct_7 = db.Column(db.Boolean, default=False)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
-
-    result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
     user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
 
     def to_dict(self):
@@ -181,8 +158,14 @@ class Attempt(db.Model):
             "answer_5": self.answer_5,
             "answer_6": self.answer_6,
             "answer_7": self.answer_7,
+            "correct_1": self.correct_1,
+            "correct_2": self.correct_2,
+            "correct_3": self.correct_3,
+            "correct_4": self.correct_4,
+            "correct_5": self.correct_5,
+            "correct_6": self.correct_6,
+            "correct_7": self.correct_7,
             "date": self.date,
-            "result_id": self.result_id,
             "user_id": self.user_id,
         }
         return data
@@ -204,15 +187,27 @@ class Attempt(db.Model):
             self.answer_6 = data["answer_6"]
         if "answer_7" in data:
             self.answer_7 = data["answer_7"]
+        if "correct_1" in data:
+            self.correct_1 = data["correct_1"]
+        if "correct_2" in data:
+            self.correct_2 = data["correct_2"]
+        if "correct_3" in data:
+            self.correct_3 = data["correct_3"]
+        if "correct_4" in data:
+            self.correct_4 = data["correct_4"]
+        if "correct_5" in data:
+            self.correct_5 = data["correct_5"]
+        if "correct_6" in data:
+            self.correct_6 = data["correct_6"]
+        if "correct_7" in data:
+            self.correct_7 = data["correct_7"]
         if "date" in data:
             self.date = data["date"]
-        if "result_id" in data:
-            self.result_id = data["result_id"]
         if "user_id" in data:
             self.user_id = data["user_id"]
 
     def __repr__(self):
-        return f"[attempt_id: {self.attempt_id}, marks: {Result.query.get(self.result_id).marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
+        return f"[attempt_id: {self.attempt_id}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
 
 
 class Question(db.Model):
@@ -305,13 +300,11 @@ admin = User(
     token="awdwds",
 )
 
-res = Result(marks=8, correct_questions="1111001111", user_id="admin1234")
 
 lg = Log(login_key="12313", user_id="admin")
 
 db.create_all()
 db.session.add(admin)
-db.session.add(res)
 db.session.add(
     User(
         id="Guest12345",
@@ -321,11 +314,6 @@ db.session.add(
         isAdmin=False,
     )
 )
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
-db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
 db.session.add(
     User(
         id="guest1234",
@@ -338,26 +326,95 @@ db.session.add(
 )
 
 db.session.add(lg)
-result = Result(user_id="admin1234")
-db.session.add(result)
 db.session.commit()
-attempt = Attempt(user_id="admin1234", result_id=result.result_id)
+attempt = Attempt(user_id="admin1234")
 db.session.add(attempt)
+db.session.commit()
+
+
+db.session.add(
+    Question(
+        question="Pick 1",
+        answer_type="MCQ",
+        answer_choice_1="1",
+        answer_choice_2="2",
+        answer_choice_3="3",
+        answer_choice_4="4",
+        answer="1",
+    )
+)
+db.session.add(
+    Question(
+        question="Pick 2",
+        answer_type="MCQ",
+        answer_choice_1="1",
+        answer_choice_2="2",
+        answer_choice_3="3",
+        answer_choice_4="4",
+        answer="2",
+    )
+)
+db.session.add(
+    Question(
+        question="Pick 3",
+        answer_type="MCQ",
+        answer_choice_1="1",
+        answer_choice_2="2",
+        answer_choice_3="3",
+        answer_choice_4="4",
+        answer="3",
+    )
+)
+db.session.add(
+    Question(
+        question="Pick 4",
+        answer_type="MCQ",
+        answer_choice_1="1",
+        answer_choice_2="2",
+        answer_choice_3="3",
+        answer_choice_4="4",
+        answer="4",
+    )
+)
+db.session.add(
+    Question(
+        question="Pick 5",
+        answer_type="MCQ",
+        answer_choice_1="5",
+        answer_choice_2="6",
+        answer_choice_3="7",
+        answer_choice_4="8",
+        answer="5",
+    )
+)
+db.session.add(
+    Question(
+        question="Pick 6",
+        answer_type="MCQ",
+        answer_choice_1="5",
+        answer_choice_2="6",
+        answer_choice_3="7",
+        answer_choice_4="8",
+        answer="6",
+    )
+)
+db.session.add(
+    Question(
+        question="Pick 7",
+        answer_type="MCQ",
+        answer_choice_1="5",
+        answer_choice_2="6",
+        answer_choice_3="7",
+        answer_choice_4="8",
+        answer="7",
+    )
+)
 db.session.commit()
 
 
 from app import *
 
 User.query.all()
-Result.query.all()
-Result.query.filter_by(user_id=id)
-Result.query.filter_by(user_id="admin1234").all()
-Result.query.filter_by(user_id="admin1234").all()[-1]
-Result.query.filter_by(user_id="admin1234")[-1]
 Log.query.all()
 
 admin = User.query.get("admin1234")
-# Get results from user id
-admin.results.first()
-admin.results.all()
-admin.results.filter_by(result_id=6).all()

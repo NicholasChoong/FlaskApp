@@ -152,6 +152,13 @@ class Attempt(db.Model):
     answer_5 = db.Column(db.String(256), nullable=True)
     answer_6 = db.Column(db.String(256), nullable=True)
     answer_7 = db.Column(db.String(256), nullable=True)
+    correct_1 = db.Column(db.Boolean, default=False)
+    correct_2 = db.Column(db.Boolean, default=False)
+    correct_3 = db.Column(db.Boolean, default=False)
+    correct_4 = db.Column(db.Boolean, default=False)
+    correct_5 = db.Column(db.Boolean, default=False)
+    correct_6 = db.Column(db.Boolean, default=False)
+    correct_7 = db.Column(db.Boolean, default=False)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
@@ -167,6 +174,13 @@ class Attempt(db.Model):
             "answer_5": self.answer_5,
             "answer_6": self.answer_6,
             "answer_7": self.answer_7,
+            "correct_1": self.correct_1,
+            "correct_2": self.correct_2,
+            "correct_3": self.correct_3,
+            "correct_4": self.correct_4,
+            "correct_5": self.correct_5,
+            "correct_6": self.correct_6,
+            "correct_7": self.correct_7,
             "date": self.date,
             "result_id": self.result_id,
             "user_id": self.user_id,
@@ -190,6 +204,20 @@ class Attempt(db.Model):
             self.answer_6 = data["answer_6"]
         if "answer_7" in data:
             self.answer_7 = data["answer_7"]
+        if "correct_1" in data:
+            self.correct_1 = data["correct_1"]
+        if "correct_2" in data:
+            self.correct_2 = data["correct_2"]
+        if "correct_3" in data:
+            self.correct_3 = data["correct_3"]
+        if "correct_4" in data:
+            self.correct_4 = data["correct_4"]
+        if "correct_5" in data:
+            self.correct_5 = data["correct_5"]
+        if "correct_6" in data:
+            self.correct_6 = data["correct_6"]
+        if "correct_7" in data:
+            self.correct_7 = data["correct_7"]
         if "date" in data:
             self.date = data["date"]
         if "result_id" in data:
@@ -199,38 +227,6 @@ class Attempt(db.Model):
 
     def __repr__(self):
         return f"[attempt_id: {self.attempt_id}, marks: {Result.query.get(self.result_id).marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
-
-
-class Answer(db.Model):
-    """User Answers"""
-
-    __tablename__ = "answers"
-    answer_id = db.Column(db.Integer, primary_key=True)
-    answer = db.Column(db.String(256), nullable=True)
-    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
-    question_id = db.Column(db.String(128), db.ForeignKey("questions.question_id"))
-
-    def to_dict(self):
-        data = {
-            "answer_id": self.answer_id,
-            "answer": self.answer,
-            "date": self.date,
-            "question_id": self.question_id,
-        }
-        return data
-
-    def from_dict(self, data):
-        if "answer_id" in data:
-            self.answer_id = data["answer_id"]
-        if "answer" in data:
-            self.answer = data["answer"]
-        if "date" in data:
-            self.date = data["date"]
-        if "question_id" in data:
-            self.question_id = data["question_id"]
-
-    def __repr__(self):
-        return f"[question_id: {self.question_id}, question: {self.question}, answer: {self.answer}, date: {self.date}]"
 
 
 class Question(db.Model):
@@ -244,8 +240,6 @@ class Question(db.Model):
     answer_choice_4 = db.Column(db.String(256), nullable=True)
     answer = db.Column(db.String(256))
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
-
-    attempted_answers = db.relationship("Answer", backref="questions", lazy="dynamic")
 
     def to_dict(self):
         data = {

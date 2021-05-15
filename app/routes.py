@@ -49,6 +49,8 @@ def learn():
 
 @app.route("/review")
 def review():
+    if current_user.is_anonymous:
+        return render_template("review.html", title="Review")
     return ReviewController.get_User_Results()
 
 

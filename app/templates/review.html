@@ -1,8 +1,6 @@
 {% extends "base.html" %} {% block content %}
     <body>
         <div class="container">
-        <p hidden="{%if current_user.is_anonymous %} false {%else%} true {%endif%}">Not Signed In</p>
-
         {% for Rev in Res %}
         <!-- To Be put in by the JS so that it is accurate to user test results-->
         <div class="accordion accordion-flush" id="testAccordion">
@@ -27,7 +25,11 @@
             </div>
         </div>
         {% else %}
-            <p ID="noCompleted">No Assesments completed</p>
+            {% if current_user.is_anonymous %}        
+                <h2>Please <a href="{{ url_for('login') }}">Sign in</a> to access assesment data</h2>
+            {%else%}
+            <h2>No Assesments completed</h2>
+            {%endif%}
         {% endfor %}
           
 

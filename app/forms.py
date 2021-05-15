@@ -1,7 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
+from wtforms import (
+    StringField,
+    PasswordField,
+    BooleanField,
+    SubmitField,
+    SelectField,
+    RadioField,
+)
 from wtforms.validators import DataRequired, regexp, EqualTo
-from app.models import User, Result, Log, Result, Question, Attempt
+from app.models import User, Result, Log, Question, Attempt
 
 """class to hold elements and validators for login form"""
 
@@ -54,4 +61,46 @@ class RegistrationForm(FlaskForm):
 
 
 class QuizForm(FlaskForm):
-    pass
+    questions = Question.query.all()
+    question_1 = RadioField(
+        str(questions[0].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[0].answer_choice_1}"),
+            ("2", f"{questions[0].answer_choice_2}"),
+            ("3", f"{questions[0].answer_choice_3}"),
+            ("4", f"{questions[0].answer_choice_4}"),
+        ],
+    )
+    question_2 = RadioField(
+        str(questions[1].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[1].answer_choice_1}"),
+            ("2", f"{questions[1].answer_choice_2}"),
+            ("3", f"{questions[1].answer_choice_3}"),
+            ("4", f"{questions[1].answer_choice_4}"),
+        ],
+    )
+    question_3 = RadioField(
+        str(questions[2].question).encode("ascii", "ignore"),
+        choices=[
+            ("1", f"{questions[2].answer_choice_1}"),
+            ("2", f"{questions[2].answer_choice_2}"),
+            ("3", f"{questions[2].answer_choice_3}"),
+            ("4", f"{questions[2].answer_choice_4}"),
+        ],
+    )
+    # Experimental
+    # Dynamic design
+    questions_dict = {}
+    for i, question in enumerate(questions):
+        questions_dict[f"question_{i+1}"] = RadioField(
+            str(question.question).encode("ascii", "ignore"),
+            choices=[
+                ("1", f"{question.answer_choice_1}"),
+                ("2", f"{question.answer_choice_2}"),
+                ("3", f"{question.answer_choice_3}"),
+                ("4", f"{question.answer_choice_4}"),
+            ],
+        )
+
+    submit = SubmitField("Submit Answers")

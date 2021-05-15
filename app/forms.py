@@ -323,4 +323,4 @@ class QuizForm(FlaskForm):
     #         ],
     #     )
 
-    # submit = SubmitField("Submit Answers")
+    submit = SubmitField("Submit Answers")

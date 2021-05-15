@@ -28,17 +28,19 @@ def load_user(id):
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
-    user_id = db.Column(db.String(128), primary_key=True)
+    id = db.Column(db.String(128), primary_key=True)
     first_name = db.Column(db.String(64))
     surname = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
     isAdmin = db.Column(db.Boolean, default=False)
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
     # token authetication for api
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
     results = db.relationship("Result", backref="user", lazy="dynamic")
     logs = db.relationship("Log", backref="user", lazy="dynamic")
+    attempts = db.relationship("Attempt", backref="user", lazy="dynamic")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -83,31 +85,31 @@ class User(UserMixin, db.Model):
 
     def to_dict(self):
         data = {
-            "user_id": self.user_id,
+            "id": self.id,
             "password_hash": self.password_hash,
             "first_name": self.first_name,
             "surname": self.surname,
             "isAdmin": self.isAdmin,
-            "_links": {"Reslts": url_for("get_user_results", id=self.user_id)},
+            "date": self.date,
         }
         return data
 
     def from_dict(self, data):
-        if "user_id" in data:
-            self.user_name = data["user_id"]
+        if "id" in data:
+            self.user_id = data["id"]
         if "first_name" in data:
-            self.user_name = data["first_name"]
+            self.first_name = data["first_name"]
         if "surname" in data:
-            self.user_name = data["surname"]
+            self.surname = data["surname"]
         if "isAdmin" in data:
-            self.user_name = data["isAdmin"]
+            self.isAdmin = data["isAdmin"]
         if "password_hash" in data:
             self.set_password(data["password_hash"])
+        if "date" in data:
+            self.date = data["date"]
 
     def __repr__(self):
-        return (
-            f"[User ID: {self.user_id}, Name: {self.__str__()}, Admin: {self.isAdmin}]"
-        )
+        return f"[id: {self.id}, name: {self.__str__()}, isAdmin: {self.isAdmin}]"
 
     def __str__(self):
         return self.first_name + " " + self.surname
@@ -116,21 +118,22 @@ class User(UserMixin, db.Model):
 class Result(db.Model):
     __tablename__ = "results"
     result_id = db.Column(db.Integer, primary_key=True)
-    marks = db.Column(db.Integer)
+    marks = db.Column(db.Integer, default=0)
     correct_questions = db.Column(db.String(256))  # A string of booleans
-    date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
-    user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
-
-    answers = db.relationship("Answer", backref="result", lazy="dynamic")
+    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
+    attempt = db.relationship(
+        "Attempt", backref="result", uselist=False
+    )  ## one-to-one relation
 
     def to_dict(self):
         data = {
             "result_id": self.result_id,
             "marks": self.marks,
             "date": self.date,
-            "user_id": self.user_id,
-            "user_name": str(User.query.get(self.user_id).__str__()),
+            "user_id": self.id,
+            "user_name": User.query.get(self.user_id).__str__(),
         }
         return data
 
@@ -147,26 +150,128 @@ class Result(db.Model):
             self.user_id = data["user_id"]
 
     def __repr__(self):
-        return f"[Result ID: {self.result_id}, Marks: {self.marks}, Date: {self.date}, Name: {str(User.query.get(self.user_id).__str__())}]"
+        return f"[result_id: {self.result_id}, marks: {self.marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
 
     def __str__(self):
-        return f"Result {self.result_id}: {self.marks}"
+        return f"result {self.result_id}: {self.marks}"
 
 
-class Answer(db.Model):
-    __tablename__ = "answers"
-    answer_id = db.Column(db.Integer, primary_key=True)
+class Attempt(db.Model):
+    __tablename__ = "attempts"
+    attempt_id = db.Column(db.Integer, primary_key=True)
+    answer_1 = db.Column(db.String(256))
+    answer_2 = db.Column(db.String(256))
+    answer_3 = db.Column(db.String(256))
+    answer_4 = db.Column(db.String(256))
+    answer_5 = db.Column(db.String(256))
+    answer_6 = db.Column(db.String(256))
+    answer_7 = db.Column(db.String(256))
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     result_id = db.Column(db.Integer, db.ForeignKey("results.result_id"))
+    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
+
+    def to_dict(self):
+        data = {
+            "attempt_id": self.attempt_id,
+            "answer_1": self.answer_1,
+            "answer_2": self.answer_2,
+            "answer_3": self.answer_3,
+            "answer_4": self.answer_4,
+            "answer_5": self.answer_5,
+            "answer_6": self.answer_6,
+            "answer_7": self.answer_7,
+            "date": self.date,
+            "result_id": self.result_id,
+            "user_id": self.user_id,
+        }
+        return data
+
+    def from_dict(self, data):
+        if "attempt_id" in data:
+            self.attempt_id = data["attempt_id"]
+        if "answer_1" in data:
+            self.answer_1 = data["answer_1"]
+        if "answer_2" in data:
+            self.answer_2 = data["answer_2"]
+        if "answer_3" in data:
+            self.answer_3 = data["answer_3"]
+        if "answer_4" in data:
+            self.answer_4 = data["answer_4"]
+        if "answer_5" in data:
+            self.answer_5 = data["answer_5"]
+        if "answer_6" in data:
+            self.answer_6 = data["answer_6"]
+        if "answer_7" in data:
+            self.answer_7 = data["answer_7"]
+        if "date" in data:
+            self.date = data["date"]
+        if "result_id" in data:
+            self.result_id = data["result_id"]
+        if "user_id" in data:
+            self.user_id = data["user_id"]
+
+    def __repr__(self):
+        return f"[attempt_id: {self.attempt_id}, marks: {Result.query.get(self.result_id).marks}, date: {self.date}, name: {User.query.get(self.user_id).__str__()}]"
+
+
+class Question(db.Model):
+    __tablename__ = "questions"
+    question_id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(256))
+    answer_type = db.Column(db.String(256))
+    answer_choice_1 = db.Column(db.String(256), nullable=True)
+    answer_choice_2 = db.Column(db.String(256), nullable=True)
+    answer_choice_3 = db.Column(db.String(256), nullable=True)
+    answer_choice_4 = db.Column(db.String(256), nullable=True)
+    answer = db.Column(db.String(256))
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
+
+    def to_dict(self):
+        data = {
+            "question_id": self.question_id,
+            "question": self.question,
+            "answer_type": self.answer_type,
+            "answer_choice_1": self.answer_choice_1,
+            "answer_choice_2": self.answer_choice_2,
+            "answer_choice_3": self.answer_choice_3,
+            "answer_choice_4": self.answer_choice_4,
+            "answer": self.answer,
+            "date": self.date,
+        }
+        return data
+
+    def from_dict(self, data):
+        if "question_id" in data:
+            self.question_id = data["question_id"]
+        if "question" in data:
+            self.question = data["question"]
+        if "answer_type" in data:
+            self.answer_type = data["answer_type"]
+        if "answer_choice_1" in data:
+            self.answer_choice_1 = data["answer_choice_1"]
+        if "answer_choice_2" in data:
+            self.answer_choice_2 = data["answer_choice_2"]
+        if "answer_choice_3" in data:
+            self.answer_choice_3 = data["answer_choice_3"]
+        if "answer_choice_4" in data:
+            self.answer_choice_4 = data["answer_choice_4"]
+        if "answer" in data:
+            self.answer = data["answer"]
+        if "date" in data:
+            self.date = data["date"]
+
+    def __repr__(self):
+        return f"[question_id: {self.question_id}, question: {self.question}, answer: {self.answer}, date: {self.date}]"
 
 
 class Log(db.Model):
     __tablename__ = "logs"
     log_id = db.Column(db.Integer, primary_key=True)
     login_key = db.Column(db.Integer, unique=True)
-    date = db.Column(db.DateTime, default=datetime.utcnow)  # date and time
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
-    user_id = db.Column(db.String(128), db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
 
     def to_dict(self):
         data = {
@@ -177,12 +282,22 @@ class Log(db.Model):
         }
         return data
 
+    def from_dict(self, data):
+        if "log_id" in data:
+            self.log_id = data["log_id"]
+        if "login_key" in data:
+            self.login_key = data["login_key"]
+        if "date" in data:
+            self.date = data["date"]
+        if "user_id" in data:
+            self.user_id = data["user_id"]
+
     def __repr__(self):
-        return f"[Log ID: {self.log_id}, Login Key: {self.login_key}, User ID: {self.user_id}, Date: {self.date}]"
+        return f"[log_id: {self.log_id}, login_key: {self.login_key}, user_id: {self.user_id}, date: {self.date}]"
 
 
 admin = User(
-    user_id="admin1234",
+    id="admin1234",
     first_name="Jojn",
     surname="jej",
     password_hash="admin1234",
@@ -190,7 +305,7 @@ admin = User(
     token="awdwds",
 )
 
-res = Result(marks=8, correct_questions="1111001111", user_id="admin")
+res = Result(marks=8, correct_questions="1111001111", user_id="admin1234")
 
 lg = Log(login_key="12313", user_id="admin")
 
@@ -199,7 +314,7 @@ db.session.add(admin)
 db.session.add(res)
 db.session.add(
     User(
-        user_id="Guest12345",
+        id="Guest12345",
         first_name="Jojn",
         surname="jej",
         password_hash="admin12345",
@@ -213,7 +328,7 @@ db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin123
 db.session.add(Result(marks=8, correct_questions="1111101111", user_id="admin1234"))
 db.session.add(
     User(
-        user_id="guest1234",
+        id="guest1234",
         first_name="John",
         surname="Doe",
         password_hash="guest1234",
@@ -221,7 +336,13 @@ db.session.add(
         token="trthre",
     )
 )
+
 db.session.add(lg)
+result = Result(user_id="admin1234")
+db.session.add(result)
+db.session.commit()
+attempt = Attempt(user_id="admin1234", result_id=result.result_id)
+db.session.add(attempt)
 db.session.commit()
 
 
@@ -230,9 +351,9 @@ from app import *
 User.query.all()
 Result.query.all()
 Result.query.filter_by(user_id=id)
-Result.query.filter_by(user_id="admin").all()
-Result.query.filter_by(user_id="admin").all()[-1]
-Result.query.filter_by(user_id="admin")[-1]
+Result.query.filter_by(user_id="admin1234").all()
+Result.query.filter_by(user_id="admin1234").all()[-1]
+Result.query.filter_by(user_id="admin1234")[-1]
 Log.query.all()
 
 admin = User.query.get("admin1234")

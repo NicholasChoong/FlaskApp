@@ -2,15 +2,14 @@
     <body>
         <div class="container">
         {% for Rev in Res %}
-        <!-- To Be put in by the JS so that it is accurate to user test results-->
         <div class="accordion accordion-flush" id="testAccordion">
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h2 class="accordion-header" id="heading{{Rev.attempt_id}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{Rev.attempt_id}}" aria-expanded="true" aria-controls="collapseOne">
                     {{Rev.date}}
                     </button>
                 </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#testAccordion">
+            <div id="collapseOne{{Rev.attempt_id}}" class="accordion-collapse collapse" aria-labelledby="heading{{Rev.attempt_id}}" data-bs-parent="#testAccordion">
                 <div class="accordion-body">
                     <ul class="list-group">
                         <li class="list-group-item {% if Rev.correct_1 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q1 {% if Rev.correct_1 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_1}}</span> {% endif %}</li>

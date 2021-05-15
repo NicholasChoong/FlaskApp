@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm, RegistrationForm, QuizForm
-from app.models import User, Result, Log, Result, Question, Attempt
+from app.models import User, Result, Log, Question, Attempt
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -226,9 +226,45 @@ class AttemptController:
     def quiz():
         form = QuizForm()
         if form.validate_on_submit():
-            attempt = Attempt()
-            if 
-        pass
+            result = Result(user_id=current_user.id)
+            db.session.add(result)
+            db.session.flush()
+            db.session.commit()
+            attempt = Attempt(user_id=current_user.id, result_id=result.result_id)
+            attempt.answer_1 = form.question_1.data
+            attempt.answer_2 = form.question_2.data
+            attempt.answer_3 = form.question_3.data
+            if attempt is None:
+                flash("Invalid Submission")
+                return render_template("quiz.html", title="Quiz", form=form)
+            db.session.add(attempt)
+            db.session.flush()
+            db.session.commit()
+            AttemptController.mark(attempt.attempt_id)
+            return render_template("result.html", title="Result")
+        return render_template("quiz.html", title="Review", form=form)
+
+    def mark(attempt_id):
+        questions = Question.query.all()
+        attempt = Attempt.query.get(attempt_id)
+        marks = 0
+        correct_questions = ""
+        result = attempt.result
+        if questions[0].answer == attempt.answer_1:
+            marks += 1
+            correct_questions += "1"  # Correct
+        else:
+            correct_questions += "0"  # Wrong
+        if questions[1].answer == attempt.answer_2:
+            marks += 1
+            correct_questions += "1"  # Correct
+        else:
+            correct_questions += "0"  # Wrong
+        if questions[2].answer == attempt.answer_3:
+            marks += 1
+            correct_questions += "1"  # Correct
+        else:
+            correct_questions += "0"  # Wrong
 
 
 class QuestionController:

@@ -6,7 +6,6 @@ from flask import url_for
 from datetime import datetime, timedelta
 import os
 
-
 @login.user_loader
 def load_user(id):
     return User.query.get(id)

@@ -63,7 +63,8 @@ class RegistrationForm(FlaskForm):
 
 
 class QuizForm(FlaskForm):
-        question_1 = RadioField(
+    question_1 = (
+        RadioField(
             "Pick 1",
             choices=[
                 ("1", "1"),
@@ -72,7 +73,9 @@ class QuizForm(FlaskForm):
                 ("4", "4"),
             ],
         ),
-        question_2 = RadioField(
+    )
+    question_2 = (
+        RadioField(
             "Pick 2",
             choices=[
                 ("1", "1"),
@@ -81,7 +84,9 @@ class QuizForm(FlaskForm):
                 ("4", "4"),
             ],
         ),
-        question_3 = RadioField(
+    )
+    question_3 = (
+        RadioField(
             "Pick 3",
             choices=[
                 ("1", "1"),
@@ -90,7 +95,9 @@ class QuizForm(FlaskForm):
                 ("4", "4"),
             ],
         ),
-        question_4 = RadioField(
+    )
+    question_4 = (
+        RadioField(
             "Pick 4",
             choices=[
                 ("1", "1"),
@@ -99,7 +106,9 @@ class QuizForm(FlaskForm):
                 ("4", "4"),
             ],
         ),
-        question_5 = RadioField(
+    )
+    question_5 = (
+        RadioField(
             "Pick 5",
             choices=[
                 ("5", "5"),
@@ -108,7 +117,9 @@ class QuizForm(FlaskForm):
                 ("8", "8"),
             ],
         ),
-        question_6 = RadioField(
+    )
+    question_6 = (
+        RadioField(
             "Pick 6",
             choices=[
                 ("5", "5"),
@@ -117,7 +128,9 @@ class QuizForm(FlaskForm):
                 ("8", "8"),
             ],
         ),
-        question_7 = RadioField(
+    )
+    question_7 = (
+        RadioField(
             "Pick 7",
             choices=[
                 ("5", "5"),
@@ -126,13 +139,14 @@ class QuizForm(FlaskForm):
                 ("8", "8"),
             ],
         ),
-        
+    )
+    submit = SubmitField("Submit Answers")
+
     # elif questions[6].answer_type == "SAQ":
     #     question_7 = TextField(
     #         questions[6].question,
     #         validators=[regexp(f"^\w{{{len(questions[6].answer)}}}$")],
     #     )
-    submit = SubmitField("Submit Answers")
     # Experimental
     # Dynamic design
     # questions_dict = {}

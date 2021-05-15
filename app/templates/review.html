@@ -9,22 +9,19 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        {{Rev.marks}} {{Rev.date}}
+                    {{Rev.date}}
                     </button>
                 </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#testAccordion">
                 <div class="accordion-body">
                     <ul class="list-group">
-                        <li class="list-group-item {% if Rev.q1correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q1 {% if Rev.q1correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q2correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q2 {% if Rev.q2correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q3correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q3 {% if Rev.q3orrect %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q4correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q4 {% if Rev.q4correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q5correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q5 {% if Rev.q5correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q6correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q6 {% if Rev.q6correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q7correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q7 {% if Rev.q7correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q8correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q8 {% if Rev.q8correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q9correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q9 {% if Rev.q9correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
-                        <li class="list-group-item {% if Rev.q10correct %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q10 {% if Rev.q10correct %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_1 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q1 {% if Rev.correct_1 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_1}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_2 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q2 {% if Rev.correct_2 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_2}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_3 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q3 {% if Rev.correct_3 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_3}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_4 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q4 {% if Rev.correct_4 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_4}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_5 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q5 {% if Rev.correct_5 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_5}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_6 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q6 {% if Rev.correct_6 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_6}}</span> {% endif %}</li>
+                        <li class="list-group-item {% if Rev.correct_7 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q7 {% if Rev.correct_7 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_7}}</span> {% endif %}</li>
                     </ul>
                 </div>
             </div>

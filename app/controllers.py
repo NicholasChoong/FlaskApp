@@ -76,16 +76,16 @@ class ReviewController:
 class AttemptController:
     def quiz():
         form = QuizForm()
-        if form.validate_on_submit():
+        if form.is_submitted():
             attempt = Attempt()
             attempt.user_id = current_user.id
-            attempt.answer_1 = form.question_1.data.lower()
-            attempt.answer_2 = form.question_2.data.lower()
-            attempt.answer_3 = form.question_3.data.lower()
-            attempt.answer_4 = form.question_4.data.lower()
-            attempt.answer_5 = form.question_5.data.lower()
-            attempt.answer_6 = form.question_6.data.lower()
-            attempt.answer_7 = form.question_7.data.lower()
+            attempt.answer_1 = form.question_1.data
+            attempt.answer_2 = form.question_2.data
+            attempt.answer_3 = form.question_3.data
+            attempt.answer_4 = form.question_4.data
+            attempt.answer_5 = form.question_5.data
+            attempt.answer_6 = form.question_6.data
+            attempt.answer_7 = form.question_7.data
             if attempt is None:
                 flash("Invalid Submission")
                 return render_template("quiz.html", title="Quiz", form=form)
@@ -93,7 +93,7 @@ class AttemptController:
             db.session.flush()
             db.session.commit()
             AttemptController.mark(attempt.attempt_id)
-            return ReviewController.get_User_Results()
+            return redirect(url_for("review"))
         return render_template("quiz.html", title="Quiz", form=form)
 
     def mark(attempt_id):

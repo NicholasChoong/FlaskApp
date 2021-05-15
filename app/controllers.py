@@ -93,7 +93,7 @@ class AttemptController:
             db.session.flush()
             db.session.commit()
             AttemptController.mark(attempt.attempt_id)
-            return ReviewController.get_User_Results()
+            return redirect(url_for("review"))
         return render_template("quiz.html", title="Quiz", form=form)
 
     def mark(attempt_id):

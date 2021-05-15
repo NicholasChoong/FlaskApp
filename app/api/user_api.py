@@ -48,6 +48,27 @@ def update_user(id):
     return jsonify(user.to_dict())
 
 
+@app.route("/api/users/<id>/attempts", methods=["POST"])
+@token_auth.login_required
+def new_attempt(id):
+    if g.current_user.id != id:
+        abort(403)
+    data = request.get_json() or {}
+    # if "marks" not in data or "result_id" not in data:
+    #     return bad_request("Must include marks and result_id")
+    user = User.query.get(id)
+    if user is None:
+        return bad_request("Unknown user, or wrong id")
+    attempt = Attempt()
+    attempt.from_dict(data)
+    db.session.flush()  # generates pk for new project
+    db.session.commit()
+    response = jsonify(attempt.to_dict())
+    response.status_code = 201  # creating a new resource should chare the location....
+    response.headers["Location"] = url_for("new_attempt", id=user.id)
+    return response
+
+
 @app.route("/api/users/<id>/results", methods=["GET"])
 @token_auth.login_required
 def get_user_results(id):
@@ -66,32 +87,6 @@ def get_user_results(id):
         result_dict["user_name"] = User.query.get(result.id).__str__()
         data[f"{result.result_id}"] = result_dict
     return jsonify(data)
-
-
-number_of_questions = 10
-
-
-@app.route("/api/users/<id>/results", methods=["POST"])
-@token_auth.login_required
-def new_result(id):
-    if g.current_user.id != id:
-        abort(403)
-    data = request.get_json() or {}
-    if "marks" not in data or "result_id" not in data:
-        return bad_request("Must include marks and result_id")
-    user = User.query.get(id)
-    if user is None:
-        return bad_request("Unknown user, or wrong id")
-    result = Result()
-    result.marks = -1
-    result.correct_questions = "0" * number_of_questions
-    db.session.add(result)
-    db.session.flush()  # generates pk for new project
-    db.session.commit()
-    response = jsonify(result.to_dict())
-    response.status_code = 201  # creating a new resource should chare the location....
-    response.headers["Location"] = url_for("new_user_results", id=user.id)
-    return response
 
 
 @app.route("/api/users/<id>/results", methods=["PUT"])

@@ -63,182 +63,75 @@ class RegistrationForm(FlaskForm):
 
 
 class QuizForm(FlaskForm):
-    questions = [
-        Question(
-            question="Pick 1",
-            answer_type="MCQ",
-            answer_choice_1="1",
-            answer_choice_2="2",
-            answer_choice_3="3",
-            answer_choice_4="4",
-            answer="1",
-        ),
-        Question(
-            question="Pick 2",
-            answer_type="MCQ",
-            answer_choice_1="1",
-            answer_choice_2="2",
-            answer_choice_3="3",
-            answer_choice_4="4",
-            answer="2",
-        ),
-        Question(
-            question="Pick 3",
-            answer_type="MCQ",
-            answer_choice_1="1",
-            answer_choice_2="2",
-            answer_choice_3="3",
-            answer_choice_4="4",
-            answer="3",
-        ),
-        Question(
-            question="Pick 4",
-            answer_type="MCQ",
-            answer_choice_1="1",
-            answer_choice_2="2",
-            answer_choice_3="3",
-            answer_choice_4="4",
-            answer="4",
-        ),
-        Question(
-            question="Pick 5",
-            answer_type="MCQ",
-            answer_choice_1="5",
-            answer_choice_2="6",
-            answer_choice_3="7",
-            answer_choice_4="8",
-            answer="1",
-        ),
-        Question(
-            question="Pick 6",
-            answer_type="MCQ",
-            answer_choice_1="5",
-            answer_choice_2="6",
-            answer_choice_3="7",
-            answer_choice_4="8",
-            answer="2",
-        ),
-        Question(
-            question="Pick 7",
-            answer_type="MCQ",
-            answer_choice_1="5",
-            answer_choice_2="6",
-            answer_choice_3="7",
-            answer_choice_4="8",
-            answer="3",
-        ),
-    ]
-    if questions[0].answer_type == "MCQ":
         question_1 = RadioField(
-            str(questions[0].question),
+            "Pick 1",
             choices=[
-                ("1", f"{questions[0].answer_choice_1}"),
-                ("2", f"{questions[0].answer_choice_2}"),
-                ("3", f"{questions[0].answer_choice_3}"),
-                ("4", f"{questions[0].answer_choice_4}"),
+                ("1", "1"),
+                ("2", "2"),
+                ("3", "3"),
+                ("4", "4"),
             ],
-        )
-    elif questions[0].answer_type == "SAQ":
-        question_1 = TextField(
-            questions[0].question,
-            validators=[regexp(f"^\w{{{len(questions[0].answer)}}}$")],
-        )
-
-    if questions[1].answer_type == "MCQ":
+        ),
         question_2 = RadioField(
-            str(questions[1].question),
+            "Pick 2",
             choices=[
-                ("1", f"{questions[1].answer_choice_1}"),
-                ("2", f"{questions[1].answer_choice_2}"),
-                ("3", f"{questions[1].answer_choice_3}"),
-                ("4", f"{questions[1].answer_choice_4}"),
+                ("1", "1"),
+                ("2", "2"),
+                ("3", "3"),
+                ("4", "4"),
             ],
-        )
-    elif questions[1].answer_type == "SAQ":
-        question_2 = TextField(
-            questions[1].question,
-            validators=[regexp(f"^\w{{{len(questions[1].answer)}}}$")],
-        )
-
-    if questions[2].answer_type == "MCQ":
+        ),
         question_3 = RadioField(
-            str(questions[2].question),
+            "Pick 3",
             choices=[
-                ("1", f"{questions[2].answer_choice_1}"),
-                ("2", f"{questions[2].answer_choice_2}"),
-                ("3", f"{questions[2].answer_choice_3}"),
-                ("4", f"{questions[2].answer_choice_4}"),
+                ("1", "1"),
+                ("2", "2"),
+                ("3", "3"),
+                ("4", "4"),
             ],
-        )
-    elif questions[2].answer_type == "SAQ":
-        question_3 = TextField(
-            questions[2].question,
-            validators=[regexp(f"^\w{{{len(questions[2].answer)}}}$")],
-        )
-
-    if questions[3].answer_type == "MCQ":
+        ),
         question_4 = RadioField(
-            str(questions[3].question),
+            "Pick 4",
             choices=[
-                ("1", f"{questions[3].answer_choice_1}"),
-                ("2", f"{questions[3].answer_choice_2}"),
-                ("3", f"{questions[3].answer_choice_3}"),
-                ("4", f"{questions[3].answer_choice_4}"),
+                ("1", "1"),
+                ("2", "2"),
+                ("3", "3"),
+                ("4", "4"),
             ],
-        )
-    elif questions[3].answer_type == "SAQ":
-        question_4 = TextField(
-            questions[3].question,
-            validators=[regexp(f"^\w{{{len(questions[3].answer)}}}$")],
-        )
-
-    if questions[4].answer_type == "MCQ":
+        ),
         question_5 = RadioField(
-            str(questions[4].question),
+            "Pick 5",
             choices=[
-                ("1", f"{questions[4].answer_choice_1}"),
-                ("2", f"{questions[4].answer_choice_2}"),
-                ("3", f"{questions[4].answer_choice_3}"),
-                ("4", f"{questions[4].answer_choice_4}"),
+                ("5", "5"),
+                ("6", "6"),
+                ("7", "7"),
+                ("8", "8"),
             ],
-        )
-    elif questions[4].answer_type == "SAQ":
-        question_5 = TextField(
-            questions[4].question,
-            validators=[regexp(f"^\w{{{len(questions[4].answer)}}}$")],
-        )
-
-    if questions[5].answer_type == "MCQ":
+        ),
         question_6 = RadioField(
-            str(questions[5].question),
+            "Pick 6",
             choices=[
-                ("1", f"{questions[5].answer_choice_1}"),
-                ("2", f"{questions[5].answer_choice_2}"),
-                ("3", f"{questions[5].answer_choice_3}"),
-                ("4", f"{questions[5].answer_choice_4}"),
+                ("5", "5"),
+                ("6", "6"),
+                ("7", "7"),
+                ("8", "8"),
             ],
-        )
-    elif questions[5].answer_type == "SAQ":
-        question_6 = TextField(
-            questions[5].question,
-            validators=[regexp(f"^\w{{{len(questions[5].answer)}}}$")],
-        )
-
-    if questions[6].answer_type == "MCQ":
+        ),
         question_7 = RadioField(
-            str(questions[6].question),
+            "Pick 7",
             choices=[
-                ("1", f"{questions[6].answer_choice_1}"),
-                ("2", f"{questions[6].answer_choice_2}"),
-                ("3", f"{questions[6].answer_choice_3}"),
-                ("4", f"{questions[6].answer_choice_4}"),
+                ("5", "5"),
+                ("6", "6"),
+                ("7", "7"),
+                ("8", "8"),
             ],
-        )
-    elif questions[6].answer_type == "SAQ":
-        question_7 = TextField(
-            questions[6].question,
-            validators=[regexp(f"^\w{{{len(questions[6].answer)}}}$")],
-        )
+        ),
+        
+    # elif questions[6].answer_type == "SAQ":
+    #     question_7 = TextField(
+    #         questions[6].question,
+    #         validators=[regexp(f"^\w{{{len(questions[6].answer)}}}$")],
+    #     )
     submit = SubmitField("Submit Answers")
     # Experimental
     # Dynamic design

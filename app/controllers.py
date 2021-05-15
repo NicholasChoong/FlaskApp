@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm, RegistrationForm, QuizForm
-from app.models import User, Result, Log, Question, Attempt
+from app.models import User, Log, Question, Attempt
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -67,155 +67,6 @@ class UserController:
         )
 
 
-class ResultController:
-    pass
-    # def result_list():
-    #     results = ResultController.get_all_results()
-    #     return render_template("index.html", results=results)
-
-    # def new_project():
-    #     if not current_user.project_id == None:
-    #         flash(current_user.prefered_name + " already has a project")
-    #         return redirect(url_for("index"))
-    #     form = ProjectForm()
-    #     form.lab.choices = ProjectController.get_labs()
-    #     if form.validate_on_submit():  # for post requests
-    #         partners = [current_user]
-    #         partners.append(
-    #             Student.query.filter_by(id=form.partner1_number.data).first()
-    #         )
-    #         partners.append(
-    #             Student.query.filter_by(id=form.partner2_number.data).first()
-    #         )
-    #         partners.append(
-    #             Student.query.filter_by(id=form.partner3_number.data).first()
-    #         )
-    #         team = [p for p in partners if p != None]
-    #         # illegal scenarios
-    #         if len(team) < 2:
-    #             flash("At least two students per group")
-    #             return redirect(url_for("index"))
-    #         distinct = False
-    #         for partner in team:
-    #             if partner.is_committed():
-    #                 flash(partner.prefered_name + " already has a project assigned")
-    #                 return redirect(url_for("index"))
-    #             if partner.id != current_user.id:
-    #                 distinct = True
-    #         if not distinct:
-    #             flash("At least two students per group")
-    #             return redirect(url_for("index"))
-    #         # check lab availability
-    #         lab = Lab.query.filter_by(lab_id=form.lab.data).first()
-    #         if lab is None or not lab.is_available():
-    #             flash("Lab not available")
-    #             return redirect(url_for("index"))
-    #         # Everything is good, make commits
-    #         ProjectController.make_project(form.project_description.data, lab, team)
-    #         return redirect(url_for("index"))
-    #     return render_template("new_project.html", student=current_user, form=form)
-
-    # def make_project(description, lab, team):
-    #     project = Project()
-    #     project.description = description
-    #     project.lab_id = lab.lab_id
-    #     db.session.add(project)
-    #     db.session.flush()  # generates pk for new project
-    #     for student in team:
-    #         student.project_id = project.project_id
-    #     db.session.commit()
-    #     return project
-
-    # def edit_project():
-    #     project = Project.query.filter_by(project_id=current_user.project_id).first()
-    #     if project == None:
-    #         flash(current_user.prefered_name + " does not have a project yet")
-    #         redirect(url_for("new_project"))
-    #     team = project.get_team()
-    #     form = ProjectForm()  # initialise with parameters
-    #     form.lab.choices = ProjectController.get_labs(project.lab_id)
-    #     if form.validate_on_submit():  # for post requests
-    #         lab = Lab.query.filter_by(lab_id=form.lab.data).first()
-    #         if lab is None or not (lab.lab_id == project.lab_id or lab.is_available()):
-    #             flash("Lab not available")
-    #         else:
-    #             project.description = form.project_description.data
-    #             project.lab_id = lab.lab_id
-    #             db.session.add(project)
-    #             db.session.commit()
-    #             return redirect(url_for("index"))
-    #     return render_template(
-    #         "edit_project.html", team=team, project=project, form=form
-    #     )
-
-    # def delete_project():
-    #     project = Project.query.filter_by(project_id=current_user.project_id).first()
-    #     if project is None:
-    #         flash(current_user.prefered_name + " does not have a project")
-    #     else:
-    #         flash(
-    #             current_user.prefered_name
-    #             + "'s project "
-    #             + project.description
-    #             + " deleted."
-    #         )
-    #         for s in project.get_team():
-    #             s.project_id = None
-    #         db.session.delete(project)
-    #         db.session.commit()
-    #         return redirect(url_for("index"))
-
-    # """Get's a string representing the team members"""
-
-    # def get_team_string(team):
-    #     team_str = team[0].prefered_name
-    #     for i in range(1, len(team)):
-    #         team_str = (
-    #             team_str
-    #             + (", " if i < len(team) - 1 else " & ")
-    #             + team[i].prefered_name
-    #         )
-    #     return team_str
-
-    # """returns list of registered projects as a list of dictionaries, with elements "project", "team" and "lab". Used by index to display project list."""
-
-    # def get_all_results():
-    #     result_list = Result.query.all()
-    #     results = []
-    #     for result in result_list:
-    #         team_str = ProjectController.get_team_string(p.get_team())
-    #         l = Lab.query.filter_by(lab_id=p.lab_id).first()
-    #         dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
-    #         time = dt.strftime("%A %d %b, %H:%M")
-    #         lab = l.lab
-    #         projects.append(
-    #             {
-    #                 "project_id": p.project_id,
-    #                 "description": p.description,
-    #                 "team": team_str,
-    #                 "lab": lab,
-    #                 "time": time,
-    #             }
-    #         )
-    #     projects.sort(key=lambda p: p["time"] + p["lab"])
-    #     return projects
-
-    # """Returns available labs formatted for a select input, including the current lab"""
-
-    # def get_labs(lab_id=None):
-    #     labs = Lab.get_available_labs()
-    #     if lab_id != None:
-    #         lab = Lab.query.get(lab_id)
-    #         dt = datetime.strptime(lab.time, "%Y-%m-%dT%H:%M")
-    #         choices = [(str(lab.lab_id), dt.strftime("%A %d %b, %H:%M"))]
-    #     else:
-    #         choices = []
-    #     for l in labs:
-    #         dt = datetime.strptime(l.time, "%Y-%m-%dT%H:%M")
-    #         choices.append((str(l.lab_id), dt.strftime("%A %d %b, %H:%M")))
-    #     return choices
-
-
 class ReviewController:
     def get_User_Results():
         Rev = Result.query.filter_by(user_id=current_user.id).all()
@@ -226,14 +77,14 @@ class AttemptController:
     def quiz():
         form = QuizForm()
         if form.validate_on_submit():
-            result = Result(user_id=current_user.id)
-            db.session.add(result)
-            db.session.flush()
-            db.session.commit()
-            attempt = Attempt(user_id=current_user.id, result_id=result.result_id)
+            attempt = Attempt(user_id=current_user.id)
             attempt.answer_1 = form.question_1.data
             attempt.answer_2 = form.question_2.data
             attempt.answer_3 = form.question_3.data
+            attempt.answer_4 = form.question_4.data
+            attempt.answer_5 = form.question_5.data
+            attempt.answer_6 = form.question_6.data
+            attempt.answer_7 = form.question_7.data
             if attempt is None:
                 flash("Invalid Submission")
                 return render_template("quiz.html", title="Quiz", form=form)
@@ -241,34 +92,20 @@ class AttemptController:
             db.session.flush()
             db.session.commit()
             AttemptController.mark(attempt.attempt_id)
-            return render_template("result.html", title="Result")
-        return render_template("quiz.html", title="Review", form=form)
+            return render_template("review.html", title="Review")
+        return render_template("quiz.html", title="Quiz", form=form)
 
     def mark(attempt_id):
         questions = Question.query.all()
         attempt = Attempt.query.get(attempt_id)
-        marks = 0
-        correct_questions = ""
-        result = attempt.result
-        if questions[0].answer == attempt.answer_1:
-            marks += 1
-            correct_questions += "1"  # Correct
-        else:
-            correct_questions += "0"  # Wrong
-        if questions[1].answer == attempt.answer_2:
-            marks += 1
-            correct_questions += "1"  # Correct
-        else:
-            correct_questions += "0"  # Wrong
-        if questions[2].answer == attempt.answer_3:
-            marks += 1
-            correct_questions += "1"  # Correct
-        else:
-            correct_questions += "0"  # Wrong
-
-
-class QuestionController:
-    pass
+        attempt.correct_1 = questions[0].answer == attempt.answer_1
+        attempt.correct_2 = questions[1].answer == attempt.answer_2
+        attempt.correct_3 = questions[2].answer == attempt.answer_3
+        attempt.correct_4 = questions[3].answer == attempt.answer_4
+        attempt.correct_5 = questions[4].answer == attempt.answer_5
+        attempt.correct_6 = questions[5].answer == attempt.answer_6
+        attempt.correct_7 = questions[6].answer == attempt.answer_7
+        db.session.commit()
 
 
 class LogController:

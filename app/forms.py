@@ -65,7 +65,7 @@ class RegistrationForm(FlaskForm):
 class QuizForm(FlaskForm):
     question_1 = RadioField(
         "Pick 1",
-        choice=[
+        choices=[
             ("1", "1"),
             ("2", "2"),
             ("3", "3"),
@@ -74,7 +74,7 @@ class QuizForm(FlaskForm):
     )
     question_2 = RadioField(
         "Pick 2",
-        choice=[
+        choices=[
             ("1", "1"),
             ("2", "2"),
             ("3", "3"),
@@ -83,7 +83,7 @@ class QuizForm(FlaskForm):
     )
     question_3 = RadioField(
         "Pick 3",
-        choice=[
+        choices=[
             ("1", "1"),
             ("2", "2"),
             ("3", "3"),
@@ -92,7 +92,7 @@ class QuizForm(FlaskForm):
     )
     question_4 = RadioField(
         "Pick 4",
-        choice=[
+        choices=[
             ("1", "1"),
             ("2", "2"),
             ("3", "3"),
@@ -101,7 +101,7 @@ class QuizForm(FlaskForm):
     )
     question_5 = RadioField(
         "Pick 5",
-        choice=[
+        choices=[
             ("5", "5"),
             ("6", "6"),
             ("7", "7"),
@@ -110,7 +110,7 @@ class QuizForm(FlaskForm):
     )
     question_6 = RadioField(
         "Pick 6",
-        choice=[
+        choices=[
             ("5", "5"),
             ("6", "6"),
             ("7", "7"),
@@ -119,7 +119,7 @@ class QuizForm(FlaskForm):
     )
     question_7 = RadioField(
         "Pick 7",
-        choice=[
+        choices=[
             ("5", "5"),
             ("6", "6"),
             ("7", "7"),

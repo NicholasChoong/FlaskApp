@@ -1,6 +1,19 @@
 {% extends "base.html" %} {% block content %}
-<style></style>
-<body>
+<style>
+    .intro-para {
+        max-width: 1000px;
+        margin: auto;
+    }
+    .quote {
+        background-color: rgb(44, 47, 51);
+        color: white;
+        padding: 1em;
+        margin: 0;
+        border-radius: 0.7rem;
+    }
+</style>
+<img src="/static/battlestation.jpg" alt="" class="pc-setup">
+<div class="intro-para">
     <h1 class="index-title">Know your PC</h1>
     <p class="intro">
         Hi, {{current_user.id}}
@@ -38,5 +51,5 @@
         you are qualified to join the PC Master Race and also build your very
         own battle station.
     </p>
-</body>
+</div>
 {% endblock %}

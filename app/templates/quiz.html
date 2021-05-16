@@ -13,12 +13,6 @@
     }
 </style>
 
-{% if current_user.isAdmin %}
-<div class="admin-test">
-    <p>YOU ARE AN ADMIN!!!!</p>
-</div>
-{% endif %}
-
 <div class="container">
     {% if current_user.is_anonymous %}
     <h2>Please <a href="{{ url_for('login') }}">Sign in</a> to access Quiz</h2>

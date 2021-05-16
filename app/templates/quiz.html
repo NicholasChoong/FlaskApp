@@ -1,65 +1,133 @@
 {% extends "base.html" %} {% block content %}
+
+<style>
+    .quiz,
+    #quiz-title,
+    #quiz-submission {
+        max-width: 1080px;
+        margin: auto;
+    }
+</style>
+
 <h1 class="title" id="quiz-title">Quiz</h1>
+
 <form action="" method="POST">
     {{ form.hidden_tag() }}
     <div class="quiz">
-        <p id="question_1">
+        <div id="question_1">
+            <br />
             <strong>Question 1.</strong>
             <br />
             {{form.question_1.label}}
             <br />
-            {{form.question_1}}
-        </p>
-
-        <p id="question_2">
+            <div id="choices_1">
+                {% for subfield in form.question_1 %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <br />
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+        <div id="question_2">
             <strong>Question 2.</strong>
             <br />
             {{form.question_2.label}}
             <br />
-            {{form.question_2}}
-        </p>
-
-        <p id="question_3">
+            <div id="choices_2">
+                {% for subfield in form.question_2 %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <br />
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+        <div id="question_3">
             <strong>Question 3.</strong>
             <br />
             {{form.question_3.label}}
             <br />
-            {{form.question_3}}
-        </p>
-
-        <p id="question_4">
+            <div id="choices_1">
+                {% for subfield in form.question_3 %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <br />
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+        <div id="question_4">
             <strong>Question 4.</strong>
             <br />
             {{form.question_4.label}}
             <br />
-            {{form.question_4}}
-        </p>
-
-        <p id="question_5">
+            <div id="choices_1">
+                {% for subfield in form.question_4 %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <br />
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+        <div id="question_5">
             <strong>Question 5.</strong>
             <br />
             {{form.question_5.label}}
             <br />
-            {{form.question_5}}
-        </p>
-
-        <p id="question_6">
+            <div id="choices_1">
+                {% for subfield in form.question_5 %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <br />
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+        <div id="question_6">
             <strong>Question 6.</strong>
             <br />
             {{form.question_6.label}}
             <br />
-            {{form.question_6}}
-        </p>
-
-        <p id="question_7">
+            <div id="choices_1">
+                {% for subfield in form.question_6 %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <br />
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+        <div id="question_7">
             <strong>Question 7.</strong>
             <br />
             {{form.question_7.label}}
             <br />
+            <!-- <div id="choices_1">
+               
+            </div> -->
             {{form.question_7}}
-        </p>
+        </div>
     </div>
-    <button name="Submit Answers" class="btn btn-lg btn-primary" type="submit" id="quiz-submission">
+    <button
+        name="Submit Answers"
+        class="btn btn-lg btn-primary"
+        type="submit"
+        id="quiz-submission"
+    >
         Submit
     </button>
 </form>

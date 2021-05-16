@@ -118,7 +118,7 @@ class QuizForm(FlaskForm):
         ],
     )
     question_7 = TextField(
-        "A ___________ is a main printed circuit board that allows communications between different electronic components",
+        "A ___________ is a main printed circuit board that allows communications between different electronic components.",
         validators=[regexp("^\w{11}$")],
     )
     submit = SubmitField("Submit Answers")

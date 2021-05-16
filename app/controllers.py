@@ -138,6 +138,9 @@ class AttemptController:
 
 class LogController:
     def stats():
+        user = User.query.get(current_user.id)
+        if user is None or not user.isAdmin:
+            return redirect(url_for("index"))
         total_logs = Log.query.all()
         today_logs = [log for log in total_logs if log.date.date() == date.today()]
         total_attempts = Attempt.query.all()

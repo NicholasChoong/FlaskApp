@@ -20,6 +20,10 @@ class UserController:
                     "login.html", title="Login", signinform=lform, signupform=rform
                 )
             login_user(user, remember=lform.remember_me.data)
+            visitor = Log(user_id=user.id)
+            db.session.add(visitor)
+            db.session.flush()
+            db.session.commit()
             next_page = request.args.get("next")
             if not next_page or url_parse(next_page).netloc != "":
                 next_page = "index"
@@ -61,6 +65,10 @@ class UserController:
             db.session.flush()
             db.session.commit()
             login_user(user, remember=False)
+            visitor = Log(user_id=user.id)
+            db.session.add(visitor)
+            db.session.flush()
+            db.session.commit()
             return redirect(url_for("index"))
         return render_template(
             "login.html", title="Register", signupform=form, signinform=lform
@@ -86,7 +94,7 @@ class ReviewController:
                 row.correct += 1
             if row.correct_7:
                 row.correct += 1
-                
+
         return render_template("review.html", title="Review", Res=Rev)
 
 
@@ -121,13 +129,17 @@ class AttemptController:
         attempt.correct_3 = questions[2].answer == attempt.answer_3
         attempt.correct_4 = questions[3].answer == attempt.answer_4
         attempt.correct_5 = questions[4].answer == attempt.answer_5
-        flash(f"Correct Answer: {questions[4].answer}, your answer: {attempt.answer_5}")
+        # flash(f"Correct Answer: {questions[4].answer}, your answer: {attempt.answer_5}")
         attempt.correct_6 = questions[5].answer == attempt.answer_6
         attempt.correct_7 = questions[6].answer == attempt.answer_7
-        flash(f"Correct Answer: {questions[6].answer}, your answer: {attempt.answer_7}")
+        # flash(f"Correct Answer: {questions[6].answer}, your answer: {attempt.answer_7}")
         db.session.commit()
 
 
 class LogController:
-    def get_all_logs():
-        pass
+    def get_all_vistors():
+        logs = Log.query.all()
+        if logs is None:
+            flash("No visitors :(")
+            return redirect(url_for("index"))
+    

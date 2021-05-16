@@ -54,23 +54,6 @@ class User(UserMixin, db.Model):
             return None
         return user
 
-    def is_committed(self):
-        return self.first_name is not None
-        
-    """Adding in dictionary methods to convert to JSON
-     Format
-     {
-     'id':'19617810',
-     'first_name':'Timothy',
-     'surname': 'French',
-     'prefered_name':'Tim',
-     'cits3403':False,
-     'pin':'0000',
-     '_links':{
-       'project': 'api/student/19617810/project'
-      }
-    }"""
-
     def to_dict(self):
         data = {
             "id": self.id,
@@ -262,4 +245,4 @@ class Log(db.Model):
             self.user_id = data["user_id"]
 
     def __repr__(self):
-        return f"[log_id: {self.log_id}, login_key: {self.login_key}, user_id: {self.user_id}, date: {self.date}]"
+        return f"[log_id: {self.log_id}, user_id: {self.user_id}, date: {self.date}]"

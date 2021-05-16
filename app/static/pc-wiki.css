@@ -1,19 +1,90 @@
+/* base */
+body {
+    background-color: rgb(35, 39, 42);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .nav-link {
-    color:orange;
+    color: orange;
 }
 .btn-outline-primary {
-    color:orange;
-    border-color:orange;
+    color: orange;
+    border-color: orange;
 }
 .btn-primary {
     background-color: orange;
-    border-color:orange;
+    border-color: orange;
 }
 .accordion-button {
-    color:#5c656d;
+    color: #5c656d;
     border: 1px solid orange;
 }
 .accordion-button:not(.collapsed) {
-    color:black;
+    color: black;
     background-color: #4cad9f;
+}
+
+footer {
+    text-align: center;
+    margin-top: auto;
+}
+
+/* #################################################################### */
+/* Index */
+.intro-para {
+    max-width: 60rem;
+    margin: auto;
+}
+.quote {
+    background-color: rgb(44, 47, 51);
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0.7rem;
+}
+#battlestation {
+    margin-top: -1rem;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+.index-title {
+    margin-bottom: 1rem;
+}
+#intro-2 {
+    margin-bottom: 30rem;
+}
+
+/* #################################################################### */
+/* Quiz */
+.quiz,
+#quiz-title {
+    max-width: 50%;
+    margin: auto;
+}
+.submit-button {
+    float: right;
+    margin-top: 5rem;
+    margin-bottom: 10rem;
+}
+
+/* #################################################################### */
+/* Stat */
+.display {
+    max-width: 37rem;
+    margin: auto;
+    font-size: 4rem;
+}
+.visitors {
+    margin-top: 25rem;
+    background-color: rgb(44, 47, 51);
+    padding: 1rem;
+    border-radius: 0.7rem;
+}
+.attempts {
+    background-color: rgb(44, 47, 51);
+    padding: 1rem;
+    border-radius: 0.7rem;
 }

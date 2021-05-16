@@ -104,8 +104,10 @@ class AttemptController:
         attempt.correct_3 = questions[2].answer == attempt.answer_3
         attempt.correct_4 = questions[3].answer == attempt.answer_4
         attempt.correct_5 = questions[4].answer == attempt.answer_5
+        flash(f"Correct Answer: {questions[4].answer}, your answer: {attempt.answer_5}")
         attempt.correct_6 = questions[5].answer == attempt.answer_6
         attempt.correct_7 = questions[6].answer == attempt.answer_7
+        flash(f"Correct Answer: {questions[6].answer}, your answer: {attempt.answer_7}")
         db.session.commit()
 
 

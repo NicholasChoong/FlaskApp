@@ -1,63 +1,47 @@
 {% extends "base.html" %} {% block content %}
 
-<style>
-    .quiz,
-    #quiz-title {
-        max-width: 1000px;
-        margin: auto;
-    }
-
-    .submit-button {
-        float: right;
-        margin-top: 100px;
-    }
-</style>
-
 <div class="container">
     {% if current_user.is_anonymous %}
     <h2>Please <a href="{{ url_for('login') }}">Sign in</a> to access Quiz</h2>
     {%else%}
     <h1 class="title" id="quiz-title">Quiz</h1>
 
-    <form action="" method="POST">
+    <form name="quiz" action="/quiz" method="POST">
         {{ form.hidden_tag() }}
         <div class="quiz">
             <div id="question_1">
                 <br />
                 <strong style="text-decoration: underline">Question 1.</strong>
                 <br />
-                {{form.question_1.label}}
-                <br />
-                <div id="choices_1">
+                {{form.question_1.label(for=form.question_1.name+"-0")}}
+                <table id="answers-1">
                     {% for subfield in form.question_1 %}
                     <tr>
                         <td>{{ subfield }}</td>
                         <td>{{ subfield.label }}</td>
                     </tr>
-                    <br />
                     {% endfor %}
-                </div>
+                </table>
             </div>
             <br />
             <div id="question_2">
                 <strong style="text-decoration: underline">Question 2.</strong>
                 <br />
-                {{form.question_2.label}}
-                <br />
-                <div id="choices_2">
+                {{form.question_2.label(for=form.question_1.name+"-0")}}
+                <table id="answers-2">
                     {% for subfield in form.question_2 %}
                     <tr>
                         <td>{{ subfield }}</td>
                         <td>{{ subfield.label }}</td>
                     </tr>
-                    <br />
                     {% endfor %}
-                </div>
+                </table>
             </div>
             <br />
             <img
                 src="/static/motherboard.jpg"
                 alt="Image of computer that is yet to be built"
+                class="motherboard"
             />
             <p class="cite">
                 Figure 1. A motherboard
@@ -67,76 +51,66 @@
                     https://www.wepc.com/tips/how-are-motherboards-made-manufacturing/</cite
                 >
             </p>
-            <div id="question_3">
+            <div id="question-3">
                 <strong style="text-decoration: underline">Question 3.</strong>
                 <br />
-                {{form.question_3.label}}
-                <br />
-                <div id="choices_1">
+                {{form.question_3.label(for=form.question_1.name+"-0")}}
+                <table id="answers_3">
                     {% for subfield in form.question_3 %}
                     <tr>
                         <td>{{ subfield }}</td>
                         <td>{{ subfield.label }}</td>
                     </tr>
-                    <br />
                     {% endfor %}
-                </div>
+                </table>
             </div>
             <br />
-            <div id="question_4">
+            <div id="question-4">
                 <strong style="text-decoration: underline">Question 4.</strong>
                 <br />
-                {{form.question_4.label}}
-                <br />
-                <div id="choices_1">
+                {{form.question_4.label(for=form.question_1.name+"-0")}}
+                <table id="answers_4">
                     {% for subfield in form.question_4 %}
                     <tr>
                         <td>{{ subfield }}</td>
                         <td>{{ subfield.label }}</td>
                     </tr>
-                    <br />
                     {% endfor %}
-                </div>
+                </table>
             </div>
             <br />
-            <div id="question_5">
+            <div id="question-5">
                 <strong style="text-decoration: underline">Question 5.</strong>
                 <br />
-                {{form.question_5.label}}
-                <br />
-                <div id="choices_1">
+                {{form.question_5.label(for=form.question_1.name+"-0")}}
+                <table id="answers_5">
                     {% for subfield in form.question_5 %}
                     <tr>
                         <td>{{ subfield }}</td>
                         <td>{{ subfield.label }}</td>
                     </tr>
-                    <br />
                     {% endfor %}
-                </div>
+                </table>
             </div>
             <br />
-            <div id="question_6">
+            <div id="question-6">
                 <strong style="text-decoration: underline">Question 6.</strong>
                 <br />
-                {{form.question_6.label}}
-                <br />
-                <div id="choices_1">
+                {{form.question_6.label(for=form.question_1.name+"-0")}}
+                <table id="answers_6">
                     {% for subfield in form.question_6 %}
                     <tr>
                         <td>{{ subfield }}</td>
                         <td>{{ subfield.label }}</td>
                     </tr>
-                    <br />
                     {% endfor %}
-                </div>
+                </table>
             </div>
             <br />
-            <div id="question_7">
+            <div id="question-7">
                 <strong style="text-decoration: underline">Question 7.</strong>
                 <br />
-                {{form.question_7.label}}
-                <br />
-                {{form.question_7(maxlength="11")}}
+                {{form.question_7.label}} {{form.question_7(maxlength="11")}}
             </div>
             <br />
         </div>

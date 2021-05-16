@@ -17,6 +17,14 @@ def create_tables():
     from app.models import User, Log, Question, Attempt
 
     db.create_all()
+    admin = User(
+        id="UWAadmin",
+        first_name="UWA",
+        surname="jej",
+        password_hash="aUWAadmin",
+        isAdmin=True,
+    )
+    # db.session.add(admin)
     db.session.add(
         Question(
             question="Pick 1",

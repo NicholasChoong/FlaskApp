@@ -9,9 +9,9 @@ from datetime import datetime, date
 
 class UserController:
     def login():
-        lform = LoginForm()
+        lform = LoginForm(prefix='l')
         rform = RegistrationForm()  # ??include current user data by default
-
+        
         if lform.validate_on_submit():  # will return false for a get request
             user = User.query.get(lform.username.data)
             if user is None or not user.check_password(lform.password.data):
@@ -39,7 +39,7 @@ class UserController:
 
     def register():
         form = RegistrationForm()  # ??include current user data by default
-        lform = LoginForm()
+        lform = LoginForm(prefix='l')
         if form.validate_on_submit():  # will return false for a GET request
             user = User()
             user.id = form.username.data

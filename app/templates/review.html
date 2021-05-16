@@ -1,12 +1,11 @@
 {% extends "base.html" %} {% block content %}
-    <body>
         <div class="container">
             {% for Rev in Res %}
             <div class="accordion accordion-flush" id="testAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading{{Rev.attempt_id}}">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{Rev.attempt_id}}" aria-expanded="true" aria-controls="collapseOne">
-                        <div class="col-10"> Quiz Completed: <span class="UTCTime">{{Rev.date}} UTC</span> </div> <div>Score: {{Rev.correct}}/7</div>
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{Rev.attempt_id}}" aria-expanded="true" aria-controls="collapseOne{{Rev.attempt_id}}">
+                        <span class="col-10"> Quiz Completed: <span class="UTCTime">{{Rev.date}} UTC</span> </span> <span>Score: {{Rev.correct}}/7</span>
                        </button>
                     </h2>
                     <div id="collapseOne{{Rev.attempt_id}}" class="accordion-collapse collapse" aria-labelledby="heading{{Rev.attempt_id}}" data-bs-parent="#testAccordion">
@@ -20,7 +19,7 @@
                             <li class="list-group-item {% if Rev.correct_6 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q6 {% if Rev.correct_6 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_6}}</span> {% endif %}</li>
                             <li class="list-group-item {% if Rev.correct_7 %}list-group-item-success {% else%} list-group-item-danger{%endif%}">Q7 {% if Rev.correct_7 %}Correct {% else%}Incorrect <span class="text-end">Answer Given {{Rev.answer_7}}</span> {% endif %}</li>
                         </ul>
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -31,9 +30,6 @@
             <h2>No Assesments completed</h2>
             {%endif%}
         {% endfor %}
-          
-
         </div>
-    </body>
-</html>
+
 {% endblock %}

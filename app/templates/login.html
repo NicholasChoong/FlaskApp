@@ -12,24 +12,24 @@
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade {% if title == 'Login'%} active show {% endif %}" id="nav-signin" role="tabpanel" aria-labelledby="nav-signin-tab">
         <form id="signin-form" action="/login" name="login" method="POST">
-        {{signinform.hidden_tag()}}
+          {{ signinform.hidden_tag() }}
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       
           <div class="form-floating">
-            <input name="username" type="text" class="form-control {% if signinform.username.errors %}is-invalid {% endif %}" id="floatingInput" required>
-            <label for="floatingInput">{{ signinform.username.label }}</label>
+            <input name="username" type="text" class="form-control {% if signinform.username.errors %}is-invalid {% endif %}" id="floatingInputsignin" required>
+            <label for="floatingInputsignin">Username</label>
             {% for error in signinform.username.errors %}
             <div class="invalid-feedback">{{ error}}</div>
             {% endfor %}
           </div>
           <div class="form-floating">
             <input name="password" type="password" class="form-control" id="floatingPassword">
-            <label for="floatingPassword">{{ signinform.password.label }}</label>
+            <label for="floatingPassword">Password</label>
           </div>
       
           <div class="checkbox mb-3">
             <label>
-              <input name="Remember Me" type="checkbox" value="remember-me">{{signinform.remember_me.label}}
+              <input name="Remember Me" type="checkbox" value="remember-me">Remember Me
             </label>
           </div>
           <button name="Sign In" class="btn btn-lg btn-primary" type="submit">Sign in</button>
@@ -42,15 +42,15 @@
             <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
           <div class="form-floating">
-            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Username">
-            <label for="floatingInput">{{ signupform.username.label }}</label>
+            <input name="username" type="text" class="form-control" id="floatingInputsignup" placeholder="Username">
+            <label for="floatingInputsignup">Username</label>
             {% for error in signupform.username.errors %}
             <div class="invalid-feedback">{{ error}}</div>
             {% endfor %}  
           </div>
           <div class="form-floating">
             <input name="new_password" type="password" class="form-control" placeholder="Password" id="signupPass1">
-            <label for="floatingInput">Password</label>
+            <label for="signupPass1">Password</label>
             {% for error in signupform.new_password.errors %}
             <div class="invalid-feedback">{{ error}}</div>
             {% endfor %}
@@ -64,12 +64,6 @@
             {% endfor %}
           </div>
           
-      
-          <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-          </div>
           <button class="btn btn-lg btn-primary" type="submit" id="signUpButton">Sign Up</button>
         </form>
       </div>

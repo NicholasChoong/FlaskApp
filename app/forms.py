@@ -64,89 +64,61 @@ class RegistrationForm(FlaskForm):
 
 class QuizForm(FlaskForm):
     question_1 = RadioField(
-        "Pick 1",
+        "Which component needs a fan or many fans to cool down?",
         choices=[
-            "1",
-            "2",
-            "3",
-            "4",
+            "M.2 Solid State Drive",
+            "Random Access Memory",
+            "Central Processing Unit",
+            "I/O Shield",
         ],
     )
     question_2 = RadioField(
-        "Pick 2",
+        "Which of the following is the first step of assembling a PC?",
         choices=[
-            "1",
-            "2",
-            "3",
-            "4",
+            "Installing a CPU to a motherboard",
+            "Installing a motherboard to a PC case",
+            "Connecting power and SATA cables to various components",
+            "Applying thermal paste onto the CPU",
         ],
     )
     question_3 = RadioField(
-        "Pick 3",
+        "In figure 1, which slots should the RAMs be installed in?",
         choices=[
-            "1",
-            "2",
-            "3",
+            "8",
+            "5",
+            "7",
             "4",
         ],
     )
     question_4 = RadioField(
-        "Pick 4",
+        "In figure 1, which slots should the GPUs be installed in?",
         choices=[
-            "1",
-            "2",
+            "6",
             "3",
-            "4",
+            "7",
+            "5",
         ],
     )
     question_5 = RadioField(
-        "Pick 5",
+        "In figure 1, what is 3?",
         choices=[
-            "5",
-            "6",
-            "7",
-            "8",
+            "6-pin connectors",
+            "HDMI",
+            "Bluetooth",
+            "SATA connectors",
         ],
     )
     question_6 = RadioField(
-        "Pick 6",
+        "Do you need to apply thermal paste if you are using stock cooler for your CPU?",
         choices=[
-            "5",
-            "6",
-            "7",
-            "8",
+            "Yes",
+            "No",
+            "I don't know",
+            "I do not need a cooler for my CPU",
         ],
     )
-    # question_7 = RadioField(
-    #     "Pick 7",
-    #     choices=[
-    #         "5",
-    #         "6",
-    #         "7",
-    #         "8",
-    #     ],
-    # )
     question_7 = TextField(
-        "Write 7",
-        validators=[regexp("^\w{1,128}$")],
+        "A ___________ is a main printed circuit board that allows communications between different electronic components",
+        validators=[regexp("^\w{11}$")],
     )
     submit = SubmitField("Submit Answers")
-
-    # elif questions[6].answer_type == "SAQ":
-    #     question_7 = TextField(
-    #         questions[6].question,
-    #         validators=[regexp(f"^\w{{{len(questions[6].answer)}}}$")],
-    #     )
-    # Experimental
-    # Dynamic design
-    # questions_dict = {}
-    # for i, question in enumerate(questions):
-    #     questions_dict[f"question_{i+1}"] = RadioField(
-    #         str(question.question).encode("ascii", "ignore"),
-    #         choice=[
-    #             ("1", f"{question.answer_choice_1}"),
-    #             ("2", f"{question.answer_choice_2}"),
-    #             ("3", f"{question.answer_choice_3}"),
-    #             ("4", f"{question.answer_choice_4}"),
-    #         ],
-    #     )

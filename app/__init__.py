@@ -24,7 +24,6 @@ def create_tables():
         isAdmin=True,
     )
     admin.set_password("UWAadmin")
-    db.session.add(admin)
     db.session.add(
         Question(
             question="Which component needs a fan or many fans to cool down?",
@@ -98,7 +97,8 @@ def create_tables():
             answer="motherboard",
         )
     )
-    db.session.commit()
+    # db.session.add(admin)
+    # db.session.commit()
 
 
 from app import routes, models

@@ -11,12 +11,12 @@
         <!-- Custom styles for this template -->
         <!-- <link href="/static/login.css" rel="stylesheet"> -->
 
-        <style>
+        <!-- <style>
             body {
                 background-color: rgb(35, 39, 42);
                 color: #ffffff;
             }
-        </style>
+        </style> -->
 
     </head>
     <body>
@@ -29,6 +29,9 @@
                   <li><a href="{{ url_for('learn')}}" class="nav-link px-2 {% if title == 'Learning'%} disabled {% else %} link-dark {%endif%}">Learn</a></li>
                   <li><a href="{{ url_for('quiz')}}" class="nav-link px-2 {% if title == 'Quiz' or current_user.is_anonymous %} disabled {% else %} link-dark {%endif%}">Quiz</a></li>
                   <li><a href="{{ url_for('review')}}" class="nav-link px-2 {% if title == 'Review' or current_user.is_anonymous %} disabled {% else %} link-dark {%endif%}">Review</a></li>
+                  {% if current_user.isAdmin %}
+                  <li><a href="{{ url_for('stat')}}" class="nav-link px-2 {% if title == 'STAT' or current_user.is_anonymous %} disabled {% else %} link-dark {%endif%}">Stat</a></li>
+                  {% endif %}
                 </ul>
                 {%if current_user.is_anonymous %}
                 <div class="col-md-3 text-end">

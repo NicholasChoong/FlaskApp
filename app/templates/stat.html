@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %} {% if current_user.isAdmin %}
 
-<div class="stat-counts">
-    <div class="visitors-stat">
+<div class="display">
+    <div class="visitors">
         <div class="total">
             <span>Total Visitors:</span>
             {{total_visitors}}
@@ -12,7 +12,7 @@
         </div>
     </div>
     <br />
-    <div class="attempts-stats">
+    <div class="attempts">
         <div class="total">
             <span>Total Attempts:</span>
             {{total_attempts}}

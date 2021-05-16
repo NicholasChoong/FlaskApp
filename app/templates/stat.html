@@ -1,37 +1,26 @@
 {% extends "base.html" %} {% block content %} {% if current_user.isAdmin %}
 
-<style>
-    .stat-counts,
-    .not-admin {
-        max-width: 1080px;
-        margin: auto;
-    }
-</style>
-
 <div class="stat-counts">
     <div class="visitors-stat">
         <div class="total">
-            <span>Total Visitors</span>
+            <span>Total Visitors:</span>
             {{total_visitors}}
         </div>
         <div class="today">
-            <span>Today's Visitors</span>
+            <span>Today's Visitors:</span>
             {{today_visitors}}
         </div>
     </div>
     <br />
     <div class="attempts-stats">
         <div class="total">
-            <span>Total Attempts</span>
+            <span>Total Attempts:</span>
             {{total_attempts}}
         </div>
         <div class="today">
-            <span>Today's Attempts</span>
+            <span>Today's Attempts:</span>
             {{today_attempts}}
         </div>
     </div>
 </div>
-{% else %}
-
-<div class="not-admin">You are not an Admin!!!</div>
-{% endif %} {% endblock %}
+{% else %} {% endif %} {% endblock %}

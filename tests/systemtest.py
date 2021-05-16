@@ -1,6 +1,6 @@
 import unittest, os, time
 from app import app, db
-from app.models import Student, Project, Lab
+from app.models import User, Attempt
 from selenium import webdriver
 
 basedir = os.path.abspath(os.path.dirname(__file__))

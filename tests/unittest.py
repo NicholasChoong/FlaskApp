@@ -1,6 +1,6 @@
 import unittest, os
 from app import app, db
-from app.models import User
+from app.models import User, Attempt
 
 
 class userModelTest(unittest.TestCase):
@@ -36,3 +36,30 @@ class userModelTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+# Relies on userModelTest having passed to work
+class attemptModelTest(unittest.TestCase):
+    def setUp(self):
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
+            basedir, "test.db"
+        )
+        self.app = app.test_client()
+        db.create_all()
+        s1 = User(id="OwO", first_name="Test", surname="Case")
+        db.session.add(s1)
+        db.session.commit()
+        t1 = Attempt(user_id="OwO", answer_1="potato")
+        db.session.add(t1)
+        db.session.commit()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+
+    def test_is_committed(self):
+        t = Attempt.query.get(user_id="OwO")
+        self.assertFalse(t.isCommitted())
+        t2 = Attempt.query.get(answer_1="potato")
+        self.assertTrue(t.isCommitted())
+

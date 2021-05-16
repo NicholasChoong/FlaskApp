@@ -59,3 +59,10 @@ def quiz():
     if current_user.is_anonymous:
         return render_template("quiz.html", title="Quiz")
     return AttemptController.quiz()
+
+
+@app.route("/stat", methods=["GET", "POST"])
+def stat():
+    if not current_user.isAdmin:
+        return redirect(url_for("index"))
+    return LogController.stats()

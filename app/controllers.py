@@ -70,6 +70,23 @@ class UserController:
 class ReviewController:
     def get_User_Results():
         Rev = Attempt.query.filter_by(user_id=current_user.id).all()
+        for row in Rev:
+            row.correct = 0
+            if row.correct_1:
+                row.correct += 1
+            if row.correct_2:
+                row.correct += 1
+            if row.correct_3:
+                row.correct += 1
+            if row.correct_4:
+                row.correct += 1
+            if row.correct_5:
+                row.correct += 1
+            if row.correct_6:
+                row.correct += 1
+            if row.correct_7:
+                row.correct += 1
+                
         return render_template("review.html", title="Review", Res=Rev)
 
 

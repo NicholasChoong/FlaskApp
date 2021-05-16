@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block content %} {% if current_user.isAdmin %}
+
+<div class="stat-counts">
+    <div class="visitors-stat">
+        <div class="total">
+            <span>Total Visitors</span>
+            {{total_visitors}}
+        </div>
+        <div class="today">
+            <span>Today's Visitors</span>
+            {{today_visitors}}
+        </div>
+    </div>
+    <br />
+    <div class="attempts-stats">
+        <div class="total">
+            <span>Total Attempts</span>
+            {{total_attempts}}
+        </div>
+        <div class="today">
+            <span>Today's Attempts</span>
+            {{today_attempts}}
+        </div>
+    </div>
+</div>
+{% endif %} {% endblock %}

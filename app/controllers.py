@@ -4,7 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm, RegistrationForm, QuizForm
 from app.models import User, Log, Question, Attempt
 from werkzeug.urls import url_parse
-from datetime import datetime
+from datetime import datetime, date
 
 
 class UserController:
@@ -137,9 +137,18 @@ class AttemptController:
 
 
 class LogController:
-    def get_all_vistors():
-        logs = Log.query.all()
-        if logs is None:
-            flash("No visitors :(")
-            return redirect(url_for("index"))
-    
+    def stats():
+        total_logs = Log.query.all()
+        today_logs = [log for log in total_logs if log.date.date() == date.today()]
+        total_attempts = Attempt.query.all()
+        today_attempts = [
+            attempt for attempt in total_attempts if attempt.date.date() == date.today()
+        ]
+        return render_template(
+            "stat.html",
+            title="Stat",
+            total_visitors=len(total_logs),
+            today_visitors=len(today_logs),
+            total_attempts=len(total_attempts),
+            today_attempts=len(today_attempts),
+        )

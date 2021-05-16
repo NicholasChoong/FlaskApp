@@ -145,7 +145,7 @@ class Attempt(db.Model):
         return data
 
     def is_committed(self):
-        return (self.attempt_id is not None) & (self.answer_1 == "potato")
+        return (self.user_id is not None) & (self.answer_1 == "potato")
 
     def from_dict(self, data):
         if "attempt_id" in data:

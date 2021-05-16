@@ -2,12 +2,22 @@
 
 <style>
     .quiz,
-    #quiz-title,
-    #quiz-submission {
+    #quiz-title {
         max-width: 1080px;
         margin: auto;
     }
+
+    .submit-button {
+        float: right;
+        margin-top: 100px;
+    }
 </style>
+
+{% if current_user.isAdmin %}
+<div class="admin-test">
+    <p>YOU ARE AN ADMIN!!!!</p>
+</div>
+{% endif %}
 
 <div class="container">
     {% if current_user.is_anonymous %}
@@ -20,7 +30,7 @@
         <div class="quiz">
             <div id="question_1">
                 <br />
-                <strong>Question 1.</strong>
+                <strong style="text-decoration: underline">Question 1.</strong>
                 <br />
                 {{form.question_1.label}}
                 <br />
@@ -36,7 +46,7 @@
             </div>
             <br />
             <div id="question_2">
-                <strong>Question 2.</strong>
+                <strong style="text-decoration: underline">Question 2.</strong>
                 <br />
                 {{form.question_2.label}}
                 <br />
@@ -52,7 +62,7 @@
             </div>
             <br />
             <div id="question_3">
-                <strong>Question 3.</strong>
+                <strong style="text-decoration: underline">Question 3.</strong>
                 <br />
                 {{form.question_3.label}}
                 <br />
@@ -68,7 +78,7 @@
             </div>
             <br />
             <div id="question_4">
-                <strong>Question 4.</strong>
+                <strong style="text-decoration: underline">Question 4.</strong>
                 <br />
                 {{form.question_4.label}}
                 <br />
@@ -84,7 +94,7 @@
             </div>
             <br />
             <div id="question_5">
-                <strong>Question 5.</strong>
+                <strong style="text-decoration: underline">Question 5.</strong>
                 <br />
                 {{form.question_5.label}}
                 <br />
@@ -100,7 +110,7 @@
             </div>
             <br />
             <div id="question_6">
-                <strong>Question 6.</strong>
+                <strong style="text-decoration: underline">Question 6.</strong>
                 <br />
                 {{form.question_6.label}}
                 <br />
@@ -116,24 +126,24 @@
             </div>
             <br />
             <div id="question_7">
-                <strong>Question 7.</strong>
+                <strong style="text-decoration: underline">Question 7.</strong>
                 <br />
                 {{form.question_7.label}}
                 <br />
-                <!-- <div id="choices_1">
-               
-            </div> -->
                 {{form.question_7}}
             </div>
+            <br />
         </div>
-        <button
-            name="Submit Answers"
-            class="btn btn-lg btn-primary"
-            type="submit"
-            id="quiz-submission"
-        >
-            Submit
-        </button>
+        <div class="submit-button">
+            <button
+                name="Submit Answers"
+                class="btn btn-lg btn-primary"
+                type="submit"
+                id="quiz-submission"
+            >
+                Submit
+            </button>
+        </div>
     </form>
     {%endif%}
 </div>

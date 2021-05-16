@@ -6,6 +6,7 @@ from flask import url_for
 from datetime import datetime, timedelta
 import os
 
+
 @login.user_loader
 def load_user(id):
     return User.query.get(id)
@@ -234,7 +235,6 @@ class Question(db.Model):
 class Log(db.Model):
     __tablename__ = "logs"
     log_id = db.Column(db.Integer, primary_key=True)
-    login_key = db.Column(db.Integer, unique=True)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # date and time
 
     user_id = db.Column(db.String(128), db.ForeignKey("users.id"))
@@ -242,7 +242,6 @@ class Log(db.Model):
     def to_dict(self):
         data = {
             "log_id": self.log_id,
-            "login_key": self.login_key,
             "date": self.date,
             "user_id": self.user_id,
         }
@@ -251,8 +250,6 @@ class Log(db.Model):
     def from_dict(self, data):
         if "log_id" in data:
             self.log_id = data["log_id"]
-        if "login_key" in data:
-            self.login_key = data["login_key"]
         if "date" in data:
             self.date = data["date"]
         if "user_id" in data:

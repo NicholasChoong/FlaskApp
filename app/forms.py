@@ -66,65 +66,69 @@ class QuizForm(FlaskForm):
     question_1 = RadioField(
         "Pick 1",
         choices=[
-            ("1", "1"),
-            ("2", "2"),
-            ("3", "3"),
-            ("4", "4"),
+            "1",
+            "2",
+            "3",
+            "4",
         ],
     )
     question_2 = RadioField(
         "Pick 2",
         choices=[
-            ("1", "1"),
-            ("2", "2"),
-            ("3", "3"),
-            ("4", "4"),
+            "1",
+            "2",
+            "3",
+            "4",
         ],
     )
     question_3 = RadioField(
         "Pick 3",
         choices=[
-            ("1", "1"),
-            ("2", "2"),
-            ("3", "3"),
-            ("4", "4"),
+            "1",
+            "2",
+            "3",
+            "4",
         ],
     )
     question_4 = RadioField(
         "Pick 4",
         choices=[
-            ("1", "1"),
-            ("2", "2"),
-            ("3", "3"),
-            ("4", "4"),
+            "1",
+            "2",
+            "3",
+            "4",
         ],
     )
     question_5 = RadioField(
         "Pick 5",
         choices=[
-            ("5", "5"),
-            ("6", "6"),
-            ("7", "7"),
-            ("8", "8"),
+            "5",
+            "6",
+            "7",
+            "8",
         ],
     )
     question_6 = RadioField(
         "Pick 6",
         choices=[
-            ("5", "5"),
-            ("6", "6"),
-            ("7", "7"),
-            ("8", "8"),
+            "5",
+            "6",
+            "7",
+            "8",
         ],
     )
-    question_7 = RadioField(
-        "Pick 7",
-        choices=[
-            ("5", "5"),
-            ("6", "6"),
-            ("7", "7"),
-            ("8", "8"),
-        ],
+    # question_7 = RadioField(
+    #     "Pick 7",
+    #     choices=[
+    #         "5",
+    #         "6",
+    #         "7",
+    #         "8",
+    #     ],
+    # )
+    question_7 = TextField(
+        "Write 7",
+        validators=[regexp("^\w{1,128}$")],
     )
     submit = SubmitField("Submit Answers")
 

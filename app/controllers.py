@@ -110,7 +110,7 @@ class AttemptController:
             attempt.answer_4 = form.question_4.data
             attempt.answer_5 = form.question_5.data
             attempt.answer_6 = form.question_6.data
-            attempt.answer_7 = form.question_7.data
+            attempt.answer_7 = form.question_7.data.lower()
             if attempt is None:
                 flash("Invalid Submission")
                 return render_template("quiz.html", title="Quiz", form=form)

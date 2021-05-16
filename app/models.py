@@ -53,6 +53,9 @@ class User(UserMixin, db.Model):
             return None
         return user
 
+    def is_committed(self):
+        return self.first_name is not None
+        
     """Adding in dictionary methods to convert to JSON
      Format
      {
@@ -140,6 +143,9 @@ class Attempt(db.Model):
             "user_id": self.user_id,
         }
         return data
+
+    def is_committed(self):
+        return (self.attempt_id is not None) & (self.answer_1 == "potato")
 
     def from_dict(self, data):
         if "attempt_id" in data:

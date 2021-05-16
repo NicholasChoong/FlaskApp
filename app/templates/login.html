@@ -16,23 +16,23 @@
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       
           <div class="form-floating">
-            <input name="username" type="text" class="form-control {% if signinform.username.errors %}is-invalid {% endif %}" id="floatingInputsignin" required>
+            <input name="l-username" type="text" class="form-control {% if signinform.username.errors %}is-invalid {% endif %}" id="floatingInputsignin" required>
             <label for="floatingInputsignin">Username</label>
             {% for error in signinform.username.errors %}
             <div class="invalid-feedback">{{ error}}</div>
             {% endfor %}
           </div>
           <div class="form-floating">
-            <input name="password" type="password" class="form-control" id="floatingPassword">
+            <input name="l-password" type="password" class="form-control" id="floatingPassword">
             <label for="floatingPassword">Password</label>
           </div>
       
           <div class="checkbox mb-3">
             <label>
-              <input name="Remember Me" type="checkbox" value="remember-me">Remember Me
+              <input name="l-Remember Me" type="checkbox" value="remember-me">Remember Me
             </label>
           </div>
-          <button name="Sign In" class="btn btn-lg btn-primary" type="submit">Sign in</button>
+          <button name="l-Sign In" class="btn btn-lg btn-primary" type="submit">Sign in</button>
         </form>
       </div>
 

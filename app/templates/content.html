@@ -1,147 +1,204 @@
 {% extends "base.html" %} {% block content %}
 <body>
-        <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column sticky-top float-end mx-5 my-2">
+        <nav id="navbar-content" class="navbar navbar-light bg-light flex-column sticky-top float-end mx-5 my-2">
             <a class="navbar-brand" href="#">Contents</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link" href="#intro">Introduction</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>
-                <a class="nav-link ms-3 my-1" href="#item-1-2">Item 1-2</a>
-              </nav>
-              <a class="nav-link" href="#item-2">Item 2</a>
-              <a class="nav-link" href="#item-3">PSU and Traditional Storage</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
-                <a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
-              </nav>
+                <a class="nav-link" href="#intro">Introduction</a>
+                <a class="nav-link" href="#moboAttach">Attaching to the Motherboard</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ms-3 my-1" href="#CPU">The CPU</a>
+                    <a class="nav-link ms-3 my-1" href="#cCooler">CPU Cooler</a>
+                    <a class="nav-link ms-3 my-1" href="#ram">Memory</a>
+                    <a class="nav-link ms-3 my-1" href="#m2">M.2 SSD</a>
+                </nav>
+                <a class="nav-link" href="#moboInCase">Putting the Motherboard in the case</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ms-3 my-1" href='#standoff'>Standoffs</a>
+                    <a class="nav-link ms-3 my-1" href='#ioSh'>I/O Shield</a>
+                    <a class="nav-link ms-3 my-1" href='#moboIn'>The Motherboard</a>
+                </nav>
+                <a class="nav-link" href="#PSUS">PSU and Traditional Storage</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ms-3 my-1" href="#PSU">Power Supply</a>
+                    <a class="nav-link ms-3 my-1" href="#Storage">SATA Storage</a>
+                </nav>
             </nav>
           </nav>
     <div class="container align-content-center my-5">          
-          <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
+        <div data-bs-spy="scroll" data-bs-target="#navbar-content" data-bs-offset="0" tabindex="0">
             <h4 id="intro">Introduction</h4>
-            <p>
-                Computer assembly can seem quite overwhelming at first look due both the apparent complexity and the fragile components
-                but this short course will help you understand how simple and easy it really is to build your own computer.
-            </p>    
-        <img src="https://cdn.mos.cms.futurecdn.net/MTNYEyWTNTPURkADAP2p7h-970-80.jpg" alt="Image of computer that is yet to be built">
-            <p>
-                This course will go through the assembly process of a computer part by part so that each parts purpose and
-                correct method of installation can be understood
-            </p>
-            <div>
-                You will need
-                <li>
-                    Screwdriver
-                </li>
-            </div>
+                <p>
+                    Computer assembly can seem quite overwhelming at first look due both the apparent complexity and the fragile components
+                    but this short course will help you understand how simple and easy it really is to build your own computer ignoring tools you
+                    will need all of the basic components of a computer. A CPU, Compatible Motherboard, GPU, RAM, storage, coolers, Power Suppy, a Case and any other 
+                    parts you want to have.
+                </p>    
+                <img src="https://cdn.mos.cms.futurecdn.net/MTNYEyWTNTPURkADAP2p7h-970-80.jpg" alt="Image of computer that is yet to be built">
+                <p>
+                    This course will go through the assembly process of a computer part by part so that each parts purpose and
+                    correct method of installation can be understood.
+                </p>
+                <p>
+                    You will need
+                </p>
+                <ul>
+                    <li>
+                        Philips Head screwdrivers
+                    </li>
+                    <li>
+                        Zip ties for calbe managment
+                    </li>
+                    <li>
+                        Flashlight for dark parts of the case
+                    </li>
+                    <li>
+                        Thermal paste if not using stock coolers
+                    </li>
+                    <li>
+                        A place to store your screws
+                    </li>
+                </ul>
+                <p>
+                    Some people choose to use anti-static equipment to ensure their hardware is protected, while this is optional it is advisable to take
+                    precautions in relation to static as you could unintentionally damage your hardware a simple way to do this is to have components rest on                        their static bags while being prepared for installation
+                </p>
+            <h4 id="MoboAttach">Attaching Components to the Motherboard</h4>
+                <p>
+                    While some people prefer to attach the motherboard before other components it is commonly easier to fit components when it is yet to be inserted
+                    into the case so there is more space.
+                </p>
+            
+                <h5 id="CPU">The CPU</h5>
+                    <p>
+                        for installing most CPU's no matter the brand the first step is to release the tension lever to gain access to the CPU socket
+                        (The difference between Intel and AMD CPU's in this regard is Intel has pins in the socket and AMD has pins on the cpu)
+                    </p>
+                    <img src="https://cdn.mos.cms.futurecdn.net/qcWFmN2y9pRmanE7T7SXdN-970-80.jpg" alt="CPU being locked into Socket">
+                    <p>
+                        The alignment indicator (arrow or triangle) lines up with the one on the socket or socket cover. 
+                        Failing to do so could result in damage to the CPU, Motherboard or Both. Simply relase the CPU into the slot and it should settle in on 
+                        its own if it fails to do so, simply reseat it DO NOT try to force the CPU into the slot as you certainly going to damage something.
+                    </p>
+                    <p>
+                        This guide covers standard types of cores but it is important to note that parts like Intel Core X series and AMD Threadripper series
+                        CPU's have special installation processes and how those CPU's are installed is not covered in this guide.
+                    </p>
+                <h5 id="cCooler">CPU Cooler</h5>
+                    <p>
+                        Most processors come with their own cooler out of the box, unless you are seriously overclocking or want a special style this cooler
+                        is normally acceptable for use
+                    </p>
+                    <img src="https://cdn.mos.cms.futurecdn.net/UGWN9Fe9gsMBcftPaF6XGc-970-80.jpg" alt="Thermal Paste being applied to a CPU">
+                    <p>
+                        If you choose to use a stock cooler, you will find the thermal paste already applied. With an aftermarket cooler this is generally not
+                        the case and you will need to apply your own thermal paste. When applying thermal paste it is important to understand that you only need
+                        a very small amount of paste, about a pea sized drop in the centre of the CPU. There are special techniques that serious assemblers 
+                        use to spread the paste as evenly as possible, but in our case it is fine to simply let the cooler spread the paste when attached. Make sure 
+                        to not add too much paste as you don't want it squirting out and onto the socket and PCB.
+                    </p>
+                    <img src="https://cdn.mos.cms.futurecdn.net/hhHtVqC73dg4LwdkBmkqz5-970-80.jpg" alt="Installation of an Intel stock CPU cooler">
+                    <p>
+                        Coolers use different types of installation depending on the manufacturer and type, most stock coolers use either a push pin system
+                        which is commonly seen on intel coolers or bar based lock in system as seen on AMD coolers. For Push pin coolers it is important to push
+                        on the opposite corners to spread the thermal paste as evenly as possible. Aftermarket coolers are installed in many different ways so 
+                        it is important to consult the manufacturers instructions as the installation method can be quite complex.
+                    </p>
+                    <p>
+                        After installing the CPU cooler remember to attach the CPU cooler cable to the cpu cooler power connector on the motherboard commonly
+                        labeled something like "CPU_FAN"
+                    </p>
+                <h5 id="ram">The Memory</h5>
+                    <img src="https://cdn.mos.cms.futurecdn.net/T93MqTXwAowX4cxykMCtb3-970-80.jpg" alt="Installing RAM">
+                    <p>
+                        Installing RAM is a simple task. First you must open the latches on the RAM slots, most boards have two latches but some more budget boards have 
+                        just one. Once the latches are open, simply align the DIMM chip with the slot, ensuring the divot in the chip aligns with the bump on the board
+                        then simply push the RAM chip in, this may require a bit of force but if it takes a notable amount of trouble ensure that the chip is aligned properly
+                        with the slot. When put in correctly the latches will snap into place and lock the chip in place. When installing RAM chips remember to install into the
+                        correct slots so that the motherboard recognises them, this is done by installing the chip pairs into slots with the same data channel. WIth motherboards
+                        that use 4 slots this is commonly split into the odd and even slots.
+                    </p>
+                <h5 id="m2">M.2 SSD</h5>
+                    <p>
+                        If you have a M.2 SSD now is a good time to install it as parts may get in its way later.
+                    </p>
+                    <img src="https://cdn.mos.cms.futurecdn.net/AYu4By3gSowQRM8kSwNkzD-970-80.jpg" alt="instaling an M.2 SSD">
+                    <p>
+                        If it is already installed remove the screw located across form the m.2 slot and slide the SSD in at an angle.
+                        make sure the notch lines up, similar to how a RAM chip is installed. If it does not line up there may be a compatability issue between the drive
+                        and the slot. Slowly lay the SSD down and install the mounting screw.
+                    </p>
+            <h4 id="moboInCase">Installing the Motherboard to the Case</h4>
+                <p>
+                    Now that we have built the core of the computer (minus the graphics card), it is time to install the motherboard into the case. If it is
+                    not yet done, remove the side panels of the case to gain access to the installation area.
+                </p>
+                <h5 id="standoff">Standoffs</h5>
+                    <img src="https://cdn.mos.cms.futurecdn.net/uBNYTyxq8vBeKm5Yncq7qP-970-80.jpg" alt="installing a standoff">
+                    <p>
+                        First, gather the standoff screws that came with your case. Then determine the correct location for the standoff screws in your case.
+                        This is determined my the size of your motherboard and where its screw holes are. It is important that there are only standofs where needed
+                        and nowhere else as standoffs in incorrect locations could damage the motherboard.
+                    </p>
+                <h5 id="ioSh">I/O Shield</h5>
+                    <img src="https://cdn.mos.cms.futurecdn.net/GtQUGL8fTgMTbLarpH3aKY-970-80.jpg" alt="Installed IO Shield">
+                    <p>
+                        The I/O shield which covers the area around your motherboards rear ports, comes with the motherboard. You need to fit the I/O shield
+                        before mounting the motherboard itself making sure it is in the correct orientation so the motherboard ports will fit through the holes
+                        in the shield. You will have to use some force to snap the I/O shield into place. Be carefull of the sharp edges as they can cause injuries
+                        during installation.
 
-            <h5 id="item-1-1">Item 1-1</h5>
-            <p>...</p>
-            <h5 id="item-1-2">Item 1-2</h5>
-            <p>...</p>
-            <h4 id="item-2">Item 2</h4>
-            <p>...</p>
-            <h4 id="item-3">Item 3</h4>
-            <p>...</p>
-            <h5 id="item-3-1">Item 3-1</h5>
-            <p>...</p>
-            <h5 id="item-3-2">Item 3-2</h5>
-            <p>...</p>
-          </div>
+                        If you have a board with a pre-installed IO shield you do not need to do this step.
+                    </p>
+                <h5 id="moboIn">The Motherboard</h5>
+                    <img src="https://cdn.mos.cms.futurecdn.net/xE3DRbiVrhvNa3wVXh2xjS-970-80.jpg" alt="installing a motherboard">
+                    <p>
+                        It is finally time to install the motherboard itself. Make sure that the holes on the motherboard line up with the standoffs and that the ports line
+                        up with the I/O shield. Once in place put the screws into the standoffs to hold the motherboard in place.
+                    </p>
+            <h4 id="PSUS">Power Supply and Traditional Storage</h4>
+                <p>
+                    Now for the parts that aren't on the motherboard itself
+                </p>
+                <h5 id="PSU">Power Supply</h5>
+                    <img src="https://cdn.mos.cms.futurecdn.net/vbqzdD39fmnXLdFCu5WjBT-970-80.jpg" alt="PSU installed">
+                    <p>
+                        The PSU is normally mounted at the back of the case, most commonly it sits at the bottom of the case but can sometimes be found at the top.
+                        The installation process is simple as the power supply simply needs to be attached to the back of the case. After that the first power connectors are attached.
+                        Those being the 24 pin power connector and the supplemental power connector, both attach to the motherboard.
+                    </p>
+                    <h5 id="Storage">SATA Storage</h5>
+                    <img src="https://cdn.mos.cms.futurecdn.net/vhLoZBmXJJMqbCN5yYu6MR-970-80.jpg" alt="Installed SATA SSD">
+                    <p>
+                        Storage drives are installed by attaching the SATA cable from the motherboard SATA slot to the 2.5 or 3.5 drive as well as attaching their
+                        SATA power connector from the PSU. They are installed into the case through unique mounting methods per case so please refer to the case
+                        instructions for specifics
+                    </p>
+            <h4 id="GPU">Installing the Graphics Card</h4>
+                <img src="https://cdn.mos.cms.futurecdn.net/tieTn2LwHPNWRzBW24458K-970-80.jpg" alt="Graphics card installing">
+                <p>
+                    This step is only needed if either your CPU lacks integrated graphics or you plan or doing more graphically intensive tasks like
+                    PC gaming. To install a graphics card first the slot covers on the back must be removed to give space for the GPU's rear slots. After this
+                    is done the GPU is placed into the PCIe x16 slot on the motherboard this is the long and thin slot normally closest under the CPU. If
+                    needed you may have to also attached PCIe power connectors form the PSU to connectors on the graphics card. Installing any other PCIe based card
+                    like a wifi card is done using a similar process (look for the slots that match the size of the cards connector).
+                </p>
+            <h4 id="cable">The Final Cables</h4>
+                <img src="https://cdn.mos.cms.futurecdn.net/Yr9GENt2hyRSgacJXLtgf6-970-80.jpg" alt="Case cables">
+                <p>
+                    This is the last major step the cables that come off the case must be attached to the motherboard. These connect to points like the audio connectors,
+                    USB2.0 and 3.0 ports and the motherboards front panel I/O connectors. It is important to ensure they are going in the right place as these cables are
+                    small and they have very small connectors to mount to. Refer to your motherboards manual for the exact location of the ports you are connecting cables
+                    to.
+                </p>
+            <h4 id="conclusion">In Conclusion</h4>
+                <img src="https://cdn.mos.cms.futurecdn.net/KhDj4AyemP5Pxz24XqhEmf-970-80.jpg" alt="completed system">
+                <p>
+                    With this your system is almost done. if you have any extra cooling install them by the instruction in the manual and perform cleanup on your cables.
+                    You can then attach periferals and attempt start up. To truly finish you need to install your OS and drivers this is done differently depending on your
+                    desired OS but remember to follow the instructions the OS provider gives for installation.
+                </p>
+        </div>
           
-        <!-- Insert Nav system for navigation in the page -->
-        <div>
-
-        <div>
-            <h3>
-                Case
-            </h3>
-            <p>
-                The case is the location in which all parts of the computer are stored they come in many different shapes sizes and styles but for 
-                simplicity we will look at the more standard sizes; full tower, mid tower and mITX.
-            </p>
-            <p>
-            These sizes are important to know what can and cannot fit within your computer as some components could be too big for some cases or you could leave
-            yourself with too much empty space to ensure you do not run into any issues with the size of your case and your components it is always important to 
-            check the capacities listed in the case specifications and the sizes for the components you plan to use to ensure you get no bad surprises
-            </p>    
-        </div>
-        <div>
-            <h3>
-                Motherboard
-            </h3>
-            <p>
-                mobo stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                CPU
-            </h3>
-            <p>
-                CPU stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                RAM
-            </h3>
-            <p>
-                ram stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                GPU
-            </h3>
-            <p>
-                gpu stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                Other PCI
-            </h3>
-            <p>
-                pci stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                PSU
-            </h3>
-            <p>
-                PSU stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                Storage Drives
-            </h3>
-            <p>
-                storage stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                Cooling
-            </h3>
-            <p>
-                cooling stuff
-            </p>
-        </div>
-        <div>
-            <h3>
-                Peripherals
-            </h3>
-            <p>
-                extra stuff
-            </p>
-        </div>
-        <!-- Insert main content block for providing content to the page -->
-        <div>{% block learning%} {% endblock %}</div>
-
-        <!-- Nav system goes here -->
         <a href="{{ url_for('quiz')}}" class="btn-primary btn-lg">Quiz</a>
     </div>  
 </body>

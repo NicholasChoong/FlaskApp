@@ -1,5 +1,34 @@
 # PC wiki
 
+## Known Issues
+    The UTC to local date conversion does not work in firefox due to no support for the timezone in the javascript library
+
+
+## Setup
+    Requires Python
+    install requirements from requirements.txt
+
+    flask run
+
+## Testing
+    requires the terminal to be selected on the CITS3403_WEBDEV page
+    pyton -m tests.unittest 
+
+    To perform the systemtest
+    first start the webserver
+    while the webserver is running use the geckowebdriver on windows
+    then run
+        python -m tests.systemtest
+
+
+
+
+
+
+
+
+
+
 ## Setup
 
 flask db init

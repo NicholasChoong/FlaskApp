@@ -69,7 +69,7 @@ def create_tables():
             answer_choice_2="6",
             answer_choice_3="7",
             answer_choice_4="8",
-            answer="1",
+            answer="5",
         )
     )
     db.session.add(
@@ -80,7 +80,7 @@ def create_tables():
             answer_choice_2="6",
             answer_choice_3="7",
             answer_choice_4="8",
-            answer="2",
+            answer="6",
         )
     )
     db.session.add(
@@ -91,7 +91,7 @@ def create_tables():
             answer_choice_2="6",
             answer_choice_3="7",
             answer_choice_4="8",
-            answer="3",
+            answer="7",
         )
     )
     db.session.commit()

@@ -63,6 +63,6 @@ def quiz():
 
 @app.route("/stat", methods=["GET", "POST"])
 def stat():
-    if not current_user.isAdmin:
+    if current_user.is_anonymous:
         return redirect(url_for("index"))
     return LogController.stats()

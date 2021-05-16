@@ -8,6 +8,7 @@ from app.controllers import (
     ReviewController,
 )
 from datetime import date
+from config import Config, TestingConfig
 
 
 class ModelTest(unittest.TestCase):
@@ -16,6 +17,7 @@ class ModelTest(unittest.TestCase):
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
             basedir, "test.db"
         )
+        app.config["TESTING"] = True
         self.app = app.test_client()  # creates a virtual test environment
         db.create_all()
         s1 = User(id="OwO", surname="Case")
@@ -52,6 +54,8 @@ class ModelTest(unittest.TestCase):
         db.session.add(l2)
         db.session.commit()
 
+        self.assertEqual(app.debug, False)
+
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -64,9 +68,9 @@ class ModelTest(unittest.TestCase):
 
     def test_user_is_admin(self):
         s = User.query.get("OwO")
-        self.assertFalse(s.isAdmin())
+        self.assertFalse(s.isAdmin)
         s2 = User.query.get("wOw")
-        self.assertTrue(s2.is_committed())
+        self.assertTrue(s2.isAdmin)
 
     def test_attempt(self):
         t = Attempt.query.all()
@@ -76,7 +80,7 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(t[0].user_id, "OwO", "User_id should be OwO")
         u1 = User.query.get("OwO")
         self.assertEqual(
-            u1.attempts.filter_by(attempts_id=1).first().attempt_id,
+            u1.attempts.filter_by(attempt_id=1).first().attempt_id,
             1,
             "attempt_id from user OwO should be 1",
         )
@@ -85,7 +89,7 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(t[2].user_id, "wOw", "User_id should be wOw")
         u1 = User.query.get("wOw")
         self.assertEqual(
-            u1.attempts.filter_by(attempts_id=3).first().attempt_id,
+            u1.attempts.filter_by(attempt_id=3).first().attempt_id,
             3,
             "attempt_id from user wOw should be 1",
         )
@@ -108,7 +112,7 @@ class ModelTest(unittest.TestCase):
     def test_log(self):
         l = Log.query.all()
         self.assertEqual(l[0].log_id, 1, "Log ID should be 1")
-        self.assertEqual(l[0].user_id.id, "OwO")
+        self.assertEqual(l[0].user_id, "OwO")
         u1 = User.query.get("OwO")
         self.assertEqual(
             u1.logs.filter_by(log_id=1).first().log_id,

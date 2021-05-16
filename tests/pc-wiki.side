@@ -14,6 +14,13 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "cdabff26-a9fd-4b29-9c73-66fdb0ab8d6a",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "PC Wiki",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "1d9310dc-c48f-4047-a4f4-b7c22ed3d09c",
       "comment": "",
       "command": "click",
@@ -380,6 +387,17 @@
         ["xpath=//div[2]/form/button", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "cc518b84-d8a3-413c-a586-c2256cdad62d",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "css=ul:nth-child(3) > li",
+      "targets": [
+        ["css=ul:nth-child(3) > li", "css:finder"],
+        ["xpath=//body/ul/li", "xpath:position"],
+        ["xpath=//li[contains(.,'Username is already taken')]", "xpath:innerText"]
+      ],
+      "value": ""
     }]
   }, {
     "id": "0d6d1eee-de09-4ed4-81ae-314fd92a490b",
@@ -389,6 +407,13 @@
       "comment": "",
       "command": "open",
       "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c3969fd5-b35a-4e6a-a30a-8e1b1466760c",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "PC Wiki",
       "targets": [],
       "value": ""
     }, {
@@ -644,6 +669,18 @@
       ],
       "value": ""
     }, {
+      "id": "0b3b1a8c-6cc7-4641-b263-10203d79b242",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "css=.accordion-button",
+      "targets": [
+        ["css=.accordion-button", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//h2[@id='heading1']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "e0838f13-dd22-4d6c-8b82-92a1d51ef052",
       "comment": "",
       "command": "click",
@@ -679,6 +716,20 @@
         ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
         ["xpath=//div/a", "xpath:position"],
         ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "92f5defc-bfa8-42e5-afe7-3559b1a99fb7",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.btn-outline-primary", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
       ],
       "value": ""
     }]

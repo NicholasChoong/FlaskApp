@@ -3,7 +3,7 @@
 <style>
     .quiz,
     #quiz-title {
-        max-width: 1080px;
+        max-width: 1000px;
         margin: auto;
     }
 
@@ -55,6 +55,18 @@
                 </div>
             </div>
             <br />
+            <img
+                src="/static/motherboard.jpg"
+                alt="Image of computer that is yet to be built"
+            />
+            <p class="cite">
+                Figure 1. A motherboard
+                <br />
+                <cite
+                    >source:
+                    https://www.wepc.com/tips/how-are-motherboards-made-manufacturing/</cite
+                >
+            </p>
             <div id="question_3">
                 <strong style="text-decoration: underline">Question 3.</strong>
                 <br />
@@ -124,7 +136,7 @@
                 <br />
                 {{form.question_7.label}}
                 <br />
-                {{form.question_7}}
+                {{form.question_7(size=11)}}
             </div>
             <br />
         </div>

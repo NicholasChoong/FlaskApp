@@ -2,6 +2,7 @@
 body {
     background-color: rgb(35, 39, 42);
     color: #ffffff;
+    font-family: "Roboto", sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -34,6 +35,11 @@ footer {
 
 /* #################################################################### */
 /* Index */
+.index-title {
+    color: grey;
+    font-weight: bold;
+    text-align: center;
+}
 .intro-para {
     max-width: 60rem;
     margin: auto;
@@ -64,6 +70,10 @@ footer {
     max-width: 50%;
     margin: auto;
 }
+.question-title {
+    text-decoration: underline;
+    font-weight: bold;
+}
 .submit-button {
     float: right;
     margin-top: 5rem;
@@ -73,18 +83,19 @@ footer {
 /* #################################################################### */
 /* Stat */
 .display {
-    max-width: 37rem;
+    max-width: 40rem;
     margin: auto;
     font-size: 4rem;
+    text-align: center;
 }
-.visitors {
-    margin-top: 25rem;
-    background-color: rgb(44, 47, 51);
-    padding: 1rem;
-    border-radius: 0.7rem;
-}
+.visitors,
 .attempts {
     background-color: rgb(44, 47, 51);
-    padding: 1rem;
-    border-radius: 0.7rem;
+    border-radius: 1.7rem;
+}
+.stat-label {
+    text-decoration: underline;
+}
+.numbers {
+    color: rgb(5, 216, 5);
 }

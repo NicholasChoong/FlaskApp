@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <div class="container">
     {% for Rev in Res %}
-    <div class="accordion accordion-flush" id="testAccordion">
+    <div class="accordion accordion-flush" id="testAccordion{{Rev.attempt_id}}">
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading{{Rev.attempt_id}}">
                 <button

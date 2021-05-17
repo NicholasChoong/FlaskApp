@@ -28,16 +28,7 @@
                 <div class="accordion-body">
                     <ul class="list-group">
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_1
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {% if Rev.correct_1 %}list-group-item-success {%else%} list-group-item-danger {%endif%}"
                         >
                             Q1 {% if Rev.correct_1 %}Correct {% else%}Incorrect
                             <span class="text-end"
@@ -46,16 +37,7 @@
                             {% endif %}
                         </li>
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_2
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {% if Rev.correct_2 %}list-group-item-success {%else%} list-group-item-danger{%endif%}"
                         >
                             Q2 {% if Rev.correct_2 %}Correct {% else%}Incorrect
                             <span class="text-end"
@@ -64,16 +46,7 @@
                             {% endif %}
                         </li>
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_3
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {% if Rev.correct_3 %} list-group-item-success {%else%} list-group-item-danger {%endif%}"
                         >
                             Q3 {% if Rev.correct_3 %}Correct {% else%}Incorrect
                             <span class="text-end"
@@ -82,16 +55,7 @@
                             {% endif %}
                         </li>
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_4
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {%if Rev.correct_4 %} list-group-item-success {%else%} list-group-item-danger {%endif%}"
                         >
                             Q4 {% if Rev.correct_4 %}Correct {% else%}Incorrect
                             <span class="text-end"
@@ -100,16 +64,7 @@
                             {% endif %}
                         </li>
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_5
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {% if Rev.correct_5 %} list-group-item-success {%else%} list-group-item-danger {%endif%}"
                         >
                             Q5 {% if Rev.correct_5 %}Correct {% else%}Incorrect
                             <span class="text-end"
@@ -118,16 +73,7 @@
                             {% endif %}
                         </li>
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_6
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {% if Rev.correct_6 %}list-group-item-success {%else%} list-group-item-danger {%endif%}"
                         >
                             Q6 {% if Rev.correct_6 %}Correct {% else%}Incorrect
                             <span class="text-end"
@@ -136,16 +82,7 @@
                             {% endif %}
                         </li>
                         <li
-                            class="
-                                list-group-item
-                                {%
-                                if
-                                Rev.correct_7
-                                %}list-group-item-success
-                                {%
-                                else%}
-                                list-group-item-danger{%endif%}
-                            "
+                            class="list-group-item {% if Rev.correct_7 %} list-group-item-success {%else%} list-group-item-danger {%endif%}"
                         >
                             Q7 {% if Rev.correct_7 %}Correct {% else%}Incorrect
                             <span class="text-end"

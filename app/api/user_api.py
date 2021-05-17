@@ -32,25 +32,9 @@ def register_user():
     return response
 
 
-@app.route("/api/users/<id>", methods=["PUT"])
-@token_auth.login_required
-def update_user(id):
-    if g.current_user.id != id:
-        abort(403)
-    data = request.get_json() or {}
-    user = User.query.get(id)
-    if user is None:
-        return bad_request("Unknown user")
-    if user.password_hash is None:
-        return bad_request("User not registered")
-    user.from_dict(data)
-    db.session.commit()
-    return jsonify(user.to_dict())
-
-
 @app.route("/api/users/<id>/attempts", methods=["POST"])
 @token_auth.login_required
-def new_attempt(id):
+def new_user_attempt(id):
     if g.current_user.id != id:
         abort(403)
     data = request.get_json() or {}
@@ -61,65 +45,35 @@ def new_attempt(id):
         return bad_request("Unknown user, or wrong id")
     attempt = Attempt()
     attempt.from_dict(data)
-    db.session.flush()  # generates pk for new project
+    questions = Question.query.all()
+    attempt.correct_1 = questions[0].answer == attempt.answer_1
+    attempt.correct_2 = questions[1].answer == attempt.answer_2
+    attempt.correct_3 = questions[2].answer == attempt.answer_3
+    attempt.correct_4 = questions[3].answer == attempt.answer_4
+    attempt.correct_5 = questions[4].answer == attempt.answer_5
+    attempt.correct_6 = questions[5].answer == attempt.answer_6
+    attempt.correct_7 = questions[6].answer == attempt.answer_7
+    db.session.flush()
     db.session.commit()
     response = jsonify(attempt.to_dict())
     response.status_code = 201  # creating a new resource should chare the location....
-    response.headers["Location"] = url_for("new_attempt", id=user.id)
+    response.headers["Location"] = url_for("new_user_attempt", id=user.id)
     return response
 
 
-@app.route("/api/users/<id>/results", methods=["GET"])
+@app.route("/api/users/<id>/attempts", methods=["GET"])
 @token_auth.login_required
-def get_user_results(id):
+def get_user_attempts(id):
     if g.current_user.id != id:
         abort(403)
     user = User.query.get(id)
-    results = Result.query.filter_by(id=id)
+    attempts = Attempt.query.filter_by(user_id=id)
     if user is None:
         return error_response(404, "User not found.")
-    if results is None:
+    if attempts is None:
         return error_response(404, "User has not done any assessments.")
-    # User.query.filter_by(id=log.id).first()
     data = {}
-    for result in results:
-        result_dict = result.to_dict()
-        result_dict["user_name"] = User.query.get(result.id).__str__()
-        data[f"{result.result_id}"] = result_dict
+    for attempt in attempts:
+        attempt_dict = attempt.to_dict()
+        data[f"{attempt.attempt_id}"] = attempt_dict
     return jsonify(data)
-
-
-@app.route("/api/users/<id>/results", methods=["PUT"])
-@token_auth.login_required
-def update_user_result(id):
-    if g.current_user.id != id:
-        abort(403)
-    print(request.data)
-    data = request.get_json() or {}
-    print(data)
-    if "marks" not in data or "result_id" not in data:
-        return bad_request("Must include marks and result_id")
-    user = User.query.get(id)
-    if user is None:
-        return bad_request("Unknown user, or wrong id")
-    result = Result.query.filter_by(id=id)[-1]
-    result.marks = data["marks"]
-    result.correct_questions = data["correct_questions"]
-    db.session.commit()
-    return jsonify(result.to_dict())
-
-
-@app.route("/api/users/<id>/results", methods=["DELETE"])
-@token_auth.login_required
-def delete_user_results(id):
-    if g.current_user.id != id:
-        abort(403)
-    user = User.query.get(id)
-    if user is None:
-        return bad_request("Unknown user, or wrong id")
-    result = Result.query.filter_by(id=id)
-    if result is None:
-        return bad_request("Result not found")
-    db.session.delete(result)
-    db.session.commit()
-    return jsonify(result.to_dict())

@@ -51,6 +51,14 @@ footer {
     color: grey;
 }
 
+.navbar-light .navbar-brand {
+    color: rgb(9, 158, 9);
+}
+
+.bg-light {
+    background-color: #292d30!important;
+}
+
 /* #################################################################### */
 /* Index */
 .index-title {

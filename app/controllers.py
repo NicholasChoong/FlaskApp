@@ -31,7 +31,6 @@ class UserController:
         return render_template(
             "login.html", title="Login", signinform=lform, signupform=rform
         )
-        # return redirect(url_for('static', filename='login.html'))
 
     def logout():
         logout_user()

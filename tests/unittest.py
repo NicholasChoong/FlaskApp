@@ -11,17 +11,21 @@ from datetime import date
 from config import Config, TestingConfig
 
 
-class ModelTest(unittest.TestCase):
+class UnitTest(unittest.TestCase):
     def setUp(self):
+        """Setting up."""
         basedir = os.path.abspath(os.path.dirname(__file__))
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
             basedir, "test.db"
         )
         app.config["TESTING"] = True
+        app.config["WTF_CSRF_ENABLED"] = False
         self.app = app.test_client()  # creates a virtual test environment
         db.create_all()
         s1 = User(id="OwO", surname="Case")
+        s1.set_password("hello")
         s2 = User(id="wOw", first_name="Unit", surname="Test", isAdmin=True)
+        s2.set_password("goodbye")
 
         t1 = Attempt(user_id="OwO", answer_1="potato", correct_1=True)
         t2 = Attempt(user_id="OwO", answer_1="potato", correct_1=True)
@@ -61,18 +65,21 @@ class ModelTest(unittest.TestCase):
         db.drop_all()
 
     def test_password_hashing(self):
+        """Make password hasing works."""
         s = User.query.get("OwO")
         s.set_password("test")
         self.assertFalse(s.check_password("case"))
         self.assertTrue(s.check_password("test"))
 
     def test_user_is_admin(self):
+        """Make sure the role of the user is correctly identified."""
         s = User.query.get("OwO")
         self.assertFalse(s.isAdmin)
         s2 = User.query.get("wOw")
         self.assertTrue(s2.isAdmin)
 
     def test_attempt(self):
+        """Make sure attempt model works."""
         t = Attempt.query.all()
         self.assertEqual(t[0].attempt_id, 1, "Attempt_id should be 1")
         self.assertEqual(t[0].answer_1, "potato", "Asnwer_1 should be potato")
@@ -95,6 +102,7 @@ class ModelTest(unittest.TestCase):
         )
 
     def test_question(self):
+        """Make sure question model works."""
         q = Question.query.all()
         self.assertEqual(q[0].question_id, 1, "Quesiton ID should be 1")
         self.assertEqual(q[0].question, "Who is Steve Jobs?")
@@ -110,6 +118,7 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(q[1].answer, "1", "Answer should be 1")
 
     def test_log(self):
+        """Make sure log model works."""
         l = Log.query.all()
         self.assertEqual(l[0].log_id, 1, "Log ID should be 1")
         self.assertEqual(l[0].user_id, "OwO")
@@ -129,6 +138,7 @@ class ModelTest(unittest.TestCase):
         )
 
     def test_date(self):
+        """Make sure the dates are correct in the models."""
         s = User.query.get("OwO")
         self.assertEqual(s.date.date(), date.today(), "User date is wrong")
         self.assertEqual(
@@ -147,6 +157,15 @@ class ModelTest(unittest.TestCase):
             date.today(),
             "Date of question is wrong",
         )
+
+    def test_app_exists(self):
+        """Make sure the app exists."""
+        self.assertFalse(app is None)
+
+    def test_home_page(self):
+        """Make sure homepage works."""
+        response = self.app.get("/")
+        self.assertEqual(response.status_code, 200)
 
 
 if __name__ == "__main__":

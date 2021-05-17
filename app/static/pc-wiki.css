@@ -1,3 +1,7 @@
+:root {
+    --default-background: rgb(44, 47, 51);
+}
+
 /* base */
 body {
     background-color: rgb(35, 39, 42);
@@ -23,9 +27,22 @@ body {
     color: #5c656d;
     border: 1px solid orange;
 }
+.collapsed {
+    color: black;
+    background-color: orange;
+}
 .accordion-button:not(.collapsed) {
     color: black;
-    background-color: #4cad9f;
+    background-color: orange;
+}
+.accordion-body {
+    background-color: rgb(94, 94, 94);
+}
+.list-group-item-success {
+    background-color: rgb(8, 177, 8);
+}
+.list-group-item-danger {
+    background-color: rgb(231, 79, 79);
 }
 
 footer {
@@ -95,7 +112,7 @@ footer {
 }
 .visitors,
 .attempts {
-    background-color: rgb(44, 47, 51);
+    background-color: var(--default-background);
     border-radius: 1.7rem;
 }
 .stat-label {

@@ -11,8 +11,7 @@
         <div class="quiz">
             <div id="question_1">
                 <br />
-                <strong style="text-decoration: underline">Question 1.</strong>
-                <br />
+                <div class="question-title">Question 1.</div>
                 {{form.question_1.label(for=form.question_1.name+"-0")}}
                 <table id="answers-1">
                     {% for subfield in form.question_1 %}
@@ -25,8 +24,7 @@
             </div>
             <br />
             <div id="question_2">
-                <strong style="text-decoration: underline">Question 2.</strong>
-                <br />
+                <div class="question-title">Question 2.</div>
                 {{form.question_2.label(for=form.question_1.name+"-0")}}
                 <table id="answers-2">
                     {% for subfield in form.question_2 %}
@@ -52,8 +50,7 @@
                 >
             </p>
             <div id="question-3">
-                <strong style="text-decoration: underline">Question 3.</strong>
-                <br />
+                <div class="question-title">Question 3.</div>
                 {{form.question_3.label(for=form.question_1.name+"-0")}}
                 <table id="answers_3">
                     {% for subfield in form.question_3 %}
@@ -66,8 +63,7 @@
             </div>
             <br />
             <div id="question-4">
-                <strong style="text-decoration: underline">Question 4.</strong>
-                <br />
+                <div class="question-title">Question 4.</div>
                 {{form.question_4.label(for=form.question_1.name+"-0")}}
                 <table id="answers_4">
                     {% for subfield in form.question_4 %}
@@ -80,8 +76,7 @@
             </div>
             <br />
             <div id="question-5">
-                <strong style="text-decoration: underline">Question 5.</strong>
-                <br />
+                <div class="question-title">Question 5.</div>
                 {{form.question_5.label(for=form.question_1.name+"-0")}}
                 <table id="answers_5">
                     {% for subfield in form.question_5 %}
@@ -94,8 +89,7 @@
             </div>
             <br />
             <div id="question-6">
-                <strong style="text-decoration: underline">Question 6.</strong>
-                <br />
+                <div class="question-title">Question 6.</div>
                 {{form.question_6.label(for=form.question_1.name+"-0")}}
                 <table id="answers_6">
                     {% for subfield in form.question_6 %}
@@ -108,8 +102,7 @@
             </div>
             <br />
             <div id="question-7">
-                <strong style="text-decoration: underline">Question 7.</strong>
-                <br />
+                <div class="question-title">Question 7.</div>
                 {{form.question_7.label}} {{form.question_7(maxlength="11")}}
             </div>
             <br />

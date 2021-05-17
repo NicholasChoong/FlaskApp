@@ -33,7 +33,7 @@
 
 ## Setup
 
-    Requires Python
+    Requires Python 3.4 and above
     install requirements from requirements.txt
 
     flask run
